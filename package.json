@@ -1,0 +1,29 @@
+{
+  "name": "splat-stitcher",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "generate:lite": "node scripts/create-lite-demo.mjs",
+    "generate:portal": "node scripts/create-portal-demo.mjs",
+    "generate:property": "node scripts/create-property-demo.mjs",
+    "validate:assets": "node scripts/validate-assets.mjs",
+    "validate:property": "node scripts/validate-property.mjs",
+    "validate:portals": "node scripts/validate-portals.mjs",
+    "validate:stitch": "node scripts/validate-stitch.mjs"
+  },
+  "dependencies": {
+    "@mkkellogg/gaussian-splats-3d": "^0.4.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.167.1",
+    "three-mesh-bvh": "^0.7.8",
+    "vite": "^5.4.21"
+  },
+  "devDependencies": {}
+}
