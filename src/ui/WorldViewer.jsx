@@ -1,8 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Crosshair, MousePointer2, RotateCcw } from 'lucide-react';
+import { Crosshair, DoorOpen, MousePointer2, RotateCcw } from 'lucide-react';
 import { WorldRenderer } from '../renderer/worldRenderer.js';
 
-export function WorldViewer({ worldBuild, showColliders, collisionEnabled, status, onStatus }) {
+export function WorldViewer({
+  worldBuild,
+  showColliders,
+  collisionEnabled,
+  status,
+  selectedRoomId,
+  calibrationTarget,
+  onCaptureDoor,
+  onStatus,
+}) {
   const canvasRef = useRef(null);
   const rendererRef = useRef(null);
   const [frame, setFrame] = useState({ position: [0, 0, 0], floorY: 0, locked: false, colliders: 0 });
@@ -39,6 +48,19 @@ export function WorldViewer({ worldBuild, showColliders, collisionEnabled, statu
   }, [onStatus, worldBuild]);
 
   const pos = frame.position || [0, 0, 0];
+  function captureDoorHere() {
+    if (!calibrationTarget || !rendererRef.current) return;
+    try {
+      const anchor = rendererRef.current.captureDoorAnchor(calibrationTarget.roomId || selectedRoomId, calibrationTarget.doorId);
+      onCaptureDoor?.({
+        roomId: calibrationTarget.roomId || selectedRoomId,
+        doorId: calibrationTarget.doorId,
+        anchor,
+      });
+    } catch (error) {
+      onStatus?.(`Door capture failed: ${error.message}`);
+    }
+  }
 
   return (
     <div className="world-panel">
@@ -54,6 +76,18 @@ export function WorldViewer({ worldBuild, showColliders, collisionEnabled, statu
         </div>
       </div>
       <div className="world-status">{status}</div>
+      {calibrationTarget && (
+        <div className="world-calibration">
+          <div>
+            <DoorOpen size={14} />
+            <span>{calibrationTarget.label || calibrationTarget.doorId}</span>
+          </div>
+          <button onClick={captureDoorHere}>
+            <Crosshair size={14} />
+            <span>Capture Here</span>
+          </button>
+        </div>
+      )}
       <button className="floating-reset" onClick={() => rendererRef.current?.resetPlayer()}>
         <RotateCcw size={16} />
         <span>Reset</span>

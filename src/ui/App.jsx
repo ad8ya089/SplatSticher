@@ -32,6 +32,42 @@ import { FloorPlanCanvas } from './FloorPlanCanvas.jsx';
 import { RoomPanel } from './RoomPanel.jsx';
 import { WorldViewer } from './WorldViewer.jsx';
 
+const DOOR_CALIBRATION_KEY = 'splat-stitcher-door-calibrations:v1';
+
+function readDoorCalibrations() {
+  if (typeof window === 'undefined') return {};
+  try {
+    return JSON.parse(window.localStorage.getItem(DOOR_CALIBRATION_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function writeDoorCalibration(roomId, doorId, anchor) {
+  if (typeof window === 'undefined') return;
+  const current = readDoorCalibrations();
+  const next = {
+    ...current,
+    [roomId]: {
+      ...(current[roomId] || {}),
+      [doorId]: anchor,
+    },
+  };
+  window.localStorage.setItem(DOOR_CALIBRATION_KEY, JSON.stringify(next));
+}
+
+function withDoorCalibrations(room) {
+  const saved = readDoorCalibrations()[room.id];
+  if (!saved) return room;
+  return {
+    ...room,
+    portalDoors: {
+      ...(room.portalDoors || {}),
+      ...saved,
+    },
+  };
+}
+
 function cloneDemoRooms() {
   return DEMO_ROOMS.map((room, index) => ({
     ...room,
@@ -54,26 +90,29 @@ function cloneDemoRooms() {
 }
 
 function clonePresetRooms(sourceRooms) {
-  return sourceRooms.map((room) => ({
-    ...room,
-    enabled: true,
-    splatYLift: room.demoMeta?.splatYLift ?? 0,
-    colliderYLift: room.demoMeta?.colliderYLift ?? room.demoMeta?.splatYLift ?? 0,
-    analysis: room.demoMeta
-      ? {
-          numPoints: room.demoMeta.numPoints,
-          sampledPoints: Math.min(room.demoMeta.numPoints, 250000),
-          floorY: room.demoMeta.splatFloorY,
-          ceilY: room.demoMeta.splatCeilY,
-          yLift: room.demoMeta.splatYLift,
-          roomHeightM: room.demoMeta.splatCeilY - room.demoMeta.splatFloorY,
-          meta: {
-            fractionalBits: room.demoMeta.fractionalBits,
-          },
-        }
-      : room.analysis,
-    status: 'ready',
-  }));
+  return sourceRooms.map((sourceRoom) => {
+    const room = withDoorCalibrations(sourceRoom);
+    return {
+      ...room,
+      enabled: true,
+      splatYLift: room.demoMeta?.splatYLift ?? 0,
+      colliderYLift: room.demoMeta?.colliderYLift ?? room.demoMeta?.splatYLift ?? 0,
+      analysis: room.demoMeta
+        ? {
+            numPoints: room.demoMeta.numPoints,
+            sampledPoints: Math.min(room.demoMeta.numPoints, 250000),
+            floorY: room.demoMeta.splatFloorY,
+            ceilY: room.demoMeta.splatCeilY,
+            yLift: room.demoMeta.splatYLift,
+            roomHeightM: room.demoMeta.splatCeilY - room.demoMeta.splatFloorY,
+            meta: {
+              fractionalBits: room.demoMeta.fractionalBits,
+            },
+          }
+        : room.analysis,
+      status: 'ready',
+    };
+  });
 }
 
 export function App() {
@@ -88,6 +127,7 @@ export function App() {
   const [status, setStatus] = useState('Demo rooms loaded');
   const [worldBuild, setWorldBuild] = useState({ nonce: 0, transforms: [], links: [] });
   const [portalLinks, setPortalLinks] = useState([]);
+  const [calibrationTarget, setCalibrationTarget] = useState(null);
 
   const selectedRoom = rooms.find((room) => room.id === selectedRoomId) || rooms[0];
   const readyCount = rooms.filter((room) => room.splatUrl || room.splatFile).length;
@@ -121,6 +161,7 @@ export function App() {
     setFloorPlanMeta(null);
     setMetersPerPixel(DEFAULT_METERS_PER_PIXEL);
     setPortalLinks([]);
+    setCalibrationTarget(null);
     setStatus('Demo rooms restored');
     void hydrateDemoColliders(demo);
   }
@@ -133,6 +174,7 @@ export function App() {
     setFloorPlanMeta({ width: LUXURY_PENTHOUSE_PLAN.width, height: LUXURY_PENTHOUSE_PLAN.height });
     setMetersPerPixel(LUXURY_PENTHOUSE_PLAN.metersPerPixel);
     setPortalLinks(LUXURY_PENTHOUSE_PORTAL_LINKS);
+    setCalibrationTarget(null);
     setActiveView('map');
     setStatus('Luxury penthouse plan loaded');
     void hydrateDemoColliders(presetRooms);
@@ -250,12 +292,45 @@ export function App() {
       splatUrl: room.realSplatUrl || room.splatUrl,
       visualFormat: room.realSplatUrl ? 'spz' : room.visualFormat,
     }));
-    const stitched = stitchRoomsByDoor(joinedRooms, { gap: 1.25, portalLinks });
+    const stitched = stitchRoomsByDoor(joinedRooms, {
+      gap: 1.25,
+      metersPerPixel: computedScale,
+      portalLinks,
+      preserveMapPlacement: Boolean(portalLinks.length),
+    });
     setRooms(stitched.rooms);
     buildWorldFromRooms(stitched.rooms, 'Loading full SPZ joined tour...', {
       links: stitched.links,
       report: stitched.report,
     });
+  }
+
+  function selectDoorCalibration(roomId, doorId, label) {
+    setSelectedRoomId(roomId);
+    setCalibrationTarget({ roomId, doorId, label });
+    setActiveView('world');
+    setStatus(`Calibrating ${label || doorId}: stand at the real door and capture`);
+  }
+
+  function handleDoorCapture({ roomId, doorId, anchor }) {
+    writeDoorCalibration(roomId, doorId, anchor);
+    setRooms((current) =>
+      current.map((room) => {
+        if (room.id !== roomId) return room;
+        const previous = room.portalDoors?.[doorId] || {};
+        return {
+          ...room,
+          portalDoors: {
+            ...(room.portalDoors || {}),
+            [doorId]: {
+              ...previous,
+              ...anchor,
+            },
+          },
+        };
+      }),
+    );
+    setStatus(`Captured ${anchor.label || doorId} at ${anchor.x.toFixed(2)}, ${anchor.z.toFixed(2)}; rebuild tour`);
   }
 
   function generateFullSelectedRoom() {
@@ -396,6 +471,9 @@ export function App() {
               showColliders={showColliders}
               collisionEnabled={collisionEnabled}
               status={status}
+              selectedRoomId={selectedRoomId}
+              calibrationTarget={calibrationTarget}
+              onCaptureDoor={handleDoorCapture}
               onStatus={setStatus}
             />
           )}
@@ -415,6 +493,8 @@ export function App() {
             onColliderUpload={handleColliderUpload}
             onToggleColliders={setShowColliders}
             onToggleCollision={setCollisionEnabled}
+            calibrationTarget={calibrationTarget}
+            onSelectDoorCalibration={selectDoorCalibration}
           />
         </aside>
       </main>

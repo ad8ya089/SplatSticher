@@ -605,13 +605,39 @@ input:focus {
 
 .door-row {
   display: grid;
-  grid-template-columns: 1fr 64px 120px;
+  grid-template-columns: minmax(0, 1fr) 58px 102px 30px;
   gap: 8px;
   align-items: center;
   min-height: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   color: #d9d4c7;
   font-size: 12px;
+}
+
+.door-row strong,
+.door-row span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.door-calibrate {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: #eadca9;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.door-calibrate.active {
+  border-color: rgba(43, 216, 148, 0.55);
+  color: var(--green);
+  background: rgba(43, 216, 148, 0.12);
 }
 
 .muted {
@@ -674,6 +700,39 @@ input:focus {
   color: var(--green);
   font-size: 12px;
   backdrop-filter: blur(7px);
+}
+
+.world-calibration {
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid rgba(200, 169, 72, 0.42);
+  border-radius: 7px;
+  background: rgba(8, 8, 7, 0.82);
+  color: #eadca9;
+  font-size: 12px;
+  backdrop-filter: blur(7px);
+}
+
+.world-calibration div,
+.world-calibration button {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.world-calibration button {
+  border: 1px solid rgba(43, 216, 148, 0.42);
+  border-radius: 6px;
+  padding: 0 9px;
+  color: var(--green);
+  background: rgba(43, 216, 148, 0.11);
 }
 
 .world-hud div {

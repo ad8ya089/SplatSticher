@@ -7,10 +7,10 @@ Standalone multi-room Gaussian splat world builder for real estate previews, hor
 Vite serves the app at:
 
 ```txt
-http://127.0.0.1:5174/
+http://127.0.0.1:5173/
 ```
 
-If port `5174` changes, check `vite-dev.log`.
+If port `5173` changes, check `vite-dev.log`.
 
 ## What This Project Does
 
@@ -18,7 +18,7 @@ Splat Stitcher keeps each room as a separate splat scene instead of merging ever
 
 `Build Tour` is the full-resolution proof mode: it aligns every current room through explicit named door anchors, loads each room's real SPZ splat, creates visible door handoff portals, and runs a sampled route check on each portal source and landing point. The browser exposes the latest result as `window.__splatStitcherReport` / `data-splat-stitcher-report`, the active loaded assets as `window.__splatStitcherActiveBuild` / `data-splat-stitcher-active-build`, and door handoff triggers as `window.__splatStitcherPortalTransitions` / `data-splat-stitcher-portal-transitions`.
 
-The generated lite and portal-cut previews remain useful for quick diagnostics, but the main tour path now uses full SPZ room assets so the walkthrough matches `Full Room` visual quality instead of the old particle-preview look. Independent room captures do not need to share one physically continuous mesh; walking into a configured door lands the player just inside the matching door of the next room.
+The generated lite and portal-cut previews remain useful for quick diagnostics, but the main tour path now uses full SPZ room assets so the walkthrough matches `Full Room` visual quality instead of the old particle-preview look. Independent room captures do not need to share one physically continuous mesh; walking into a configured door lands the player just inside the matching door of the next room. Door anchors can be calibrated from inside the world and are saved in browser local storage.
 
 The current safe production workflow is:
 
@@ -26,7 +26,7 @@ The current safe production workflow is:
 2. Place each room box on the map.
 3. Use `Build Tour` for a full-SPZ, door-stitched multi-room walkthrough.
 4. Use `Full Room` to isolate and inspect a selected room's real SPZ at full quality.
-5. For very large homes, keep an optimized/lazy mode available too. Six full rooms work in the demo, but full-SPZ tours are GPU and memory heavy.
+5. For very large homes, keep an optimized/lite preview available too. Six full rooms work in the demo, but full-SPZ tours are GPU and memory heavy.
 
 ## Luxury Penthouse Demo
 
@@ -37,7 +37,7 @@ Click `Penthouse` or the left `Estate` button to load a production-style real es
 - Source SPZ/GLB pairs: `public/environments`
 - Generated preview assets: `lite_*.ply` and `portal_*.ply`
 
-The map keeps the real floor-plan coordinate space, shows editable room boxes, and draws the green dashed tour route. `Build Tour` converts that route into a walkable six-room Gaussian splat tour with doorway cuts and connector floors.
+The map keeps the real floor-plan coordinate space, shows editable room boxes, and draws the green dashed tour route. `Build Tour` converts that route into a walkable six-room Gaussian splat tour with doorway portals and full SPZ room visuals.
 
 ## Buttons
 
@@ -49,7 +49,7 @@ The map keeps the real floor-plan coordinate space, shows editable room boxes, a
 - `Room`: adds a new empty room card.
 - `Spread`: spreads room boxes horizontally on the map.
 - `Penthouse`: loads the Luxury Penthouse floor-plan preset from `public/environments`.
-- `Build Tour`: includes all current rooms, aligns their named portal doors, loads the real full SPZ assets, and enables bidirectional door handoffs.
+- `Build Tour`: includes all current rooms, keeps the floor-plan placement, loads the real full SPZ assets, and enables bidirectional calibrated door handoffs.
 - `Full Room`: loads only the selected room using its real full SPZ file.
 - `Generate`: loads the currently included rooms.
 - `Reset`: resets the player camera in the world view.
@@ -66,6 +66,7 @@ The map keeps the real floor-plan coordinate space, shows editable room boxes, a
 - `Yaw deg`: rotate the selected room around Y.
 - `Y offset`: manually adjust vertical placement.
 - `Plan X` / `Plan Y`: precise floor-plan coordinates.
+- Door row crosshair: arm a named door for calibration; in the world view, stand at the real doorway and press `Capture Here`.
 
 ## Verification
 
@@ -98,10 +99,10 @@ For a new listing:
 
 1. Put the floor-plan image in `public/plans`.
 2. Put each room `.spz` and matching `_collider.glb` in `public/environments`.
-3. Add a preset in `src/core/propertyPresets.js` with room labels, plan box positions, SPZ/GLB URLs, footprints, named `portalDoors`, and `portalLinks`.
+3. Add a preset in `src/core/propertyPresets.js` with room labels, plan box positions, SPZ/GLB URLs, footprints, rough named `portalDoors`, and `portalLinks`.
 4. Run `npm run generate:property` to create lite and portal-cut previews.
 5. Run `npm run validate:property`.
-6. Open the app, load the preset, adjust boxes on the map, then click `Build Tour`.
+6. Open the app, load the preset, adjust boxes on the map, click `Build Tour`, then calibrate each named door from the world view.
 
 The next deeper upgrade is automatic door discovery: render room views, segment `door` or `doorway`, lift the mask back to Gaussian indices, and write those exact indices into the portal cutter. The current version is deterministic and local: it uses configured doorway boxes, which is much more reliable for a working real estate pipeline today.
 

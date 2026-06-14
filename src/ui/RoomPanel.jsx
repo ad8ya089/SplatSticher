@@ -3,6 +3,7 @@ import {
   AlertTriangle,
   Box,
   CheckCircle2,
+  Crosshair,
   DoorOpen,
   Eye,
   EyeOff,
@@ -29,6 +30,8 @@ export function RoomPanel({
   onColliderUpload,
   onToggleColliders,
   onToggleCollision,
+  calibrationTarget,
+  onSelectDoorCalibration,
 }) {
   if (!room) {
     return <div className="empty-panel">No room selected</div>;
@@ -220,6 +223,13 @@ export function RoomPanel({
               <strong>{door.label || door.id || door.wall}</strong>
               <span>{number(door.width, 2)}m</span>
               <span>{number(door.worldX, 2)}, {number(door.worldZ, 2)}</span>
+              <button
+                className={calibrationTarget?.roomId === room.id && calibrationTarget?.doorId === door.id ? 'door-calibrate active' : 'door-calibrate'}
+                onClick={() => onSelectDoorCalibration?.(room.id, door.id, door.label || door.id)}
+                title="Calibrate"
+              >
+                <Crosshair size={13} />
+              </button>
             </div>
           ))
         ) : (

@@ -29,7 +29,12 @@ for (const preset of PROPERTY_PRESETS) {
   const stitched = stitchRoomsByDoor(preset.rooms, { gap: 1.25 });
   assert(stitched.links.length === preset.rooms.length - 1, `${preset.id}: tour links did not cover every room`);
   if (preset.portalLinks?.length) {
-    const portalStitched = stitchRoomsByDoor(preset.rooms, { gap: 1.25, portalLinks: preset.portalLinks });
+    const portalStitched = stitchRoomsByDoor(preset.rooms, {
+      gap: 1.25,
+      metersPerPixel: preset.plan.metersPerPixel,
+      portalLinks: preset.portalLinks,
+      preserveMapPlacement: true,
+    });
     assert(
       portalStitched.links.length === preset.portalLinks.length,
       `${preset.id}: portal graph did not create every named door link`,
@@ -39,8 +44,8 @@ for (const preset of PROPERTY_PRESETS) {
       `${preset.id}: portal graph did not place every room`,
     );
     assert(
-      portalStitched.report.transitionMode === 'door_portals',
-      `${preset.id}: portal graph did not use door_portals mode`,
+      portalStitched.report.transitionMode === 'door_portals_map',
+      `${preset.id}: portal graph did not use door_portals_map mode`,
     );
     portalRows.push(
       ...portalStitched.links.map((link) => ({

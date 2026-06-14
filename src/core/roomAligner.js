@@ -57,7 +57,35 @@ export function inwardDirectionForWall(wall = 'east') {
   return {
     x: -outward.x,
     z: -outward.z,
-    yawDeg: (outward.yawDeg + 180) % 360,
+    yawDeg: yawDegForDirection({ x: -outward.x, z: -outward.z }),
+  };
+}
+
+export function yawDegForDirection(direction) {
+  return THREE.MathUtils.radToDeg(Math.atan2(-direction.x, -direction.z));
+}
+
+export function yawDegForRoom(room) {
+  return Number(room.floorPlanRotation ?? 0) + Number(room.manualYawDeg ?? 0);
+}
+
+export function rotateLocalXZ(room, x = 0, z = 0) {
+  const yaw = THREE.MathUtils.degToRad(yawDegForRoom(room));
+  const cos = Math.cos(yaw);
+  const sin = Math.sin(yaw);
+  return {
+    x: x * cos + z * sin,
+    z: -x * sin + z * cos,
+  };
+}
+
+export function inverseRotateWorldXZ(room, x = 0, z = 0) {
+  const yaw = THREE.MathUtils.degToRad(-yawDegForRoom(room));
+  const cos = Math.cos(yaw);
+  const sin = Math.sin(yaw);
+  return {
+    x: x * cos + z * sin,
+    z: -x * sin + z * cos,
   };
 }
 
@@ -145,11 +173,22 @@ export function connectRoomCenters(transforms) {
 export function localDoorToWorld(room, doorName) {
   const door = getRoomPortalDoor(room, doorName);
   if (!door) return null;
+  const rotated = rotateLocalXZ(room, door.x, door.z);
+  const localOutward = directionForWall(door.wall);
+  const worldOutward = rotateLocalXZ(room, localOutward.x, localOutward.z);
+  const worldInward = { x: -worldOutward.x, z: -worldOutward.z };
   return {
     ...door,
-    x: (room.worldX ?? 0) + door.x,
+    localX: door.x,
+    localZ: door.z,
+    x: (room.worldX ?? 0) + rotated.x,
     y: 0,
-    z: (room.worldZ ?? 0) + door.z,
+    z: (room.worldZ ?? 0) + rotated.z,
+    worldOutward,
+    worldInward: {
+      ...worldInward,
+      yawDeg: yawDegForDirection(worldInward),
+    },
   };
 }
 
@@ -249,14 +288,15 @@ function placeRoomAtDoor({ placedRoom, targetRoom, placedDoorName, targetDoorNam
   const targetDoor = getRoomPortalDoor(targetRoom, targetDoorName);
   if (!placedDoor || !targetDoor) return false;
 
-  const outward = directionForWall(placedDoor.wall);
+  const outward = placedDoor.worldOutward || directionForWall(placedDoor.wall);
+  const targetOffset = rotateLocalXZ(targetRoom, targetDoor.x, targetDoor.z);
   const targetDoorWorld = {
     x: placedDoor.x + outward.x * gap,
     z: placedDoor.z + outward.z * gap,
   };
 
-  targetRoom.worldX = targetDoorWorld.x - targetDoor.x;
-  targetRoom.worldZ = targetDoorWorld.z - targetDoor.z;
+  targetRoom.worldX = targetDoorWorld.x - targetOffset.x;
+  targetRoom.worldZ = targetDoorWorld.z - targetOffset.z;
   setRoomDoorWorld(targetRoom);
   return true;
 }
@@ -290,13 +330,60 @@ export function stitchRoomsByPortalLinks(rooms, options = {}) {
   const stitched = rooms.map((room) => ({
     ...room,
     useFloorProxy: true,
-    manualYawDeg: 0,
-    floorPlanRotation: 0,
   }));
 
   if (!stitched.length) return { rooms: stitched, links: [], report: { passable: false, reason: 'no_rooms' } };
 
   const roomById = new Map(stitched.map((room) => [room.id, room]));
+  if (options.preserveMapPlacement) {
+    const originX = options.originX ?? Math.min(...stitched.map((room) => room.floorPlanX ?? 0), 0);
+    const originY = options.originY ?? Math.min(...stitched.map((room) => room.floorPlanY ?? 0), 0);
+    const metersPerPixel = options.metersPerPixel ?? DEFAULT_METERS_PER_PIXEL;
+    for (const room of stitched) {
+      room.worldX = typeof room.worldX === 'number' ? room.worldX : ((room.floorPlanX ?? 0) - originX) * metersPerPixel;
+      room.worldZ = typeof room.worldZ === 'number' ? room.worldZ : ((room.floorPlanY ?? 0) - originY) * metersPerPixel;
+      setRoomDoorWorld(room);
+    }
+
+    const links = portalLinks
+      .map((link) => {
+        const fromRoom = roomById.get(link.from);
+        const toRoom = roomById.get(link.to);
+        if (!fromRoom || !toRoom) return null;
+        return buildPortalLink(link, fromRoom, toRoom);
+      })
+      .filter(Boolean);
+
+    for (const room of stitched) {
+      const footprintCenterX = room.footprint ? (room.footprint.xMin + room.footprint.xMax) / 2 : 0;
+      const footprintCenterZ = room.footprint ? (room.footprint.zMin + room.footprint.zMax) / 2 : 0;
+      const spawnOffset = rotateLocalXZ(room, footprintCenterX, footprintCenterZ);
+      room.spawnX = (room.worldX ?? 0) + spawnOffset.x;
+      room.spawnZ = (room.worldZ ?? 0) + spawnOffset.z;
+      room.spawnYawDeg = -90 + yawDegForRoom(room);
+    }
+
+    return {
+      rooms: stitched,
+      links,
+      report: {
+        passable: links.length === portalLinks.length,
+        roomCount: stitched.length,
+        placedRoomCount: stitched.length,
+        connectorCount: links.length,
+        transitionMode: 'door_portals_map',
+        links: links.map((link) => ({
+          from: link.from,
+          fromDoor: link.fromDoor,
+          to: link.to,
+          toDoor: link.toDoor,
+          distanceM: Number(link.distanceM.toFixed(3)),
+          width: link.width,
+        })),
+      },
+    };
+  }
+
   const rootId = options.rootId || portalLinks[0]?.from || stitched[0].id;
   const root = roomById.get(rootId) || stitched[0];
   root.worldX = options.startX ?? 0;
@@ -361,9 +448,10 @@ export function stitchRoomsByPortalLinks(rooms, options = {}) {
     setRoomDoorWorld(room);
     const footprintCenterX = room.footprint ? (room.footprint.xMin + room.footprint.xMax) / 2 : 0;
     const footprintCenterZ = room.footprint ? (room.footprint.zMin + room.footprint.zMax) / 2 : 0;
-    room.spawnX = (room.worldX ?? 0) + footprintCenterX;
-    room.spawnZ = (room.worldZ ?? 0) + footprintCenterZ;
-    room.spawnYawDeg = -90;
+    const spawnOffset = rotateLocalXZ(room, footprintCenterX, footprintCenterZ);
+    room.spawnX = (room.worldX ?? 0) + spawnOffset.x;
+    room.spawnZ = (room.worldZ ?? 0) + spawnOffset.z;
+    room.spawnYawDeg = -90 + yawDegForRoom(room);
   }
 
   const report = {

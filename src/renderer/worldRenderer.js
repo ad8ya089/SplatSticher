@@ -12,6 +12,7 @@ import {
 } from 'three-mesh-bvh';
 import {
   directionForWall,
+  inverseRotateWorldXZ,
   inwardDirectionForWall,
   PLAYER_EYE_HEIGHT,
 } from '../core/roomAligner.js';
@@ -23,6 +24,22 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast;
 
 const SPLAT_ALPHA_REMOVAL_THRESHOLD = 5;
 const _rayDirectionDown = new THREE.Vector3(0, -1, 0);
+
+function outwardForDoor(door) {
+  return door?.worldOutward || directionForWall(door?.wall);
+}
+
+function inwardForDoor(door) {
+  return door?.worldInward || inwardDirectionForWall(door?.wall);
+}
+
+function wallFromLocalDirection(direction, fallback = 'east') {
+  if (!direction || (!direction.x && !direction.z)) return fallback;
+  if (Math.abs(direction.x) >= Math.abs(direction.z)) {
+    return direction.x >= 0 ? 'east' : 'west';
+  }
+  return direction.z >= 0 ? 'south' : 'north';
+}
 
 function objectUrlFor(source) {
   if (!source) return null;
@@ -64,6 +81,10 @@ export class WorldRenderer {
     this.colliderMeshes = [];
     this.roomDebugRoots = [];
     this.portalTransitions = [];
+    this.roomTransforms = [];
+    this.roomById = new Map();
+    this.spawnPoint = [0, 1.65, 6];
+    this.spawnYawDeg = 180;
     this.lastPortalAt = 0;
     this.running = true;
     this.disposed = false;
@@ -134,15 +155,12 @@ export class WorldRenderer {
     this.colliderMeshes = [];
     this.roomDebugRoots = [];
     this.portalTransitions = [];
+    this.roomTransforms = [];
+    this.roomById = new Map();
   }
 
-  async loadRooms(roomTransforms, links = []) {
-    const loadVersion = ++this.loadVersion;
-    await this.clear();
-    if (this.disposed || loadVersion !== this.loadVersion) return;
-    this.callbacks.onStatus?.('Loading splat rooms...');
-
-    this.dropIn = new DropInViewer({
+  _makeDropInViewer() {
+    return new DropInViewer({
       dynamicScene: true,
       gpuAcceleratedSort: false,
       integerBasedSort: false,
@@ -157,6 +175,35 @@ export class WorldRenderer {
       inMemoryCompressionLevel: 1,
       freeIntermediateSplatData: true,
     });
+  }
+
+  _splatSourceForRoom(room) {
+    if (!room || room.visualFormat === 'glb') return null;
+    return room.splatFile || room.splatUrl;
+  }
+
+  _splatSourceMeta(room, url = null) {
+    return {
+      id: room.id,
+      label: room.label,
+      url,
+      format: room.visualFormat || 'spz',
+      pointCount: room.sourceRoom?.analysis?.numPoints || room.sourceRoom?.demoMeta?.numPoints || null,
+    };
+  }
+
+  async loadRooms(roomTransforms, links = []) {
+    const loadVersion = ++this.loadVersion;
+    await this.clear();
+    if (this.disposed || loadVersion !== this.loadVersion) return;
+    this.roomTransforms = roomTransforms;
+    this.roomById = new Map(roomTransforms.map((room) => [room.id, room]));
+    this.spawnPoint = roomTransforms[0]?.spawnPoint || [0, 1.65, 4];
+    this.spawnYawDeg = roomTransforms[0]?.spawnYawDeg ?? 180;
+
+    this.callbacks.onStatus?.('Loading splat rooms...');
+
+    this.dropIn = this._makeDropInViewer();
     this.dropIn.name = 'splat-stitcher-dropin';
     this.scene.add(this.dropIn);
 
@@ -171,20 +218,14 @@ export class WorldRenderer {
         meshRooms.push(room);
         continue;
       }
-      const source = room.splatFile || room.splatUrl;
+      const source = this._splatSourceForRoom(room);
       if (!source) {
         placeholderRooms.push(room);
         continue;
       }
       const handle = objectUrlFor(source);
       splatHandles.push(handle);
-      loadedSplatSources.push({
-        id: room.id,
-        label: room.label,
-        url: handle.url,
-        format: room.visualFormat || 'spz',
-        pointCount: room.sourceRoom?.analysis?.numPoints || room.sourceRoom?.demoMeta?.numPoints || null,
-      });
+      loadedSplatSources.push(this._splatSourceMeta(room, handle.url));
       splatScenes.push({
         path: handle.url,
         splatAlphaRemovalThreshold: SPLAT_ALPHA_REMOVAL_THRESHOLD,
@@ -254,8 +295,7 @@ export class WorldRenderer {
     window.__splatStitcherReport = passabilityReport;
     document.documentElement.dataset.splatStitcherReport = JSON.stringify(passabilityReport);
     document.documentElement.dataset.splatStitcherActiveBuild = JSON.stringify(window.__splatStitcherActiveBuild);
-    const spawn = roomTransforms[0]?.spawnPoint || [0, 1.65, 4];
-    this.player.teleportTo(spawn, roomTransforms[0]?.spawnYawDeg ?? 180);
+    this.player.teleportTo(this.spawnPoint, this.spawnYawDeg);
     const routeStatus = links.length
       ? passabilityReport.passable
         ? passabilityReport.transitionMode === 'door_portals'
@@ -377,11 +417,14 @@ export class WorldRenderer {
     });
     const mesh = new THREE.Mesh(geometry, material);
     mesh.name = `proxy-floor-mesh-${room.id}`;
+    const centerOffset = new THREE.Vector3((footprint.xMin + footprint.xMax) / 2, 0, (footprint.zMin + footprint.zMax) / 2);
+    centerOffset.applyQuaternion(new THREE.Quaternion().fromArray(room.colliderQuaternion));
     mesh.position.set(
-      room.colliderPosition[0] + (footprint.xMin + footprint.xMax) / 2,
+      room.colliderPosition[0] + centerOffset.x,
       -0.04,
-      room.colliderPosition[2] + (footprint.zMin + footprint.zMax) / 2,
+      room.colliderPosition[2] + centerOffset.z,
     );
+    mesh.quaternion.fromArray(room.colliderQuaternion);
     mesh.visible = this.showColliders;
     mesh.frustumCulled = false;
     mesh.geometry.computeBoundsTree?.();
@@ -583,8 +626,8 @@ export class WorldRenderer {
 
   _addDoorPortalMarker(root, point, door, width, thresholdMaterial, frameMaterial) {
     if (!point || !door) return;
-    const outward = directionForWall(door.wall);
-    const inward = inwardDirectionForWall(door.wall);
+    const outward = outwardForDoor(door);
+    const inward = inwardForDoor(door);
     const yaw = -Math.atan2(outward.z, outward.x);
     const portalWidth = Math.max(0.85, width || door.width || 1.1);
     const center = new THREE.Vector3(point[0], 0, point[2]);
@@ -602,14 +645,6 @@ export class WorldRenderer {
     threshold.rotation.y = yaw;
     threshold.frustumCulled = false;
     root.add(threshold);
-
-    this._addPortalFrame(
-      root,
-      center.clone().add(new THREE.Vector3(inward.x * 0.06, 0, inward.z * 0.06)),
-      yaw,
-      portalWidth,
-      frameMaterial,
-    );
   }
 
   _addPortalFrame(root, center, yaw, width, material) {
@@ -697,7 +732,7 @@ export class WorldRenderer {
 
   _makePortalTransition({ id, from, to, sourcePoint, targetPoint, targetDoor, radius, label }) {
     if (!sourcePoint || !targetPoint || !targetDoor) return null;
-    const targetInward = inwardDirectionForWall(targetDoor.wall);
+    const targetInward = inwardForDoor(targetDoor);
     return {
       id,
       from,
@@ -801,8 +836,8 @@ export class WorldRenderer {
     const checkedLinks = [];
 
     for (const link of portalLinks) {
-      const sourceInward = inwardDirectionForWall(link.fromDoorMeta?.wall);
-      const targetInward = inwardDirectionForWall(link.toDoorMeta?.wall);
+      const sourceInward = inwardForDoor(link.fromDoorMeta);
+      const targetInward = inwardForDoor(link.toDoorMeta);
       const sourcePoint = {
         x: link.a[0] + sourceInward.x * 0.55,
         z: link.a[2] + sourceInward.z * 0.55,
@@ -871,7 +906,36 @@ export class WorldRenderer {
   }
 
   resetPlayer() {
-    this.player.teleportTo([0, 1.65, 6], 180);
+    this.player.teleportTo(this.spawnPoint, this.spawnYawDeg);
+  }
+
+  captureDoorAnchor(roomId, doorId) {
+    const room = this.roomTransforms.find((item) => item.id === roomId);
+    if (!room) {
+      throw new Error('Selected room is not loaded in the world');
+    }
+
+    const existingDoor = room.sourceRoom?.portalDoors?.[doorId] || room.sourceRoom?.stitchDoors?.[doorId] || null;
+    const worldDelta = {
+      x: this.camera.position.x - room.position[0],
+      z: this.camera.position.z - room.position[2],
+    };
+    const local = inverseRotateWorldXZ(room.sourceRoom || room, worldDelta.x, worldDelta.z);
+    const worldForward = {
+      x: -Math.sin(this.player.yaw),
+      z: -Math.cos(this.player.yaw),
+    };
+    const localForward = inverseRotateWorldXZ(room.sourceRoom || room, worldForward.x, worldForward.z);
+    const wall = wallFromLocalDirection(localForward, existingDoor?.wall || 'east');
+
+    return {
+      x: Number(local.x.toFixed(3)),
+      z: Number(local.z.toFixed(3)),
+      wall,
+      width: existingDoor?.width || 1.15,
+      label: existingDoor?.label || doorId,
+      calibrated: true,
+    };
   }
 
   _checkPortalTransitions() {

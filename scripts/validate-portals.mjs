@@ -24,13 +24,14 @@ function insideFootprint(room, x, z, margin = 0.05) {
   );
 }
 
-const GAP_M = 1.25;
 const stitched = stitchRoomsByDoor(LUXURY_PENTHOUSE_ROOMS, {
-  gap: GAP_M,
+  gap: 1.25,
+  metersPerPixel: 0.018,
   portalLinks: LUXURY_PENTHOUSE_PORTAL_LINKS,
+  preserveMapPlacement: true,
 });
 
-assert(stitched.report.transitionMode === 'door_portals', 'expected door_portals transition mode');
+assert(stitched.report.transitionMode === 'door_portals_map', 'expected door_portals_map transition mode');
 assert(stitched.links.length === LUXURY_PENTHOUSE_PORTAL_LINKS.length, 'not every portal link was created');
 assert(stitched.report.placedRoomCount === LUXURY_PENTHOUSE_ROOMS.length, 'not every room was placed by the portal graph');
 
@@ -42,7 +43,6 @@ for (const link of stitched.links) {
   const toRoom = roomById.get(link.to);
   assert(fromRoom, `${link.id}: missing source room`);
   assert(toRoom, `${link.id}: missing target room`);
-  assert(Math.abs(link.distanceM - GAP_M) < 0.001, `${link.id}: door centers are not ${GAP_M}m apart`);
 
   const fromInward = inwardDirectionForWall(link.fromDoorMeta.wall);
   const toInward = inwardDirectionForWall(link.toDoorMeta.wall);
@@ -70,6 +70,7 @@ for (const link of stitched.links) {
     toDoor: `${link.to}:${link.toDoor}`,
     source: `${sourceInside.x.toFixed(2)}, ${sourceInside.z.toFixed(2)}`,
     landing: `${targetInside.x.toFixed(2)}, ${targetInside.z.toFixed(2)}`,
+    mapDistanceM: link.distanceM.toFixed(2),
     yaw: toInward.yawDeg,
   });
 }
