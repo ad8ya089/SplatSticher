@@ -1,0 +1,5924 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+debug-bulk-tour-fixed.png
+debug-dense-tour-fixed.png
+full-castle-spz.png
+full-hogwarts-spz-final.png
+full-hogwarts-spz.png
+index.html
+joined-map-world.png
+mobile-world.png
+package.json
+public/demo/cozy_dimly_lit_bedroom_collider.glb
+public/demo/cozy_dimly_lit_bedroom.spz
+public/demo/Cramped_Urban_Apartment_Night_collider.glb
+public/demo/Cramped_Urban_Apartment_Night.spz
+public/demo/enchanted_castle_like_room_collider.glb
+public/demo/enchanted_castle_like_room_world.spz
+public/demo/Hogwarts_Castle_Magical_Bedroom_collider.glb
+public/demo/Hogwarts_Castle_Magical_Bedroom.spz
+public/demo/lite_cozy_bedroom.ply
+public/demo/lite_cramped_apartment.ply
+public/demo/lite_enchanted_castle.ply
+public/demo/lite_hogwarts_bedroom.ply
+public/demo/portal_cozy_bedroom.ply
+public/demo/portal_cramped_apartment.ply
+public/demo/portal_enchanted_castle.ply
+public/demo/portal_hogwarts_bedroom.ply
+public/environments/Grand Luxury Penthouse Living Room_collider.glb
+public/environments/Grand Luxury Penthouse Living Room.spz
+public/environments/lite_grand_luxury_penthouse_living_room.ply
+public/environments/lite_luxurious_master_dressing_room.ply
+public/environments/lite_luxury_contemporary_bedroom_interior.ply
+public/environments/lite_luxury_guest_suite_evening_ambiance.ply
+public/environments/lite_luxury_penthouse_master_bedroom_suite.ply
+public/environments/lite_luxury_spa_master_bathroom.ply
+public/environments/Luxurious Master Dressing Room_collider.glb
+public/environments/Luxurious Master Dressing Room.spz
+public/environments/Luxury Contemporary Bedroom Interior_collider.glb
+public/environments/Luxury Contemporary Bedroom Interior.spz
+public/environments/Luxury guest suite, evening ambiance_collider.glb
+public/environments/Luxury guest suite, evening ambiance.spz
+public/environments/Luxury Penthouse Master Bedroom Suite_collider.glb
+public/environments/Luxury Penthouse Master Bedroom Suite.spz
+public/environments/Luxury Spa Master Bathroom_collider.glb
+public/environments/Luxury Spa Master Bathroom.spz
+public/environments/portal_grand_luxury_penthouse_living_room.ply
+public/environments/portal_luxurious_master_dressing_room.ply
+public/environments/portal_luxury_contemporary_bedroom_interior.ply
+public/environments/portal_luxury_guest_suite_evening_ambiance.ply
+public/environments/portal_luxury_penthouse_master_bedroom_suite.ply
+public/environments/portal_luxury_spa_master_bathroom.ply
+public/plans/luxury-penthouse-floorplan.png
+README.md
+scripts/create-lite-demo.mjs
+scripts/create-portal-demo.mjs
+scripts/create-property-demo.mjs
+scripts/validate-assets.mjs
+scripts/validate-portals.mjs
+scripts/validate-property.mjs
+scripts/validate-stitch.mjs
+src/core/demoRooms.js
+src/core/doorDetector.js
+src/core/glbAnalyzer.js
+src/core/orientationDetector.js
+src/core/portalCutter.js
+src/core/propertyPresets.js
+src/core/roomAligner.js
+src/core/splatParser.js
+src/main.jsx
+src/renderer/playerController.js
+src/renderer/worldRenderer.js
+src/styles.css
+src/ui/App.jsx
+src/ui/FloorPlanCanvas.jsx
+src/ui/RoomPanel.jsx
+src/ui/WorldViewer.jsx
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Splat Stitcher</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="package.json">
+{
+  "name": "splat-stitcher",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "generate:lite": "node scripts/create-lite-demo.mjs",
+    "generate:portal": "node scripts/create-portal-demo.mjs",
+    "generate:property": "node scripts/create-property-demo.mjs",
+    "validate:assets": "node scripts/validate-assets.mjs",
+    "validate:property": "node scripts/validate-property.mjs",
+    "validate:portals": "node scripts/validate-portals.mjs",
+    "validate:stitch": "node scripts/validate-stitch.mjs"
+  },
+  "dependencies": {
+    "@mkkellogg/gaussian-splats-3d": "^0.4.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.167.1",
+    "three-mesh-bvh": "^0.7.8",
+    "vite": "^5.4.21"
+  },
+  "devDependencies": {}
+}
+</file>
+
+<file path="scripts/create-lite-demo.mjs">
+import fs from 'node:fs/promises';
+import zlib from 'node:zlib';
+import { promisify } from 'node:util';
+
+const gunzip = promisify(zlib.gunzip);
+
+const jobs = [
+  {
+    input: 'public/demo/enchanted_castle_like_room_world.spz',
+    output: 'public/demo/lite_enchanted_castle.ply',
+    count: 24000,
+  },
+  {
+    input: 'public/demo/Hogwarts_Castle_Magical_Bedroom.spz',
+    output: 'public/demo/lite_hogwarts_bedroom.ply',
+    count: 26000,
+  },
+  {
+    input: 'public/demo/Cramped_Urban_Apartment_Night.spz',
+    output: 'public/demo/lite_cramped_apartment.ply',
+    count: 22000,
+  },
+  {
+    input: 'public/demo/cozy_dimly_lit_bedroom.spz',
+    output: 'public/demo/lite_cozy_bedroom.ply',
+    count: 22000,
+  },
+];
+
+function signed24LE(bytes, offset) {
+  let value = bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+  if (value & 0x800000) value |= 0xff000000;
+  return value;
+}
+
+async function createLitePly({ input, output, count }) {
+  const compressed = await fs.readFile(input);
+  const raw = await gunzip(compressed);
+  const view = new DataView(raw.buffer, raw.byteOffset, raw.byteLength);
+  const bytes = new Uint8Array(raw.buffer, raw.byteOffset, raw.byteLength);
+  const numPoints = view.getUint32(8, true);
+  const fractionalBits = view.getUint8(13);
+  const scale = 1 / (1 << fractionalBits);
+  const sampleCount = Math.min(count, numPoints);
+  const step = Math.max(1, Math.floor(numPoints / sampleCount));
+  const alphaOffset = 16 + numPoints * 9;
+  const colorOffset = alphaOffset + numPoints;
+
+  const header = [
+    'ply',
+    'format binary_little_endian 1.0',
+    `element vertex ${sampleCount}`,
+    'property float x',
+    'property float y',
+    'property float z',
+    'property float scale_0',
+    'property float scale_1',
+    'property float scale_2',
+    'property float rot_0',
+    'property float rot_1',
+    'property float rot_2',
+    'property float rot_3',
+    'property float opacity',
+    'property uchar red',
+    'property uchar green',
+    'property uchar blue',
+    'end_header\n',
+  ].join('\n');
+
+  const stride = 11 * 4 + 3;
+  const body = Buffer.alloc(sampleCount * stride);
+
+  for (let sample = 0; sample < sampleCount; sample += 1) {
+    const pointIndex = Math.min(numPoints - 1, sample * step);
+    const posBase = 16 + pointIndex * 9;
+    const dest = sample * stride;
+    const x = signed24LE(bytes, posBase) * scale;
+    const y = signed24LE(bytes, posBase + 3) * scale;
+    const z = signed24LE(bytes, posBase + 6) * scale;
+    const alpha = bytes[alphaOffset + pointIndex] ?? 210;
+    const r = bytes[colorOffset + pointIndex * 3] ?? 210;
+    const g = bytes[colorOffset + pointIndex * 3 + 1] ?? 190;
+    const b = bytes[colorOffset + pointIndex * 3 + 2] ?? 150;
+
+    body.writeFloatLE(x, dest);
+    body.writeFloatLE(y, dest + 4);
+    body.writeFloatLE(z, dest + 8);
+    body.writeFloatLE(-3.8, dest + 12);
+    body.writeFloatLE(-3.8, dest + 16);
+    body.writeFloatLE(-3.8, dest + 20);
+    body.writeFloatLE(0, dest + 24);
+    body.writeFloatLE(0, dest + 28);
+    body.writeFloatLE(0, dest + 32);
+    body.writeFloatLE(1, dest + 36);
+    body.writeFloatLE(Math.max(0.2, Math.min(5, alpha / 45)), dest + 40);
+    body.writeUInt8(r, dest + 44);
+    body.writeUInt8(g, dest + 45);
+    body.writeUInt8(b, dest + 46);
+  }
+
+  await fs.writeFile(output, Buffer.concat([Buffer.from(header), body]));
+  console.log(`${output}: ${sampleCount.toLocaleString()} lite splats`);
+}
+
+for (const job of jobs) {
+  await createLitePly(job);
+}
+</file>
+
+<file path="scripts/create-portal-demo.mjs">
+import fs from 'node:fs/promises';
+import zlib from 'node:zlib';
+import { promisify } from 'node:util';
+import { DEMO_ROOMS } from '../src/core/demoRooms.js';
+import { isPointInsidePortalCut, summarizePortalCuts } from '../src/core/portalCutter.js';
+
+const gunzip = promisify(zlib.gunzip);
+
+const jobs = [
+  {
+    roomId: 'enchanted_castle',
+    input: 'public/demo/enchanted_castle_like_room_world.spz',
+    output: 'public/demo/portal_enchanted_castle.ply',
+    count: 30000,
+  },
+  {
+    roomId: 'hogwarts_bedroom',
+    input: 'public/demo/Hogwarts_Castle_Magical_Bedroom.spz',
+    output: 'public/demo/portal_hogwarts_bedroom.ply',
+    count: 32000,
+  },
+  {
+    roomId: 'cramped_apartment',
+    input: 'public/demo/Cramped_Urban_Apartment_Night.spz',
+    output: 'public/demo/portal_cramped_apartment.ply',
+    count: 28000,
+  },
+  {
+    roomId: 'cozy_bedroom',
+    input: 'public/demo/cozy_dimly_lit_bedroom.spz',
+    output: 'public/demo/portal_cozy_bedroom.ply',
+    count: 28000,
+  },
+];
+
+function signed24LE(bytes, offset) {
+  let value = bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+  if (value & 0x800000) value |= 0xff000000;
+  return value;
+}
+
+function readPoint(bytes, index, fractionalBits) {
+  const scale = 1 / (1 << fractionalBits);
+  const base = 16 + index * 9;
+  return [
+    signed24LE(bytes, base) * scale,
+    signed24LE(bytes, base + 3) * scale,
+    signed24LE(bytes, base + 6) * scale,
+  ];
+}
+
+async function createPortalPly({ roomId, input, output, count }) {
+  const room = DEMO_ROOMS.find((item) => item.id === roomId);
+  if (!room) throw new Error(`Unknown demo room ${roomId}`);
+
+  const compressed = await fs.readFile(input);
+  const raw = await gunzip(compressed);
+  const view = new DataView(raw.buffer, raw.byteOffset, raw.byteLength);
+  const bytes = new Uint8Array(raw.buffer, raw.byteOffset, raw.byteLength);
+  const numPoints = view.getUint32(8, true);
+  const fractionalBits = view.getUint8(13);
+  const alphaOffset = 16 + numPoints * 9;
+  const colorOffset = alphaOffset + numPoints;
+  const step = Math.max(1, Math.floor(numPoints / count));
+  const stride = 11 * 4 + 3;
+  const body = Buffer.alloc(count * stride);
+  let accepted = 0;
+  let portalSkipped = 0;
+  let visited = 0;
+
+  for (let pointIndex = 0; pointIndex < numPoints && accepted < count; pointIndex += step) {
+    const [x, y, z] = readPoint(bytes, pointIndex, fractionalBits);
+    visited += 1;
+    if (isPointInsidePortalCut(room, [x, y, z])) {
+      portalSkipped += 1;
+      continue;
+    }
+
+    const dest = accepted * stride;
+    const alpha = bytes[alphaOffset + pointIndex] ?? 210;
+    const r = bytes[colorOffset + pointIndex * 3] ?? 210;
+    const g = bytes[colorOffset + pointIndex * 3 + 1] ?? 190;
+    const b = bytes[colorOffset + pointIndex * 3 + 2] ?? 150;
+
+    body.writeFloatLE(x, dest);
+    body.writeFloatLE(y, dest + 4);
+    body.writeFloatLE(z, dest + 8);
+    body.writeFloatLE(-3.85, dest + 12);
+    body.writeFloatLE(-3.85, dest + 16);
+    body.writeFloatLE(-3.85, dest + 20);
+    body.writeFloatLE(0, dest + 24);
+    body.writeFloatLE(0, dest + 28);
+    body.writeFloatLE(0, dest + 32);
+    body.writeFloatLE(1, dest + 36);
+    body.writeFloatLE(Math.max(0.2, Math.min(5, alpha / 45)), dest + 40);
+    body.writeUInt8(r, dest + 44);
+    body.writeUInt8(g, dest + 45);
+    body.writeUInt8(b, dest + 46);
+    accepted += 1;
+  }
+
+  const header = [
+    'ply',
+    'format binary_little_endian 1.0',
+    `element vertex ${accepted}`,
+    'property float x',
+    'property float y',
+    'property float z',
+    'property float scale_0',
+    'property float scale_1',
+    'property float scale_2',
+    'property float rot_0',
+    'property float rot_1',
+    'property float rot_2',
+    'property float rot_3',
+    'property float opacity',
+    'property uchar red',
+    'property uchar green',
+    'property uchar blue',
+    'end_header\n',
+  ].join('\n');
+
+  await fs.writeFile(output, Buffer.concat([Buffer.from(header), body.subarray(0, accepted * stride)]));
+  console.log(
+    `${output}: ${accepted.toLocaleString()} portal-cut splats, skipped ${portalSkipped.toLocaleString()} sampled portal points from ${visited.toLocaleString()} visits`,
+  );
+  console.log(JSON.stringify({ room: roomId, cuts: summarizePortalCuts(room) }));
+}
+
+for (const job of jobs) {
+  await createPortalPly(job);
+}
+</file>
+
+<file path="scripts/create-property-demo.mjs">
+import fs from 'node:fs/promises';
+import zlib from 'node:zlib';
+import { promisify } from 'node:util';
+import { PROPERTY_PRESETS } from '../src/core/propertyPresets.js';
+import { isPointInsidePortalCut, summarizePortalCuts } from '../src/core/portalCutter.js';
+
+const gunzip = promisify(zlib.gunzip);
+const DEFAULT_LITE_COUNT = 45000;
+const DEFAULT_PORTAL_COUNT = 70000;
+const FEATURE_LITE_COUNT = 70000;
+const FEATURE_PORTAL_COUNT = 110000;
+const COLOR_SCALE = 0.15;
+const MIN_ALPHA = 5;
+
+function signed24LE(bytes, offset) {
+  let value = bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+  if (value & 0x800000) value |= 0xff000000;
+  return value;
+}
+
+function filePathFromPublicUrl(url) {
+  return `public${decodeURIComponent(url)}`;
+}
+
+function readPoint(bytes, index, fractionalBits) {
+  const scale = 1 / (1 << fractionalBits);
+  const base = 16 + index * 9;
+  return [
+    signed24LE(bytes, base) * scale,
+    signed24LE(bytes, base + 3) * scale,
+    signed24LE(bytes, base + 6) * scale,
+  ];
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function logit(value) {
+  const p = clamp(value, 0.01, 0.99);
+  return Math.log(p / (1 - p));
+}
+
+function sectionOffsets(numPoints) {
+  const alphaOffset = 16 + numPoints * 9;
+  const colorOffset = alphaOffset + numPoints;
+  const scaleOffset = colorOffset + numPoints * 3;
+  const rotationOffset = scaleOffset + numPoints * 3;
+  return { alphaOffset, colorOffset, scaleOffset, rotationOffset };
+}
+
+function writeVertex(body, accepted, point, bytes, pointIndex, numPoints) {
+  const [x, y, z] = point;
+  const { alphaOffset, colorOffset, scaleOffset, rotationOffset } = sectionOffsets(numPoints);
+  const stride = 14 * 4;
+  const dest = accepted * stride;
+  const alpha = bytes[alphaOffset + pointIndex] ?? 210;
+  const r = bytes[colorOffset + pointIndex * 3] ?? 210;
+  const g = bytes[colorOffset + pointIndex * 3 + 1] ?? 190;
+  const b = bytes[colorOffset + pointIndex * 3 + 2] ?? 150;
+  const scale0 = (bytes[scaleOffset + pointIndex * 3] ?? 98) / 16 - 10;
+  const scale1 = (bytes[scaleOffset + pointIndex * 3 + 1] ?? 98) / 16 - 10;
+  const scale2 = (bytes[scaleOffset + pointIndex * 3 + 2] ?? 98) / 16 - 10;
+  const rotX = ((bytes[rotationOffset + pointIndex * 3] ?? 128) / 127.5) - 1;
+  const rotY = ((bytes[rotationOffset + pointIndex * 3 + 1] ?? 128) / 127.5) - 1;
+  const rotZ = ((bytes[rotationOffset + pointIndex * 3 + 2] ?? 128) / 127.5) - 1;
+  const rotW = Math.sqrt(Math.max(0, 1 - rotX * rotX - rotY * rotY - rotZ * rotZ));
+
+  body.writeFloatLE(x, dest);
+  body.writeFloatLE(y, dest + 4);
+  body.writeFloatLE(z, dest + 8);
+  body.writeFloatLE((r / 255 - 0.5) / COLOR_SCALE, dest + 12);
+  body.writeFloatLE((g / 255 - 0.5) / COLOR_SCALE, dest + 16);
+  body.writeFloatLE((b / 255 - 0.5) / COLOR_SCALE, dest + 20);
+  body.writeFloatLE(logit(alpha / 255), dest + 24);
+  body.writeFloatLE(scale0, dest + 28);
+  body.writeFloatLE(scale1, dest + 32);
+  body.writeFloatLE(scale2, dest + 36);
+  body.writeFloatLE(rotW, dest + 40);
+  body.writeFloatLE(rotX, dest + 44);
+  body.writeFloatLE(rotY, dest + 48);
+  body.writeFloatLE(rotZ, dest + 52);
+}
+
+async function writePly(output, body, vertexCount) {
+  const header = [
+    'ply',
+    'format binary_little_endian 1.0',
+    `element vertex ${vertexCount}`,
+    'property float x',
+    'property float y',
+    'property float z',
+    'property float f_dc_0',
+    'property float f_dc_1',
+    'property float f_dc_2',
+    'property float opacity',
+    'property float scale_0',
+    'property float scale_1',
+    'property float scale_2',
+    'property float rot_0',
+    'property float rot_1',
+    'property float rot_2',
+    'property float rot_3',
+    'end_header\n',
+  ].join('\n');
+
+  await fs.writeFile(output, Buffer.concat([Buffer.from(header), body]));
+}
+
+async function readSpz(room) {
+  const compressed = await fs.readFile(filePathFromPublicUrl(room.realSplatUrl));
+  const raw = await gunzip(compressed);
+  const view = new DataView(raw.buffer, raw.byteOffset, raw.byteLength);
+  const bytes = new Uint8Array(raw.buffer, raw.byteOffset, raw.byteLength);
+  return {
+    bytes,
+    numPoints: view.getUint32(8, true),
+    fractionalBits: view.getUint8(13),
+  };
+}
+
+async function createPreview(room, mode) {
+  const isPortal = mode === 'portal';
+  const output = filePathFromPublicUrl(isPortal ? room.portalSplatUrl : room.liteSplatUrl);
+  const targetCount = room.id === 'penthouse_living_dining'
+    ? isPortal ? FEATURE_PORTAL_COUNT : FEATURE_LITE_COUNT
+    : isPortal ? DEFAULT_PORTAL_COUNT : DEFAULT_LITE_COUNT;
+  const { bytes, numPoints, fractionalBits } = await readSpz(room);
+  const { alphaOffset } = sectionOffsets(numPoints);
+  const step = Math.max(1, Math.floor(numPoints / targetCount));
+  const stride = 14 * 4;
+  const body = Buffer.alloc(targetCount * stride);
+  let accepted = 0;
+  let skipped = 0;
+  let lowAlphaSkipped = 0;
+  let visited = 0;
+
+  for (let pointIndex = 0; pointIndex < numPoints && accepted < targetCount; pointIndex += step) {
+    const point = readPoint(bytes, pointIndex, fractionalBits);
+    visited += 1;
+    if ((bytes[alphaOffset + pointIndex] ?? 0) < MIN_ALPHA) {
+      lowAlphaSkipped += 1;
+      continue;
+    }
+    if (isPortal && isPointInsidePortalCut(room, point)) {
+      skipped += 1;
+      continue;
+    }
+    writeVertex(body, accepted, point, bytes, pointIndex, numPoints);
+    accepted += 1;
+  }
+
+  await writePly(output, body.subarray(0, accepted * stride), accepted);
+  console.log(
+    `${output}: ${accepted.toLocaleString()} ${isPortal ? 'portal-cut' : 'lite'} splats` +
+      (isPortal
+        ? `, skipped ${skipped.toLocaleString()} sampled portal points and ${lowAlphaSkipped.toLocaleString()} low-alpha points from ${visited.toLocaleString()} visits`
+        : `, skipped ${lowAlphaSkipped.toLocaleString()} low-alpha points from ${visited.toLocaleString()} visits`),
+  );
+  if (isPortal) {
+    console.log(JSON.stringify({ room: room.id, cuts: summarizePortalCuts(room) }));
+  }
+}
+
+for (const preset of PROPERTY_PRESETS) {
+  for (const room of preset.rooms) {
+    await createPreview(room, 'lite');
+    await createPreview(room, 'portal');
+  }
+}
+</file>
+
+<file path="scripts/validate-assets.mjs">
+import fs from 'node:fs/promises';
+import zlib from 'node:zlib';
+import { promisify } from 'node:util';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { detectOrientation } from '../src/core/orientationDetector.js';
+import {
+  computeBoundsFromVertices,
+  computeYStats,
+  detectDoorsFromVertices,
+  extractWorldVertices,
+} from '../src/core/doorDetector.js';
+import { DEMO_ROOMS } from '../src/core/demoRooms.js';
+import { computeWorldTransforms } from '../src/core/roomAligner.js';
+
+const gunzip = promisify(zlib.gunzip);
+const loader = new GLTFLoader();
+
+function signed24LE(bytes, offset) {
+  let value = bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+  if (value & 0x800000) value |= 0xff000000;
+  return value;
+}
+
+async function parseSpzSample(path, maxPoints = 250000) {
+  const compressed = await fs.readFile(path);
+  const raw = await gunzip(compressed);
+  const view = new DataView(raw.buffer, raw.byteOffset, raw.byteLength);
+  const bytes = new Uint8Array(raw.buffer, raw.byteOffset, raw.byteLength);
+  const magic = raw.subarray(0, 4).toString('ascii');
+  const version = view.getUint32(4, true);
+  const numPoints = view.getUint32(8, true);
+  const shDegree = view.getUint8(12);
+  const fractionalBits = view.getUint8(13);
+  const flags = view.getUint8(14);
+  const sampleCount = Math.min(numPoints, maxPoints);
+  const step = Math.max(1, Math.floor(numPoints / sampleCount));
+  const positions = new Float32Array(sampleCount * 3);
+  const scale = 1 / (1 << fractionalBits);
+
+  for (let sample = 0; sample < sampleCount; sample += 1) {
+    const pointIndex = Math.min(numPoints - 1, sample * step);
+    const sourceBase = 16 + pointIndex * 9;
+    const dest = sample * 3;
+    positions[dest] = signed24LE(bytes, sourceBase) * scale;
+    positions[dest + 1] = signed24LE(bytes, sourceBase + 3) * scale;
+    positions[dest + 2] = signed24LE(bytes, sourceBase + 6) * scale;
+  }
+
+  return {
+    positions,
+    numPoints,
+    sampledPoints: sampleCount,
+    meta: { magic, version, shDegree, fractionalBits, flags, compressedBytes: compressed.length, decompressedBytes: raw.length },
+  };
+}
+
+async function loadGltf(path) {
+  const buf = await fs.readFile(path);
+  const arrayBuffer = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+  return new Promise((resolve, reject) => loader.parse(arrayBuffer, '', resolve, reject));
+}
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+const rows = [];
+
+for (const room of DEMO_ROOMS) {
+  const spzPath = `public${room.realSplatUrl || room.splatUrl}`;
+  const glbPath = `public${room.colliderUrl}`;
+  const parsed = await parseSpzSample(spzPath);
+  const orientation = detectOrientation(parsed.positions, 'spz');
+  const gltf = await loadGltf(glbPath);
+  const vertices = extractWorldVertices(gltf.scene, { maxVertices: 260000 });
+  const bounds = computeBoundsFromVertices(vertices);
+  const yStats = computeYStats(vertices);
+  const doors = detectDoorsFromVertices(vertices, bounds, { floorY: yStats.p05 });
+
+  assert(parsed.meta.magic === 'NGSP', `${room.id}: missing NGSP header`);
+  assert(parsed.numPoints === room.demoMeta.numPoints, `${room.id}: point count mismatch`);
+  assert(parsed.meta.fractionalBits === room.demoMeta.fractionalBits, `${room.id}: fractional bits mismatch`);
+  assert(Number.isFinite(orientation.yLift), `${room.id}: orientation yLift is not finite`);
+  assert(vertices.length > 0, `${room.id}: collider has no vertices`);
+
+  rows.push({
+    room: room.id,
+    points: parsed.numPoints,
+    frac: parsed.meta.fractionalBits,
+    spzFloor: orientation.floorY.toFixed(3),
+    spzLift: orientation.yLift.toFixed(3),
+    glbP05: yStats.p05.toFixed(3),
+    glbLift: (-yStats.p05).toFixed(3),
+    doors: doors.length,
+    bounds: bounds.size.map((v) => v.toFixed(2)).join(' x '),
+  });
+}
+
+const transforms = computeWorldTransforms(
+  DEMO_ROOMS.map((room) => ({
+    ...room,
+    splatYLift: room.demoMeta.splatYLift,
+    colliderYLift: room.demoMeta.colliderYLift,
+  })),
+  0.04,
+);
+
+assert(Math.abs(transforms[1].position[0] - 9.64) < 0.001, 'hogwarts transform X should use demo worldX');
+assert(Math.abs(transforms[2].position[0] - 27.587) < 0.001, 'apartment transform X should use demo worldX');
+
+console.table(rows);
+console.table(
+  transforms.map((t) => ({
+    room: t.id,
+    splatPos: t.position.map((v) => v.toFixed(3)).join(', '),
+    colliderPos: t.colliderPosition.map((v) => v.toFixed(3)).join(', '),
+    floorMismatchM: t.floorMismatchM.toFixed(3),
+    flipX: t.visualFlipX,
+  })),
+);
+console.log('Validation complete.');
+</file>
+
+<file path="scripts/validate-stitch.mjs">
+import { DEMO_ROOMS } from '../src/core/demoRooms.js';
+import { stitchRoomsByDoor } from '../src/core/roomAligner.js';
+import { isPointInsidePortalCut } from '../src/core/portalCutter.js';
+import { parsePLY } from '../src/core/splatParser.js';
+import fs from 'node:fs/promises';
+
+const GAP_M = 1.25;
+const EPSILON = 0.025;
+const SAMPLE_SPACING_M = 0.35;
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function* permutations(items, length, prefix = []) {
+  if (prefix.length === length) {
+    yield prefix;
+    return;
+  }
+  for (const item of items) {
+    if (prefix.includes(item)) continue;
+    yield* permutations(items, length, [...prefix, item]);
+  }
+}
+
+function pointInRoomFootprint(room, x, z) {
+  const footprint = room.footprint;
+  if (!footprint) return false;
+  const localX = x - (room.worldX ?? 0);
+  const localZ = z - (room.worldZ ?? 0);
+  return (
+    localX >= footprint.xMin - EPSILON &&
+    localX <= footprint.xMax + EPSILON &&
+    localZ >= footprint.zMin - EPSILON &&
+    localZ <= footprint.zMax + EPSILON
+  );
+}
+
+function pointInConnector(link, x, z) {
+  const ax = link.a[0];
+  const az = link.a[2];
+  const bx = link.b[0];
+  const bz = link.b[2];
+  const dx = bx - ax;
+  const dz = bz - az;
+  const lengthSq = dx * dx + dz * dz;
+  if (lengthSq < 0.0001) return false;
+
+  const t = ((x - ax) * dx + (z - az) * dz) / lengthSq;
+  if (t < -EPSILON || t > 1 + EPSILON) return false;
+  const closestX = ax + Math.max(0, Math.min(1, t)) * dx;
+  const closestZ = az + Math.max(0, Math.min(1, t)) * dz;
+  return Math.hypot(x - closestX, z - closestZ) <= (link.width || 1) / 2 + EPSILON;
+}
+
+function hasFloorAt(rooms, links, x, z) {
+  return rooms.some((room) => pointInRoomFootprint(room, x, z)) || links.some((link) => pointInConnector(link, x, z));
+}
+
+function validateRoute(rooms, links) {
+  const roomById = new Map(rooms.map((room) => [room.id, room]));
+  const waypoints = [];
+  for (const [index, link] of links.entries()) {
+    const from = roomById.get(link.from);
+    const to = roomById.get(link.to);
+    if (index === 0 && from) waypoints.push([from.worldX ?? 0, from.worldZ ?? 0]);
+    waypoints.push([link.a[0], link.a[2]]);
+    waypoints.push([link.b[0], link.b[2]]);
+    if (to) waypoints.push([to.worldX ?? 0, to.worldZ ?? 0]);
+  }
+
+  let samples = 0;
+  for (let i = 1; i < waypoints.length; i += 1) {
+    const [sx, sz] = waypoints[i - 1];
+    const [ex, ez] = waypoints[i];
+    const distance = Math.hypot(ex - sx, ez - sz);
+    const steps = Math.max(1, Math.ceil(distance / SAMPLE_SPACING_M));
+    for (let step = 0; step <= steps; step += 1) {
+      const t = step / steps;
+      const x = sx + (ex - sx) * t;
+      const z = sz + (ez - sz) * t;
+      samples += 1;
+      if (!hasFloorAt(rooms, links, x, z)) {
+        return { passable: false, samples, failedAt: [x, z] };
+      }
+    }
+  }
+  return { passable: true, samples };
+}
+
+const rows = [];
+let checked = 0;
+
+for (let length = 2; length <= DEMO_ROOMS.length; length += 1) {
+  for (const order of permutations(DEMO_ROOMS, length)) {
+    const { rooms, links } = stitchRoomsByDoor(order, { gap: GAP_M });
+    assert(links.length === length - 1, `${length}-room order did not create enough door links`);
+
+    for (const link of links) {
+      assert(Math.abs(link.distanceM - GAP_M) < 0.001, `${link.id}: connector distance is not ${GAP_M}m`);
+      assert(Math.abs(link.a[2] - link.b[2]) < 0.001, `${link.id}: doorway Z coordinates are misaligned`);
+      assert(link.width >= 1.15, `${link.id}: connector is too narrow`);
+    }
+
+    const route = validateRoute(rooms, links);
+    assert(route.passable, `${rooms.map((room) => room.id).join(' -> ')} failed at ${route.failedAt?.join(', ')}`);
+
+    checked += 1;
+    if (length === DEMO_ROOMS.length) {
+      rows.push({
+        order: rooms.map((room) => room.label).join(' -> '),
+        connectors: links.length,
+        totalMeters: links.reduce((sum, link) => sum + link.distanceM, 0).toFixed(2),
+        samples: route.samples,
+      });
+    }
+  }
+}
+
+const portalRows = [];
+for (const room of DEMO_ROOMS) {
+  assert(room.portalSplatUrl, `${room.id}: missing portalSplatUrl`);
+  const buffer = await fs.readFile(`public${room.portalSplatUrl}`);
+  const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+  const parsed = await parsePLY(arrayBuffer, { maxPoints: 1000000 });
+  let pointsInsideCut = 0;
+  for (let i = 0; i < parsed.positions.length; i += 3) {
+    if (
+      isPointInsidePortalCut(room, [
+        parsed.positions[i],
+        parsed.positions[i + 1],
+        parsed.positions[i + 2],
+      ])
+    ) {
+      pointsInsideCut += 1;
+    }
+  }
+  assert(pointsInsideCut === 0, `${room.id}: ${pointsInsideCut} portal preview splats remain inside cut boxes`);
+  portalRows.push({
+    room: room.label,
+    portalPreview: room.portalSplatUrl,
+    splats: parsed.numPoints,
+    cutLeaks: pointsInsideCut,
+  });
+}
+
+const defaultJoin = stitchRoomsByDoor(DEMO_ROOMS, { gap: GAP_M });
+console.table(
+  defaultJoin.rooms.map((room) => ({
+    room: room.label,
+    worldX: room.worldX.toFixed(3),
+    worldZ: room.worldZ.toFixed(3),
+    entry: room.stitchDoorWorld.entry ? `${room.stitchDoorWorld.entry.x.toFixed(3)}, ${room.stitchDoorWorld.entry.z.toFixed(3)}` : '-',
+    exit: room.stitchDoorWorld.exit ? `${room.stitchDoorWorld.exit.x.toFixed(3)}, ${room.stitchDoorWorld.exit.z.toFixed(3)}` : '-',
+  })),
+);
+console.table(rows);
+console.table(portalRows);
+console.log(`Door stitch validation complete: ${checked} ordered combinations passed.`);
+</file>
+
+<file path="src/core/demoRooms.js">
+export const DEMO_ROOMS = [
+  {
+    id: 'enchanted_castle',
+    label: 'Enchanted Castle',
+    category: 'Fantasy',
+    realSplatUrl: '/demo/enchanted_castle_like_room_world.spz',
+    liteSplatUrl: '/demo/lite_enchanted_castle.ply',
+    portalSplatUrl: '/demo/portal_enchanted_castle.ply',
+    splatUrl: '/demo/lite_enchanted_castle.ply',
+    colliderUrl: '/demo/enchanted_castle_like_room_collider.glb',
+    floorPlanX: 190,
+    floorPlanY: 245,
+    floorPlanW: 170,
+    floorPlanH: 130,
+    realWidthM: 6.9,
+    realDepthM: 5.8,
+    worldX: 0,
+    worldZ: 0,
+    format: 'spz',
+    visualFormat: 'ply',
+    visualFlipX: false,
+    footprint: {
+      xMin: -3.543,
+      xMax: 3.443,
+      zMin: -1.844,
+      zMax: 4.008,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -3.543, z: -1.064, width: 1.3 },
+      exit: { wall: 'east', x: 3.443, z: -1.064, width: 1.3 },
+    },
+    portalCut: {
+      heightM: 2.35,
+    },
+    demoMeta: {
+      numPoints: 500000,
+      fractionalBits: 12,
+      splatFloorY: -2.992,
+      splatCeilY: 0.588,
+      splatYLift: 2.992,
+      colliderYLift: 2.953,
+    },
+  },
+  {
+    id: 'hogwarts_bedroom',
+    label: 'Magical Bedroom',
+    category: 'Real Estate',
+    realSplatUrl: '/demo/Hogwarts_Castle_Magical_Bedroom.spz',
+    liteSplatUrl: '/demo/lite_hogwarts_bedroom.ply',
+    portalSplatUrl: '/demo/portal_hogwarts_bedroom.ply',
+    splatUrl: '/demo/lite_hogwarts_bedroom.ply',
+    colliderUrl: '/demo/Hogwarts_Castle_Magical_Bedroom_collider.glb',
+    floorPlanX: 475,
+    floorPlanY: 245,
+    floorPlanW: 185,
+    floorPlanH: 150,
+    realWidthM: 7.4,
+    realDepthM: 5.8,
+    worldX: 9.64,
+    worldZ: 0,
+    format: 'spz',
+    visualFormat: 'ply',
+    visualFlipX: false,
+    footprint: {
+      xMin: -5.347,
+      xMax: 6.346,
+      zMin: -6.848,
+      zMax: 6.257,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -5.347, z: -1.064, width: 1.4 },
+      exit: { wall: 'east', x: 6.346, z: -1.064, width: 1.4 },
+    },
+    portalCut: {
+      heightM: 2.35,
+    },
+    demoMeta: {
+      numPoints: 2000000,
+      fractionalBits: 10,
+      splatFloorY: -0.005,
+      splatCeilY: 4.023,
+      splatYLift: 0.005,
+      colliderYLift: -0.029,
+    },
+  },
+  {
+    id: 'cramped_apartment',
+    label: 'Cramped Apartment',
+    category: 'Horror',
+    realSplatUrl: '/demo/Cramped_Urban_Apartment_Night.spz',
+    liteSplatUrl: '/demo/lite_cramped_apartment.ply',
+    portalSplatUrl: '/demo/portal_cramped_apartment.ply',
+    splatUrl: '/demo/lite_cramped_apartment.ply',
+    colliderUrl: '/demo/Cramped_Urban_Apartment_Night_collider.glb',
+    floorPlanX: 760,
+    floorPlanY: 245,
+    floorPlanW: 220,
+    floorPlanH: 165,
+    realWidthM: 8.8,
+    realDepthM: 6.6,
+    worldX: 27.587,
+    worldZ: 0,
+    format: 'spz',
+    visualFormat: 'ply',
+    visualFlipX: false,
+    footprint: {
+      xMin: -10.082,
+      xMax: 3.722,
+      zMin: -12.528,
+      zMax: 2.394,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -10.082, z: -1.064, width: 1.25 },
+      exit: { wall: 'east', x: 3.722, z: -1.064, width: 1.25 },
+    },
+    portalCut: {
+      heightM: 2.3,
+    },
+    demoMeta: {
+      numPoints: 2000000,
+      fractionalBits: 10,
+      splatFloorY: -1.302,
+      splatCeilY: 4.176,
+      splatYLift: 1.302,
+      colliderYLift: 3.828,
+    },
+  },
+  {
+    id: 'cozy_bedroom',
+    label: 'Cozy Bedroom',
+    category: 'Fresh Upload',
+    realSplatUrl: '/demo/cozy_dimly_lit_bedroom.spz',
+    liteSplatUrl: '/demo/lite_cozy_bedroom.ply',
+    portalSplatUrl: '/demo/portal_cozy_bedroom.ply',
+    splatUrl: '/demo/lite_cozy_bedroom.ply',
+    colliderUrl: '/demo/cozy_dimly_lit_bedroom_collider.glb',
+    floorPlanX: 1045,
+    floorPlanY: 245,
+    floorPlanW: 180,
+    floorPlanH: 135,
+    realWidthM: 7.2,
+    realDepthM: 5.4,
+    worldX: 39.5,
+    worldZ: 0,
+    format: 'spz',
+    visualFormat: 'ply',
+    visualFlipX: false,
+    footprint: {
+      xMin: -3.175,
+      xMax: 4.698,
+      zMin: -2.869,
+      zMax: 3.009,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -3.175, z: -1.064, width: 1.2 },
+      exit: { wall: 'east', x: 4.698, z: -1.064, width: 1.2 },
+    },
+    portalCut: {
+      heightM: 2.25,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: -0.027,
+      splatCeilY: 2.826,
+      splatYLift: 0.027,
+      colliderYLift: 0.014,
+    },
+  },
+];
+
+export function makeEmptyRoom(index) {
+  const id = `room_${Date.now()}_${index}`;
+  return {
+    id,
+    label: `Room ${index + 1}`,
+    category: 'Custom',
+    floorPlanX: 180 + index * 220,
+    floorPlanY: 240,
+    floorPlanW: 160,
+    floorPlanH: 120,
+    realWidthM: 4,
+    realDepthM: 3,
+    format: 'pending',
+    visualFormat: 'pending',
+    visualFlipX: false,
+  };
+}
+</file>
+
+<file path="src/core/doorDetector.js">
+import * as THREE from 'three';
+
+export function extractWorldVertices(root, options = {}) {
+  const maxVertices = options.maxVertices ?? 350000;
+  const stride = Math.max(1, options.stride ?? 1);
+  const collected = [];
+  const vertex = new THREE.Vector3();
+
+  root.updateWorldMatrix(true, true);
+  root.traverse((child) => {
+    if (!child.isMesh || !child.geometry?.attributes?.position) return;
+    const attr = child.geometry.attributes.position;
+    const localStride = Math.max(stride, Math.ceil(attr.count / maxVertices));
+    for (let i = 0; i < attr.count; i += localStride) {
+      vertex.fromBufferAttribute(attr, i).applyMatrix4(child.matrixWorld);
+      collected.push(vertex.x, vertex.y, vertex.z);
+      if (collected.length / 3 >= maxVertices) return;
+    }
+  });
+
+  return new Float32Array(collected);
+}
+
+export function computeBoundsFromVertices(vertices) {
+  const min = [Infinity, Infinity, Infinity];
+  const max = [-Infinity, -Infinity, -Infinity];
+  for (let i = 0; i < vertices.length; i += 3) {
+    min[0] = Math.min(min[0], vertices[i]);
+    min[1] = Math.min(min[1], vertices[i + 1]);
+    min[2] = Math.min(min[2], vertices[i + 2]);
+    max[0] = Math.max(max[0], vertices[i]);
+    max[1] = Math.max(max[1], vertices[i + 1]);
+    max[2] = Math.max(max[2], vertices[i + 2]);
+  }
+  return {
+    min,
+    max,
+    xMin: min[0],
+    yMin: min[1],
+    zMin: min[2],
+    xMax: max[0],
+    yMax: max[1],
+    zMax: max[2],
+    size: [max[0] - min[0], max[1] - min[1], max[2] - min[2]],
+    center: [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2, (min[2] + max[2]) / 2],
+  };
+}
+
+function percentile(sorted, ratio) {
+  if (!sorted.length) return 0;
+  return sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor(sorted.length * ratio)))];
+}
+
+export function computeYStats(vertices) {
+  const count = vertices.length / 3;
+  const values = new Float32Array(count);
+  for (let i = 0; i < count; i += 1) values[i] = vertices[i * 3 + 1];
+  values.sort();
+  return {
+    min: percentile(values, 0),
+    p01: percentile(values, 0.01),
+    p05: percentile(values, 0.05),
+    p10: percentile(values, 0.1),
+    p20: percentile(values, 0.2),
+    p30: percentile(values, 0.3),
+    p50: percentile(values, 0.5),
+    p90: percentile(values, 0.9),
+    p95: percentile(values, 0.95),
+    max: percentile(values, 0.999999),
+  };
+}
+
+function mergeNearbyDoors(doors) {
+  const sorted = [...doors].sort((a, b) => a.wall.localeCompare(b.wall) || a.centerOffset - b.centerOffset);
+  const merged = [];
+
+  for (const door of sorted) {
+    const prev = merged[merged.length - 1];
+    if (
+      prev &&
+      prev.wall === door.wall &&
+      Math.abs(prev.centerOffset - door.centerOffset) < 0.45
+    ) {
+      prev.width = Math.max(prev.width, door.width);
+      prev.confidence = Math.max(prev.confidence, door.confidence);
+      prev.worldX = (prev.worldX + door.worldX) / 2;
+      prev.worldZ = (prev.worldZ + door.worldZ) / 2;
+    } else {
+      merged.push({ ...door });
+    }
+  }
+
+  return merged;
+}
+
+export function detectDoorsFromVertices(vertices, inputBounds, options = {}) {
+  if (!vertices?.length) return [];
+
+  const bounds = inputBounds?.xMin !== undefined ? inputBounds : computeBoundsFromVertices(vertices);
+  const wallMargin = options.wallMargin ?? Math.max(0.25, Math.min(bounds.size?.[0] ?? 1, bounds.size?.[2] ?? 1) * 0.06);
+  const minDoorWidth = options.minDoorWidth ?? 0.55;
+  const maxDoorWidth = options.maxDoorWidth ?? 2.85;
+  const gapThreshold = options.gapThreshold ?? 0.18;
+  const bins = options.bins ?? 36;
+  const allowEdgeGaps = options.allowEdgeGaps ?? true;
+  const yStats = computeYStats(vertices);
+  const floorY = options.floorY ?? yStats.p05;
+  const wallMinY = floorY + (options.wallBaseOffset ?? 0.35);
+  const wallMaxY = floorY + (options.wallHeight ?? 2.4);
+
+  const walls = {
+    north: [],
+    south: [],
+    west: [],
+    east: [],
+  };
+
+  for (let i = 0; i < vertices.length; i += 3) {
+    const x = vertices[i];
+    const y = vertices[i + 1];
+    const z = vertices[i + 2];
+    if (y < wallMinY || y > wallMaxY) continue;
+    if (z < bounds.zMin + wallMargin) walls.north.push(x);
+    if (z > bounds.zMax - wallMargin) walls.south.push(x);
+    if (x < bounds.xMin + wallMargin) walls.west.push(z);
+    if (x > bounds.xMax - wallMargin) walls.east.push(z);
+  }
+
+  const doors = [];
+  const pushGaps = (values, dimMin, dimMax, wall, isXWall) => {
+    if (values.length < bins) return;
+    const dimSize = dimMax - dimMin;
+    if (dimSize <= 0) return;
+    const binWidth = dimSize / bins;
+    const hist = new Array(bins).fill(0);
+    for (const value of values) {
+      const idx = Math.min(bins - 1, Math.max(0, Math.floor((value - dimMin) / binWidth)));
+      hist[idx] += 1;
+    }
+
+    const maxDensity = Math.max(...hist);
+    const threshold = maxDensity * gapThreshold;
+    let gapStart = null;
+
+    for (let i = 0; i <= bins; i += 1) {
+      const dense = i < bins && hist[i] > threshold;
+      if (!dense && gapStart === null) {
+        gapStart = i;
+      } else if ((dense || i === bins) && gapStart !== null) {
+        const gapEnd = i;
+        const width = (gapEnd - gapStart) * binWidth;
+        const touchesEdge = gapStart === 0 || gapEnd === bins;
+        if (width >= minDoorWidth && width <= maxDoorWidth && (!touchesEdge || allowEdgeGaps)) {
+          const center = dimMin + ((gapStart + gapEnd) / 2) * binWidth;
+          const wallPos = isXWall
+            ? wall === 'west'
+              ? bounds.xMin
+              : bounds.xMax
+            : wall === 'north'
+              ? bounds.zMin
+              : bounds.zMax;
+          doors.push({
+            id: `${wall}-${doors.length}`,
+            wall,
+            centerOffset: center,
+            width,
+            worldX: isXWall ? wallPos : center,
+            worldZ: isXWall ? center : wallPos,
+            facingYaw: isXWall ? (wall === 'west' ? 90 : 270) : wall === 'north' ? 180 : 0,
+            edgeGap: touchesEdge,
+            confidence: Math.max(0.15, 1 - width / Math.max(dimSize, 0.001)) + (touchesEdge ? 0.05 : 0),
+          });
+        }
+        gapStart = null;
+      }
+    }
+  };
+
+  pushGaps(walls.north, bounds.xMin, bounds.xMax, 'north', false);
+  pushGaps(walls.south, bounds.xMin, bounds.xMax, 'south', false);
+  pushGaps(walls.west, bounds.zMin, bounds.zMax, 'west', true);
+  pushGaps(walls.east, bounds.zMin, bounds.zMax, 'east', true);
+
+  const maxPerWall = options.maxPerWall ?? 2;
+  const perWall = new Map();
+  for (const door of mergeNearbyDoors(doors).sort((a, b) => b.confidence - a.confidence)) {
+    const current = perWall.get(door.wall) || [];
+    if (current.length < maxPerWall) {
+      current.push(door);
+      perWall.set(door.wall, current);
+    }
+  }
+
+  return [...perWall.values()]
+    .flat()
+    .sort((a, b) => a.wall.localeCompare(b.wall) || a.centerOffset - b.centerOffset)
+    .slice(0, options.maxDoors ?? 8);
+}
+</file>
+
+<file path="src/core/glbAnalyzer.js">
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {
+  computeBoundsFromVertices,
+  computeYStats,
+  detectDoorsFromVertices,
+  extractWorldVertices,
+} from './doorDetector.js';
+
+const loader = new GLTFLoader();
+
+function sourceToUrl(source) {
+  if (typeof source === 'string') return { url: source, revoke: null };
+  const url = URL.createObjectURL(source);
+  return { url, revoke: () => URL.revokeObjectURL(url) };
+}
+
+export async function loadGLTFSource(source) {
+  const { url, revoke } = sourceToUrl(source);
+  try {
+    return await loader.loadAsync(url);
+  } finally {
+    revoke?.();
+  }
+}
+
+export async function analyzeGLBCollider(source, options = {}) {
+  const gltf = await loadGLTFSource(source);
+  const vertices = extractWorldVertices(gltf.scene, options);
+  const bounds = computeBoundsFromVertices(vertices);
+  const yStats = computeYStats(vertices);
+  const floorPercentile = options.floorPercentile ?? 'p05';
+  const floorY = yStats[floorPercentile] ?? yStats.p05 ?? bounds.min[1];
+  const doors = detectDoorsFromVertices(vertices, bounds, { floorY, ...options.doorOptions });
+
+  return {
+    vertexCount: vertices.length / 3,
+    bounds,
+    yStats,
+    floorY,
+    yLift: -floorY,
+    doors,
+  };
+}
+</file>
+
+<file path="src/core/orientationDetector.js">
+function percentile(sortedValues, ratio) {
+  if (!sortedValues.length) return 0;
+  const index = Math.min(sortedValues.length - 1, Math.max(0, Math.floor(sortedValues.length * ratio)));
+  return sortedValues[index];
+}
+
+export function axisStats(positions, axis = 1) {
+  const count = Math.floor(positions.length / 3);
+  const values = new Float32Array(count);
+  let min = Infinity;
+  let max = -Infinity;
+  let sum = 0;
+
+  for (let i = 0; i < count; i += 1) {
+    const value = positions[i * 3 + axis];
+    values[i] = value;
+    min = Math.min(min, value);
+    max = Math.max(max, value);
+    sum += value;
+  }
+
+  values.sort();
+  return {
+    min,
+    max,
+    mean: count ? sum / count : 0,
+    p01: percentile(values, 0.01),
+    p05: percentile(values, 0.05),
+    p10: percentile(values, 0.1),
+    p50: percentile(values, 0.5),
+    p90: percentile(values, 0.9),
+    p95: percentile(values, 0.95),
+    p99: percentile(values, 0.99),
+  };
+}
+
+export function boundsFromPositions(positions) {
+  const min = [Infinity, Infinity, Infinity];
+  const max = [-Infinity, -Infinity, -Infinity];
+  for (let i = 0; i < positions.length; i += 3) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      const value = positions[i + axis];
+      min[axis] = Math.min(min[axis], value);
+      max[axis] = Math.max(max[axis], value);
+    }
+  }
+  return { min, max, size: max.map((value, index) => value - min[index]) };
+}
+
+export function detectOrientation(positions, format, options = {}) {
+  if (!positions?.length) {
+    return {
+      floorY: 0,
+      ceilY: 0,
+      yLift: 0,
+      flippedYLift: 0,
+      roomHeightM: 0,
+      isDataInverted: false,
+      recommendedFlipX: false,
+      confidence: 0,
+      notes: ['No point sample was available.'],
+    };
+  }
+
+  const y = axisStats(positions, 1);
+  const bounds = boundsFromPositions(positions);
+  const roomHeightM = y.p95 - y.p05;
+  const midY = (y.p05 + y.p95) / 2;
+  const normalizedMedian = roomHeightM > 0 ? (y.p50 - midY) / (roomHeightM / 2) : 0;
+  const isDataInverted = normalizedMedian < -0.35 && y.p95 < Math.abs(y.p05);
+
+  const manualFlip = options.flipX;
+  const recommendedFlipX =
+    typeof manualFlip === 'boolean'
+      ? manualFlip
+      : Boolean(options.assumeRendererFlip && format === 'spz' && !isDataInverted);
+
+  return {
+    bounds,
+    yStats: y,
+    floorY: y.p05,
+    ceilY: y.p95,
+    yLift: -y.p05,
+    flippedYLift: y.p95,
+    roomHeightM,
+    isDataInverted,
+    recommendedFlipX,
+    confidence: Math.min(1, Math.abs(normalizedMedian)),
+    correctionEuler: recommendedFlipX ? [Math.PI, 0, 0] : [0, 0, 0],
+    correctionQuaternion: recommendedFlipX ? [1, 0, 0, 0] : [0, 0, 0, 1],
+    notes: [
+      format === 'spz'
+        ? 'SPZ is analyzed from corrected v2 fixed-point samples; visual flip remains user-adjustable.'
+        : 'Orientation uses sampled vertex Y percentiles.',
+    ],
+  };
+}
+
+export function getYLiftFromGLBStats(glbStats, percentileName = 'p05') {
+  const floorY = glbStats?.yStats?.[percentileName] ?? glbStats?.bounds?.min?.[1] ?? 0;
+  return -floorY;
+}
+</file>
+
+<file path="src/core/portalCutter.js">
+export const DEFAULT_PORTAL_CUT = {
+  planeMarginM: 0.72,
+  sideMarginM: 0.28,
+  heightM: 2.35,
+  floorClearanceM: 0.08,
+};
+
+function getFloorY(room) {
+  return Number(room.analysis?.floorY ?? room.demoMeta?.splatFloorY ?? 0);
+}
+
+export function getPortalCutBoxes(room, options = {}) {
+  const config = {
+    ...DEFAULT_PORTAL_CUT,
+    ...(room.portalCut || {}),
+    ...options,
+  };
+  const floorY = getFloorY(room);
+  const yMin = floorY + config.floorClearanceM;
+  const yMax = floorY + config.heightM;
+  const boxes = [];
+
+  for (const [name, door] of Object.entries(room.stitchDoors || {})) {
+    if (!door) continue;
+    const halfWidth = (door.width || 1.1) / 2 + config.sideMarginM;
+    const wall = door.wall || 'east';
+    const base = {
+      name,
+      wall,
+      yMin,
+      yMax,
+      door,
+    };
+
+    if (wall === 'east' || wall === 'west') {
+      boxes.push({
+        ...base,
+        xMin: door.x - config.planeMarginM,
+        xMax: door.x + config.planeMarginM,
+        zMin: door.z - halfWidth,
+        zMax: door.z + halfWidth,
+      });
+    } else {
+      boxes.push({
+        ...base,
+        xMin: door.x - halfWidth,
+        xMax: door.x + halfWidth,
+        zMin: door.z - config.planeMarginM,
+        zMax: door.z + config.planeMarginM,
+      });
+    }
+  }
+
+  return boxes;
+}
+
+export function isPointInsidePortalCut(room, point, options = {}) {
+  const [x, y, z] = Array.isArray(point) ? point : [point.x, point.y, point.z];
+  return getPortalCutBoxes(room, options).some(
+    (box) =>
+      x >= box.xMin &&
+      x <= box.xMax &&
+      y >= box.yMin &&
+      y <= box.yMax &&
+      z >= box.zMin &&
+      z <= box.zMax,
+  );
+}
+
+export function summarizePortalCuts(room) {
+  return getPortalCutBoxes(room).map((box) => ({
+    name: box.name,
+    wall: box.wall,
+    x: [Number(box.xMin.toFixed(3)), Number(box.xMax.toFixed(3))],
+    y: [Number(box.yMin.toFixed(3)), Number(box.yMax.toFixed(3))],
+    z: [Number(box.zMin.toFixed(3)), Number(box.zMax.toFixed(3))],
+  }));
+}
+</file>
+
+<file path="src/core/propertyPresets.js">
+export const LUXURY_PENTHOUSE_PLAN = {
+  id: 'luxury_penthouse_plan',
+  label: 'Luxury Penthouse Plan',
+  url: '/plans/luxury-penthouse-floorplan.png',
+  width: 1220,
+  height: 858,
+  metersPerPixel: 0.018,
+};
+
+export const LUXURY_PENTHOUSE_ROOMS = [
+  {
+    id: 'penthouse_living_dining',
+    label: 'Living & Dining',
+    category: 'Primary Space',
+    realSplatUrl: '/environments/Grand Luxury Penthouse Living Room.spz',
+    liteSplatUrl: '/environments/lite_grand_luxury_penthouse_living_room.ply',
+    portalSplatUrl: '/environments/portal_grand_luxury_penthouse_living_room.ply',
+    splatUrl: '/environments/lite_grand_luxury_penthouse_living_room.ply',
+    colliderUrl: '/environments/Grand Luxury Penthouse Living Room_collider.glb',
+    floorPlanX: 405,
+    floorPlanY: 475,
+    floorPlanW: 300,
+    floorPlanH: 410,
+    realWidthM: 10.98,
+    realDepthM: 4.65,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -20.194,
+      xMax: 5.495,
+      zMin: -13.367,
+      zMax: 7.791,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -20.194, z: 0, width: 1.55 },
+      exit: { wall: 'east', x: 5.495, z: 0, width: 1.55 },
+    },
+    portalDoors: {
+      guest_suite: { wall: 'west', x: -20.194, z: -1.6, width: 1.35, label: 'Bedroom 4' },
+      bedroom_two: { wall: 'east', x: 5.495, z: -0.65, width: 1.25, label: 'Bedroom 2' },
+    },
+    portalCut: {
+      heightM: 2.4,
+      planeMarginM: 0.9,
+    },
+    demoMeta: {
+      numPoints: 3840000,
+      fractionalBits: 10,
+      splatFloorY: -0.015,
+      splatCeilY: 3.354,
+      splatYLift: 0.015,
+      colliderYLift: 0.002,
+    },
+  },
+  {
+    id: 'penthouse_guest_suite',
+    label: 'Bedroom 4 Guest Suite',
+    category: 'Bedroom',
+    realSplatUrl: '/environments/Luxury guest suite, evening ambiance.spz',
+    liteSplatUrl: '/environments/lite_luxury_guest_suite_evening_ambiance.ply',
+    portalSplatUrl: '/environments/portal_luxury_guest_suite_evening_ambiance.ply',
+    splatUrl: '/environments/lite_luxury_guest_suite_evening_ambiance.ply',
+    colliderUrl: '/environments/Luxury guest suite, evening ambiance_collider.glb',
+    floorPlanX: 205,
+    floorPlanY: 335,
+    floorPlanW: 165,
+    floorPlanH: 205,
+    realWidthM: 4.12,
+    realDepthM: 4.42,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -4.781,
+      xMax: 3.907,
+      zMin: -7.633,
+      zMax: 2.465,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -4.781, z: -0.8, width: 1.25 },
+      exit: { wall: 'east', x: 3.907, z: -0.8, width: 1.25 },
+    },
+    portalDoors: {
+      living: { wall: 'east', x: 3.907, z: -0.8, width: 1.25, label: 'Living & Dining' },
+    },
+    portalCut: {
+      heightM: 2.3,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: -0.006,
+      splatCeilY: 3.143,
+      splatYLift: 0.006,
+      colliderYLift: -0.05,
+    },
+  },
+  {
+    id: 'penthouse_bedroom_two',
+    label: 'Bedroom 2',
+    category: 'Bedroom',
+    realSplatUrl: '/environments/Luxury Contemporary Bedroom Interior.spz',
+    liteSplatUrl: '/environments/lite_luxury_contemporary_bedroom_interior.ply',
+    portalSplatUrl: '/environments/portal_luxury_contemporary_bedroom_interior.ply',
+    splatUrl: '/environments/lite_luxury_contemporary_bedroom_interior.ply',
+    colliderUrl: '/environments/Luxury Contemporary Bedroom Interior_collider.glb',
+    floorPlanX: 735,
+    floorPlanY: 335,
+    floorPlanW: 135,
+    floorPlanH: 190,
+    realWidthM: 3.65,
+    realDepthM: 4.87,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -2.981,
+      xMax: 3.136,
+      zMin: -7.207,
+      zMax: 1.644,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -2.981, z: -0.75, width: 1.2 },
+      exit: { wall: 'east', x: 3.136, z: -0.75, width: 1.2 },
+    },
+    portalDoors: {
+      living: { wall: 'west', x: -2.981, z: -0.75, width: 1.2, label: 'Living & Dining' },
+      master_suite: { wall: 'east', x: 3.136, z: -0.75, width: 1.2, label: 'Master Bedroom' },
+    },
+    portalCut: {
+      heightM: 2.25,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: 0.005,
+      splatCeilY: 3.045,
+      splatYLift: -0.005,
+      colliderYLift: -0.048,
+    },
+  },
+  {
+    id: 'penthouse_master_suite',
+    label: 'Master Bedroom Suite',
+    category: 'Bedroom',
+    realSplatUrl: '/environments/Luxury Penthouse Master Bedroom Suite.spz',
+    liteSplatUrl: '/environments/lite_luxury_penthouse_master_bedroom_suite.ply',
+    portalSplatUrl: '/environments/portal_luxury_penthouse_master_bedroom_suite.ply',
+    splatUrl: '/environments/lite_luxury_penthouse_master_bedroom_suite.ply',
+    colliderUrl: '/environments/Luxury Penthouse Master Bedroom Suite_collider.glb',
+    floorPlanX: 895,
+    floorPlanY: 330,
+    floorPlanW: 170,
+    floorPlanH: 195,
+    realWidthM: 4.27,
+    realDepthM: 4.57,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -5.023,
+      xMax: 4.586,
+      zMin: -10.054,
+      zMax: 6.771,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -5.023, z: -0.9, width: 1.35 },
+      exit: { wall: 'east', x: 4.586, z: -0.9, width: 1.35 },
+    },
+    portalDoors: {
+      bedroom_two: { wall: 'west', x: -5.023, z: -0.9, width: 1.35, label: 'Bedroom 2' },
+      dressing: { wall: 'east', x: 4.586, z: -0.9, width: 1.2, label: 'Dressing' },
+    },
+    portalCut: {
+      heightM: 2.35,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: -0.007,
+      splatCeilY: 3.201,
+      splatYLift: 0.007,
+      colliderYLift: -0.024,
+    },
+  },
+  {
+    id: 'penthouse_dressing_room',
+    label: 'Master Dressing',
+    category: 'Wardrobe',
+    realSplatUrl: '/environments/Luxurious Master Dressing Room.spz',
+    liteSplatUrl: '/environments/lite_luxurious_master_dressing_room.ply',
+    portalSplatUrl: '/environments/portal_luxurious_master_dressing_room.ply',
+    splatUrl: '/environments/lite_luxurious_master_dressing_room.ply',
+    colliderUrl: '/environments/Luxurious Master Dressing Room_collider.glb',
+    floorPlanX: 930,
+    floorPlanY: 505,
+    floorPlanW: 115,
+    floorPlanH: 120,
+    realWidthM: 2.6,
+    realDepthM: 2.2,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -6.039,
+      xMax: 2.441,
+      zMin: -7.238,
+      zMax: 6.416,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -6.039, z: -0.65, width: 1.15 },
+      exit: { wall: 'east', x: 2.441, z: -0.65, width: 1.15 },
+    },
+    portalDoors: {
+      master_suite: { wall: 'west', x: -6.039, z: -0.65, width: 1.15, label: 'Master Bedroom' },
+      spa_bathroom: { wall: 'east', x: 2.441, z: -0.65, width: 1.1, label: 'Bathroom' },
+    },
+    portalCut: {
+      heightM: 2.25,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: -0.002,
+      splatCeilY: 3.004,
+      splatYLift: 0.002,
+      colliderYLift: -0.011,
+    },
+  },
+  {
+    id: 'penthouse_spa_bathroom',
+    label: 'Spa Master Bathroom',
+    category: 'Bathroom',
+    realSplatUrl: '/environments/Luxury Spa Master Bathroom.spz',
+    liteSplatUrl: '/environments/lite_luxury_spa_master_bathroom.ply',
+    portalSplatUrl: '/environments/portal_luxury_spa_master_bathroom.ply',
+    splatUrl: '/environments/lite_luxury_spa_master_bathroom.ply',
+    colliderUrl: '/environments/Luxury Spa Master Bathroom_collider.glb',
+    floorPlanX: 1035,
+    floorPlanY: 500,
+    floorPlanW: 120,
+    floorPlanH: 125,
+    realWidthM: 2.6,
+    realDepthM: 2.21,
+    format: 'spz',
+    visualFormat: 'ply',
+    footprint: {
+      xMin: -2.343,
+      xMax: 3.04,
+      zMin: -4.997,
+      zMax: 9.713,
+    },
+    stitchDoors: {
+      entry: { wall: 'west', x: -2.343, z: 0.2, width: 1.1 },
+      exit: { wall: 'east', x: 3.04, z: 0.2, width: 1.1 },
+    },
+    portalDoors: {
+      dressing: { wall: 'west', x: -2.343, z: 0.2, width: 1.1, label: 'Dressing' },
+    },
+    portalCut: {
+      heightM: 2.2,
+    },
+    demoMeta: {
+      numPoints: 1920000,
+      fractionalBits: 10,
+      splatFloorY: -0.007,
+      splatCeilY: 2.906,
+      splatYLift: 0.007,
+      colliderYLift: -0.002,
+    },
+  },
+];
+
+export const LUXURY_PENTHOUSE_PORTAL_LINKS = [
+  {
+    id: 'living_to_guest_suite',
+    from: 'penthouse_living_dining',
+    fromDoor: 'guest_suite',
+    to: 'penthouse_guest_suite',
+    toDoor: 'living',
+    label: 'Living & Dining to Bedroom 4',
+  },
+  {
+    id: 'living_to_bedroom_two',
+    from: 'penthouse_living_dining',
+    fromDoor: 'bedroom_two',
+    to: 'penthouse_bedroom_two',
+    toDoor: 'living',
+    label: 'Living & Dining to Bedroom 2',
+  },
+  {
+    id: 'bedroom_two_to_master',
+    from: 'penthouse_bedroom_two',
+    fromDoor: 'master_suite',
+    to: 'penthouse_master_suite',
+    toDoor: 'bedroom_two',
+    label: 'Bedroom 2 to Master Bedroom',
+  },
+  {
+    id: 'master_to_dressing',
+    from: 'penthouse_master_suite',
+    fromDoor: 'dressing',
+    to: 'penthouse_dressing_room',
+    toDoor: 'master_suite',
+    label: 'Master Bedroom to Dressing',
+  },
+  {
+    id: 'dressing_to_spa',
+    from: 'penthouse_dressing_room',
+    fromDoor: 'spa_bathroom',
+    to: 'penthouse_spa_bathroom',
+    toDoor: 'dressing',
+    label: 'Dressing to Bathroom',
+  },
+];
+
+export const PROPERTY_PRESETS = [
+  {
+    id: 'luxury_penthouse',
+    label: 'Luxury Penthouse',
+    plan: LUXURY_PENTHOUSE_PLAN,
+    rooms: LUXURY_PENTHOUSE_ROOMS,
+    portalLinks: LUXURY_PENTHOUSE_PORTAL_LINKS,
+  },
+];
+</file>
+
+<file path="src/core/splatParser.js">
+const SPZ_MAGIC_TEXT = 'NGSP';
+const DEFAULT_SPZ_SAMPLE_LIMIT = 250000;
+const DEFAULT_PLY_SAMPLE_LIMIT = 100000;
+
+function extensionOf(name = '') {
+  const clean = name.split('?')[0].split('#')[0];
+  const index = clean.lastIndexOf('.');
+  return index >= 0 ? clean.slice(index + 1).toLowerCase() : '';
+}
+
+function readAscii(bytes, start, length) {
+  return String.fromCharCode(...bytes.slice(start, start + length));
+}
+
+function signed24LE(bytes, offset) {
+  let value = bytes[offset] | (bytes[offset + 1] << 8) | (bytes[offset + 2] << 16);
+  if (value & 0x800000) value |= 0xff000000;
+  return value;
+}
+
+function halfToFloat(h) {
+  const s = (h & 0x8000) >> 15;
+  const e = (h & 0x7c00) >> 10;
+  const f = h & 0x03ff;
+  if (e === 0) return (s ? -1 : 1) * Math.pow(2, -14) * (f / 1024);
+  if (e === 31) return f ? NaN : (s ? -Infinity : Infinity);
+  return (s ? -1 : 1) * Math.pow(2, e - 15) * (1 + f / 1024);
+}
+
+async function gunzip(arrayBuffer) {
+  if (typeof DecompressionStream === 'undefined') {
+    throw new Error('This browser does not expose DecompressionStream for SPZ gzip data.');
+  }
+  const stream = new Blob([arrayBuffer]).stream().pipeThrough(new DecompressionStream('gzip'));
+  return new Response(stream).arrayBuffer();
+}
+
+export async function parseSPZ(arrayBuffer, options = {}) {
+  const maxPoints = options.maxPoints ?? DEFAULT_SPZ_SAMPLE_LIMIT;
+  const decompressed = await gunzip(arrayBuffer);
+  const bytes = new Uint8Array(decompressed);
+  const view = new DataView(decompressed);
+
+  if (bytes.byteLength < 16 || readAscii(bytes, 0, 4) !== SPZ_MAGIC_TEXT) {
+    throw new Error('Invalid SPZ file: missing NGSP header.');
+  }
+
+  const version = view.getUint32(4, true);
+  const numPoints = view.getUint32(8, true);
+  const shDegree = view.getUint8(12);
+  const fractionalBits = view.getUint8(13);
+  const flags = view.getUint8(14);
+  const reserved = view.getUint8(15);
+
+  if (version < 1 || version > 2) {
+    throw new Error(`Unsupported SPZ version ${version}.`);
+  }
+
+  const usesFloat16 = version === 1;
+  const bytesPerPointPosition = usesFloat16 ? 6 : 9;
+  const positionByteLength = numPoints * bytesPerPointPosition;
+  const expectedMinSize = 16 + positionByteLength + numPoints + numPoints * 3 + numPoints * 3 + numPoints * 3;
+  if (bytes.byteLength < expectedMinSize) {
+    throw new Error('SPZ payload is shorter than the advertised point count.');
+  }
+
+  const sampleCount = Math.min(numPoints, maxPoints);
+  const step = Math.max(1, Math.floor(numPoints / sampleCount));
+  const positions = new Float32Array(sampleCount * 3);
+  const scale = 1 / (1 << fractionalBits);
+  const positionOffset = 16;
+
+  for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex += 1) {
+    const pointIndex = Math.min(numPoints - 1, sampleIndex * step);
+    const sourceBase = positionOffset + pointIndex * bytesPerPointPosition;
+    const destBase = sampleIndex * 3;
+
+    if (usesFloat16) {
+      positions[destBase] = halfToFloat(view.getUint16(sourceBase, true));
+      positions[destBase + 1] = halfToFloat(view.getUint16(sourceBase + 2, true));
+      positions[destBase + 2] = halfToFloat(view.getUint16(sourceBase + 4, true));
+    } else {
+      positions[destBase] = signed24LE(bytes, sourceBase) * scale;
+      positions[destBase + 1] = signed24LE(bytes, sourceBase + 3) * scale;
+      positions[destBase + 2] = signed24LE(bytes, sourceBase + 6) * scale;
+    }
+  }
+
+  return {
+    positions,
+    numPoints,
+    sampledPoints: sampleCount,
+    format: 'spz',
+    meta: {
+      magic: SPZ_MAGIC_TEXT,
+      version,
+      shDegree,
+      fractionalBits,
+      flags,
+      reserved,
+      antialiased: (flags & 1) !== 0,
+      positionEncoding: usesFloat16 ? 'float16' : 'signed24_fixed_point',
+      decompressedBytes: bytes.byteLength,
+    },
+  };
+}
+
+function findHeaderEnd(bytes) {
+  const marker = new TextEncoder().encode('end_header');
+  outer:
+  for (let i = 0; i <= bytes.length - marker.length; i += 1) {
+    for (let j = 0; j < marker.length; j += 1) {
+      if (bytes[i + j] !== marker[j]) continue outer;
+    }
+    let end = i + marker.length;
+    while (end < bytes.length && (bytes[end] === 10 || bytes[end] === 13)) end += 1;
+    return end;
+  }
+  return -1;
+}
+
+const PLY_TYPE_READERS = {
+  char: { size: 1, read: (view, offset) => view.getInt8(offset) },
+  int8: { size: 1, read: (view, offset) => view.getInt8(offset) },
+  uchar: { size: 1, read: (view, offset) => view.getUint8(offset) },
+  uint8: { size: 1, read: (view, offset) => view.getUint8(offset) },
+  short: { size: 2, read: (view, offset) => view.getInt16(offset, true) },
+  int16: { size: 2, read: (view, offset) => view.getInt16(offset, true) },
+  ushort: { size: 2, read: (view, offset) => view.getUint16(offset, true) },
+  uint16: { size: 2, read: (view, offset) => view.getUint16(offset, true) },
+  int: { size: 4, read: (view, offset) => view.getInt32(offset, true) },
+  int32: { size: 4, read: (view, offset) => view.getInt32(offset, true) },
+  uint: { size: 4, read: (view, offset) => view.getUint32(offset, true) },
+  uint32: { size: 4, read: (view, offset) => view.getUint32(offset, true) },
+  float: { size: 4, read: (view, offset) => view.getFloat32(offset, true) },
+  float32: { size: 4, read: (view, offset) => view.getFloat32(offset, true) },
+  double: { size: 8, read: (view, offset) => view.getFloat64(offset, true) },
+  float64: { size: 8, read: (view, offset) => view.getFloat64(offset, true) },
+};
+
+function parsePLYHeader(headerText) {
+  const lines = headerText.split(/\r?\n/);
+  if (lines[0]?.trim() !== 'ply') throw new Error('Invalid PLY file: missing ply header.');
+
+  let format = 'ascii';
+  let vertexCount = 0;
+  let currentElement = null;
+  const vertexProperties = [];
+
+  for (const line of lines) {
+    const parts = line.trim().split(/\s+/);
+    if (parts[0] === 'format') format = parts[1];
+    if (parts[0] === 'element') {
+      currentElement = parts[1];
+      if (currentElement === 'vertex') vertexCount = Number(parts[2]);
+    } else if (parts[0] === 'property' && currentElement === 'vertex') {
+      if (parts[1] === 'list') continue;
+      vertexProperties.push({ type: parts[1], name: parts[2] });
+    }
+  }
+
+  return { format, vertexCount, vertexProperties };
+}
+
+export async function parsePLY(arrayBuffer, options = {}) {
+  const maxPoints = options.maxPoints ?? DEFAULT_PLY_SAMPLE_LIMIT;
+  const bytes = new Uint8Array(arrayBuffer);
+  const headerEnd = findHeaderEnd(bytes);
+  if (headerEnd < 0) throw new Error('Invalid PLY file: end_header not found.');
+
+  const headerText = new TextDecoder().decode(bytes.slice(0, headerEnd));
+  const { format, vertexCount, vertexProperties } = parsePLYHeader(headerText);
+  const sampleCount = Math.min(vertexCount, maxPoints);
+  const step = Math.max(1, Math.floor(vertexCount / sampleCount));
+  const positions = new Float32Array(sampleCount * 3);
+  const propertyNames = vertexProperties.map((p) => p.name);
+  const xIndex = propertyNames.indexOf('x');
+  const yIndex = propertyNames.indexOf('y');
+  const zIndex = propertyNames.indexOf('z');
+  if (xIndex < 0 || yIndex < 0 || zIndex < 0) {
+    throw new Error('PLY vertex properties must include x, y, and z.');
+  }
+
+  if (format === 'ascii') {
+    const body = new TextDecoder().decode(bytes.slice(headerEnd));
+    const lines = body.trim().split(/\r?\n/);
+    for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex += 1) {
+      const sourceIndex = Math.min(vertexCount - 1, sampleIndex * step);
+      const values = lines[sourceIndex]?.trim().split(/\s+/).map(Number);
+      if (!values || values.length <= Math.max(xIndex, yIndex, zIndex)) break;
+      const dest = sampleIndex * 3;
+      positions[dest] = values[xIndex];
+      positions[dest + 1] = values[yIndex];
+      positions[dest + 2] = values[zIndex];
+    }
+  } else if (format === 'binary_little_endian') {
+    const layout = [];
+    let stride = 0;
+    for (const prop of vertexProperties) {
+      const reader = PLY_TYPE_READERS[prop.type];
+      if (!reader) throw new Error(`Unsupported PLY property type ${prop.type}.`);
+      layout.push({ ...prop, offset: stride, reader });
+      stride += reader.size;
+    }
+    const view = new DataView(arrayBuffer);
+    for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex += 1) {
+      const sourceIndex = Math.min(vertexCount - 1, sampleIndex * step);
+      const base = headerEnd + sourceIndex * stride;
+      const dest = sampleIndex * 3;
+      positions[dest] = layout[xIndex].reader.read(view, base + layout[xIndex].offset);
+      positions[dest + 1] = layout[yIndex].reader.read(view, base + layout[yIndex].offset);
+      positions[dest + 2] = layout[zIndex].reader.read(view, base + layout[zIndex].offset);
+    }
+  } else {
+    throw new Error(`Unsupported PLY format ${format}.`);
+  }
+
+  return {
+    positions,
+    numPoints: vertexCount,
+    sampledPoints: sampleCount,
+    format: 'ply',
+    meta: {
+      format,
+      vertexProperties,
+    },
+  };
+}
+
+export async function parseSplatFile(file, options = {}) {
+  const ext = extensionOf(file?.name || file?.url || '');
+  if (ext === 'glb' || ext === 'gltf') {
+    return {
+      positions: new Float32Array(0),
+      numPoints: 0,
+      sampledPoints: 0,
+      format: 'glb',
+      meta: { note: 'GLB rooms render as mesh scenes and use collider analysis.' },
+    };
+  }
+
+  const arrayBuffer = await file.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer.slice(0, 8));
+  if (ext === 'spz' || readAscii(bytes, 0, 2) === '\u001f\u008b') {
+    return parseSPZ(arrayBuffer, options);
+  }
+  if (ext === 'ply' || readAscii(bytes, 0, 3) === 'ply') {
+    return parsePLY(arrayBuffer, options);
+  }
+  throw new Error(`Unsupported splat format .${ext || 'unknown'}. Upload SPZ, PLY, or GLB.`);
+}
+
+export function getSplatFormatFromName(name = '') {
+  const ext = extensionOf(name);
+  if (['spz', 'ply', 'glb', 'gltf', 'splat', 'ksplat'].includes(ext)) return ext;
+  return 'unknown';
+}
+</file>
+
+<file path="src/main.jsx">
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { App } from './ui/App.jsx';
+import './styles.css';
+
+createRoot(document.getElementById('root')).render(<App />);
+</file>
+
+<file path="src/renderer/playerController.js">
+import * as THREE from 'three';
+
+const _forward = new THREE.Vector3();
+const _right = new THREE.Vector3();
+const _move = new THREE.Vector3();
+const _rayDirectionDown = new THREE.Vector3(0, -1, 0);
+const _rayDirectionHorizontal = new THREE.Vector3();
+const _hitNormal = new THREE.Vector3();
+
+export class PlayerController {
+  constructor(camera, domElement, options = {}) {
+    this.camera = camera;
+    this.domElement = domElement;
+    this.eyeHeight = options.eyeHeight ?? 1.65;
+    this.walkSpeed = options.walkSpeed ?? 3.0;
+    this.sprintSpeed = options.sprintSpeed ?? 5.6;
+    this.radius = options.radius ?? 0.28;
+    this.maxStepHeight = options.maxStepHeight ?? 0.45;
+    this.gravityFallbackY = options.gravityFallbackY ?? 0;
+    this.yaw = options.yaw ?? 0;
+    this.pitch = options.pitch ?? 0;
+    this.keys = {};
+    this.enabled = true;
+    this.collisionEnabled = true;
+    this.isLocked = false;
+    this.floorY = 0;
+
+    this._onMouseMove = this._onMouseMove.bind(this);
+    this._onPointerLockChange = this._onPointerLockChange.bind(this);
+    this._onKeyDown = this._onKeyDown.bind(this);
+    this._onKeyUp = this._onKeyUp.bind(this);
+    this._onClick = this._onClick.bind(this);
+
+    this.bind();
+  }
+
+  bind() {
+    document.addEventListener('mousemove', this._onMouseMove);
+    document.addEventListener('pointerlockchange', this._onPointerLockChange);
+    document.addEventListener('keydown', this._onKeyDown);
+    document.addEventListener('keyup', this._onKeyUp);
+    this.domElement.addEventListener('click', this._onClick);
+  }
+
+  dispose() {
+    document.removeEventListener('mousemove', this._onMouseMove);
+    document.removeEventListener('pointerlockchange', this._onPointerLockChange);
+    document.removeEventListener('keydown', this._onKeyDown);
+    document.removeEventListener('keyup', this._onKeyUp);
+    this.domElement.removeEventListener('click', this._onClick);
+  }
+
+  _onClick() {
+    if (!this.enabled) return;
+    this.domElement.requestPointerLock?.();
+  }
+
+  _onPointerLockChange() {
+    this.isLocked = document.pointerLockElement === this.domElement;
+  }
+
+  _onMouseMove(event) {
+    if (!this.enabled || !this.isLocked) return;
+    this.yaw -= event.movementX * 0.002;
+    this.pitch -= event.movementY * 0.002;
+    this.pitch = THREE.MathUtils.clamp(this.pitch, -Math.PI / 2 + 0.05, Math.PI / 2 - 0.05);
+  }
+
+  _onKeyDown(event) {
+    this.keys[event.code] = true;
+  }
+
+  _onKeyUp(event) {
+    this.keys[event.code] = false;
+  }
+
+  setCollisionEnabled(value) {
+    this.collisionEnabled = Boolean(value);
+  }
+
+  update(deltaTime, colliders = []) {
+    if (!this.enabled) return;
+
+    this.camera.rotation.order = 'YXZ';
+    this.camera.rotation.x = this.pitch;
+    this.camera.rotation.y = this.yaw;
+    this.camera.rotation.z = 0;
+
+    const speed = this.keys.ShiftLeft || this.keys.ShiftRight ? this.sprintSpeed : this.walkSpeed;
+    _forward.set(-Math.sin(this.yaw), 0, -Math.cos(this.yaw));
+    _right.set(Math.cos(this.yaw), 0, -Math.sin(this.yaw));
+    _move.set(0, 0, 0);
+
+    if (this.keys.KeyW || this.keys.ArrowUp) _move.addScaledVector(_forward, speed * deltaTime);
+    if (this.keys.KeyS || this.keys.ArrowDown) _move.addScaledVector(_forward, -speed * deltaTime);
+    if (this.keys.KeyA || this.keys.ArrowLeft) _move.addScaledVector(_right, -speed * deltaTime);
+    if (this.keys.KeyD || this.keys.ArrowRight) _move.addScaledVector(_right, speed * deltaTime);
+
+    if (_move.lengthSq() > 0) {
+      const proposed = this.camera.position.clone().add(_move);
+      if (!this.collisionEnabled || this._canMoveTo(proposed, colliders)) {
+        this.camera.position.x = proposed.x;
+        this.camera.position.z = proposed.z;
+      }
+    }
+
+    const floor = this._findFloorY(this.camera.position, colliders);
+    this.floorY = floor;
+    this.camera.position.y = THREE.MathUtils.lerp(
+      this.camera.position.y,
+      floor + this.eyeHeight,
+      Math.min(1, deltaTime * 14),
+    );
+  }
+
+  _canMoveTo(proposed, colliders) {
+    if (!colliders.length) return true;
+    const delta = proposed.clone().sub(this.camera.position);
+    delta.y = 0;
+    const distance = delta.length();
+    if (distance < 0.0001) return true;
+
+    _rayDirectionHorizontal.copy(delta).normalize();
+    const raycaster = new THREE.Raycaster(
+      this.camera.position.clone().setY(this.floorY + 0.9),
+      _rayDirectionHorizontal,
+      0,
+      distance + this.radius,
+    );
+
+    for (const collider of colliders) {
+      const hits = raycaster.intersectObject(collider, true);
+      const blockingHit = hits.find((hit) => hit.distance <= distance + this.radius);
+      if (blockingHit) return false;
+    }
+    return true;
+  }
+
+  _findFloorY(position, colliders) {
+    if (!this.collisionEnabled || !colliders.length) return this.gravityFallbackY;
+    const origin = position.clone();
+    origin.y += 4;
+    const raycaster = new THREE.Raycaster(origin, _rayDirectionDown, 0, 12);
+    let best = -Infinity;
+
+    for (const collider of colliders) {
+      const hits = raycaster.intersectObject(collider, true);
+      for (const hit of hits) {
+        if (!this._isWalkableFloorHit(hit)) continue;
+        if (hit.point.y > this.floorY + this.maxStepHeight) continue;
+        if (hit.point.y <= position.y + 0.25 && hit.point.y > best) {
+          best = hit.point.y;
+        }
+      }
+    }
+
+    return Number.isFinite(best) ? best : this.floorY || this.gravityFallbackY;
+  }
+
+  _isWalkableFloorHit(hit) {
+    if (!hit.face) return true;
+    _hitNormal.copy(hit.face.normal).transformDirection(hit.object.matrixWorld);
+    return _hitNormal.y > 0.45;
+  }
+
+  teleportTo(position, yawDeg = 0) {
+    const [x, y, z] = Array.isArray(position) ? position : [position.x, position.y, position.z];
+    this.camera.position.set(x, y, z);
+    this.floorY = y - this.eyeHeight;
+    this.yaw = THREE.MathUtils.degToRad(yawDeg);
+    this.pitch = 0;
+  }
+}
+</file>
+
+<file path="src/ui/FloorPlanCanvas.jsx">
+import React, { useRef, useState } from 'react';
+import { Move, RotateCw, Ruler } from 'lucide-react';
+
+export function FloorPlanCanvas({
+  rooms,
+  selectedRoomId,
+  floorPlanUrl,
+  planSize,
+  metersPerPixel,
+  portalLinks = [],
+  onSelectRoom,
+  onUpdateRoom,
+  setMetersPerPixel,
+}) {
+  const stageRef = useRef(null);
+  const [drag, setDrag] = useState(null);
+  const stageWidth = planSize?.width || 1220;
+  const stageHeight = planSize?.height || 520;
+  const roomById = new Map(rooms.map((room) => [room.id, room]));
+  const routeSegments = portalLinks.length
+    ? portalLinks
+        .map((link) => ({ previous: roomById.get(link.from), room: roomById.get(link.to), id: link.id }))
+        .filter((segment) => segment.previous && segment.room)
+    : rooms
+        .filter((room) => room.enabled !== false)
+        .slice(1)
+        .map((room, index, routeRooms) => ({
+          previous: index === 0
+            ? rooms.filter((item) => item.enabled !== false)[0]
+            : routeRooms[index - 1],
+          room,
+          id: `${index}-${room.id}`,
+        }))
+        .filter((segment) => segment.previous);
+
+  function beginDrag(event, room) {
+    if (event.button !== 0) return;
+    const rect = stageRef.current.getBoundingClientRect();
+    const scaleX = stageWidth / rect.width;
+    const scaleY = stageHeight / rect.height;
+    setDrag({
+      id: room.id,
+      offsetX: event.clientX * scaleX - rect.left * scaleX - room.floorPlanX,
+      offsetY: event.clientY * scaleY - rect.top * scaleY - room.floorPlanY,
+    });
+    onSelectRoom(room.id);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function moveDrag(event) {
+    if (!drag) return;
+    const rect = stageRef.current.getBoundingClientRect();
+    const scaleX = stageWidth / rect.width;
+    const scaleY = stageHeight / rect.height;
+    const x = event.clientX * scaleX - rect.left * scaleX - drag.offsetX;
+    const y = event.clientY * scaleY - rect.top * scaleY - drag.offsetY;
+    onUpdateRoom(drag.id, {
+      floorPlanX: Math.max(40, Math.min(stageWidth - 40, x)),
+      floorPlanY: Math.max(40, Math.min(stageHeight - 40, y)),
+      worldX: undefined,
+      worldZ: undefined,
+    });
+  }
+
+  function endDrag() {
+    setDrag(null);
+  }
+
+  return (
+    <div className="map-panel">
+      <div
+        ref={stageRef}
+        className={floorPlanUrl ? 'plan-stage has-plan' : 'plan-stage'}
+        style={{ width: stageWidth, height: stageHeight }}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+      >
+        {floorPlanUrl && <img className="floor-plan-image" src={floorPlanUrl} alt="" />}
+        <div className="plan-grid" />
+        <svg className="tour-lines" viewBox={`0 0 ${stageWidth} ${stageHeight}`} aria-hidden="true">
+          {routeSegments
+            .map(({ previous, room, id }) => {
+              return (
+                <g key={id || `${previous.id}-${room.id}`}>
+                  <line
+                    x1={previous.floorPlanX}
+                    y1={previous.floorPlanY}
+                    x2={room.floorPlanX}
+                    y2={room.floorPlanY}
+                  />
+                  <circle cx={room.floorPlanX} cy={room.floorPlanY} r="4" />
+                </g>
+              );
+            })}
+        </svg>
+        {rooms.map((room) => {
+          const selected = room.id === selectedRoomId;
+          const ready = room.splatFile || room.splatUrl;
+          const style = {
+            width: room.floorPlanW,
+            height: room.floorPlanH,
+            left: room.floorPlanX - room.floorPlanW / 2,
+            top: room.floorPlanY - room.floorPlanH / 2,
+            transform: `rotate(${room.floorPlanRotation || 0}deg)`,
+          };
+          return (
+            <div
+              key={room.id}
+              className={`room-box ${selected ? 'selected' : ''} ${ready ? 'ready' : ''} ${room.enabled === false ? 'disabled-room' : ''}`}
+              style={style}
+              onPointerDown={(event) => beginDrag(event, room)}
+              onClick={() => onSelectRoom(room.id)}
+            >
+              <div className="room-box-top">
+                <Move size={14} />
+                <button
+                  className="mini-tool"
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onUpdateRoom(room.id, {
+                      floorPlanRotation: ((room.floorPlanRotation || 0) + 90) % 360,
+                    });
+                  }}
+                >
+                  <RotateCw size={13} />
+                </button>
+              </div>
+              <strong>{room.label}</strong>
+              <span>{room.category || 'Room'}</span>
+              <small>
+                {Number(room.realWidthM || 0).toFixed(1)}m x {Number(room.realDepthM || 0).toFixed(1)}m
+              </small>
+            </div>
+          );
+        })}
+
+        <div className="scale-widget">
+          <Ruler size={14} />
+          <label>
+            <span>m/px</span>
+            <input
+              type="number"
+              min="0.001"
+              step="0.001"
+              value={metersPerPixel.toFixed(3)}
+              onChange={(event) => setMetersPerPixel(Number(event.target.value) || metersPerPixel)}
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '127.0.0.1',
+    port: 5173,
+    strictPort: false,
+  },
+  assetsInclude: ['**/*.spz', '**/*.ply', '**/*.splat', '**/*.ksplat', '**/*.glb'],
+  optimizeDeps: {
+    exclude: ['@mkkellogg/gaussian-splats-3d'],
+  },
+});
+</file>
+
+<file path="README.md">
+# Splat Stitcher
+
+Standalone multi-room Gaussian splat world builder for real estate previews, horror rooms, escape games, and hide-and-seek style 3D walkthroughs.
+
+## Live Development URL
+
+Vite serves the app at:
+
+```txt
+http://127.0.0.1:5173/
+```
+
+If port `5173` changes, check `vite-dev.log`.
+
+## What This Project Does
+
+Splat Stitcher keeps each room as a separate splat scene instead of merging every room into one giant SPZ. The app analyzes SPZ/PLY splats, analyzes GLB colliders, places rooms on a floor-plan canvas, computes world transforms, loads the rooms into one Three.js viewer, and lets the player walk with collision.
+
+`Build Tour` is the full-resolution proof mode: it aligns every current room through explicit named door anchors, loads each room's real SPZ splat, creates visible door handoff portals, and runs a sampled route check on each portal source and landing point. The browser exposes the latest result as `window.__splatStitcherReport` / `data-splat-stitcher-report`, the active loaded assets as `window.__splatStitcherActiveBuild` / `data-splat-stitcher-active-build`, and door handoff triggers as `window.__splatStitcherPortalTransitions` / `data-splat-stitcher-portal-transitions`.
+
+The generated lite and portal-cut previews remain useful for quick diagnostics, but the main tour path now uses full SPZ room assets so the walkthrough matches `Full Room` visual quality instead of the old particle-preview look. Independent room captures do not need to share one physically continuous mesh; walking into a configured door lands the player just inside the matching door of the next room. Door anchors can be calibrated from inside the world and are saved in browser local storage.
+
+The current safe production workflow is:
+
+1. Upload or select room splats and matching `_collider.glb` files.
+2. Place each room box on the map.
+3. Use `Build Tour` for a full-SPZ, door-stitched multi-room walkthrough.
+4. Use `Full Room` to isolate and inspect a selected room's real SPZ at full quality.
+5. For very large homes, keep an optimized/lite preview available too. Six full rooms work in the demo, but full-SPZ tours are GPU and memory heavy.
+
+## Luxury Penthouse Demo
+
+Click `Penthouse` or the left `Estate` button to load a production-style real estate demo:
+
+- Floor plan: `public/plans/luxury-penthouse-floorplan.png`
+- Rooms: Living & Dining, Bedroom 4 Guest Suite, Bedroom 2, Master Bedroom Suite, Master Dressing, Spa Master Bathroom
+- Source SPZ/GLB pairs: `public/environments`
+- Generated preview assets: `lite_*.ply` and `portal_*.ply`
+
+The map keeps the real floor-plan coordinate space, shows editable room boxes, and draws the green dashed tour route. `Build Tour` converts that route into a walkable six-room Gaussian splat tour with doorway portals and full SPZ room visuals.
+
+## Buttons
+
+- `Map`: shows the floor-plan canvas and draggable room boxes.
+- `World`: shows the 3D rendered world.
+- `Demo`: restores the default four attached demo rooms.
+- `Estate`: loads the Luxury Penthouse floor-plan preset.
+- `Plan`: uploads a floor-plan image behind the room boxes.
+- `Room`: adds a new empty room card.
+- `Spread`: spreads room boxes horizontally on the map.
+- `Penthouse`: loads the Luxury Penthouse floor-plan preset from `public/environments`.
+- `Build Tour`: includes all current rooms, keeps the floor-plan placement, loads the real full SPZ assets, and enables bidirectional calibrated door handoffs.
+- `Full Room`: loads only the selected room using its real full SPZ file.
+- `Generate`: loads the currently included rooms.
+- `Reset`: resets the player camera in the world view.
+
+## Room Panel Controls
+
+- `SPZ/PLY/GLB`: upload the selected room visual file.
+- `Collider`: upload the matching GLB collision mesh.
+- `Include in world`: include or exclude the selected room from `Generate`.
+- `Full SPZ asset`: switch a demo room between lightweight preview PLY and real SPZ.
+- `Flip visual X`: manually flip the splat if an export appears upside-down.
+- `Show colliders`: show or hide wireframe collider meshes.
+- `Collision`: enable or disable physical walking collision.
+- `Yaw deg`: rotate the selected room around Y.
+- `Y offset`: manually adjust vertical placement.
+- `Plan X` / `Plan Y`: precise floor-plan coordinates.
+- Door row crosshair: arm a named door for calibration; in the world view, stand at the real doorway and press `Capture Here`.
+
+## Verification
+
+Run:
+
+```sh
+npm run build
+npm run validate:assets
+npm run validate:property
+npm run validate:portals
+npm run validate:stitch
+npm run generate:portal
+npm run generate:property
+```
+
+Verified locally:
+
+- Four-room joined preview reaches `World ready: 4 rooms; door path passable`.
+- Luxury Penthouse tour reaches `World ready: 6 rooms; door portals ready (5 links)`.
+- Luxury Penthouse validator checks 6 room SPZ/GLB pairs and confirms `0` portal-cut splat leaks.
+- Luxury Penthouse portal validator checks 5 named bidirectional room links, 1.25m door spacing, source points, landing points, and destination yaw.
+- Door stitch validation samples every 2-room, 3-room, and 4-room ordering of the four attached assets. `60 ordered combinations passed`.
+- Portal preview validation confirms `0` splats remain inside the configured doorway cut boxes.
+- Full Enchanted Castle SPZ reaches `World ready: 1 rooms`.
+- Full 2M-point Hogwarts SPZ reaches `World ready: 1 rooms`, but takes roughly 90 seconds in the browser session.
+
+## Future Property Pipeline
+
+For a new listing:
+
+1. Put the floor-plan image in `public/plans`.
+2. Put each room `.spz` and matching `_collider.glb` in `public/environments`.
+3. Add a preset in `src/core/propertyPresets.js` with room labels, plan box positions, SPZ/GLB URLs, footprints, rough named `portalDoors`, and `portalLinks`.
+4. Run `npm run generate:property` to create lite and portal-cut previews.
+5. Run `npm run validate:property`.
+6. Open the app, load the preset, adjust boxes on the map, click `Build Tour`, then calibrate each named door from the world view.
+
+The next deeper upgrade is automatic door discovery: render room views, segment `door` or `doorway`, lift the mask back to Gaussian indices, and write those exact indices into the portal cutter. The current version is deterministic and local: it uses configured doorway boxes, which is much more reliable for a working real estate pipeline today.
+
+## Reference Repo Takeaways
+
+The attached `segment-3gs` repo is useful for the next deeper version, especially:
+
+- `splatIndex.ts`: build a spatial grid of Gaussian centers.
+- `capture.ts`: freeze a camera pose and map 3D points into mask pixels.
+- `lift.ts`: lift 2D masks back into 3D Gaussian indices.
+- `registry.ts`: persist per-Gaussian selections with multi-view voting.
+
+For this project, those ideas map to automatic door discovery: render room views, segment "door" or "doorway", lift masks to splat indices, and write those indices into the portal cutter instead of using only configured doorway boxes. The current build uses geometry-box cutting because it is deterministic, local, and does not require a GPU/SAM server.
+</file>
+
+<file path="scripts/validate-property.mjs">
+import fs from 'node:fs/promises';
+import { PROPERTY_PRESETS } from '../src/core/propertyPresets.js';
+import { stitchRoomsByDoor } from '../src/core/roomAligner.js';
+import { isPointInsidePortalCut } from '../src/core/portalCutter.js';
+import { parsePLY } from '../src/core/splatParser.js';
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function publicPath(url) {
+  return `public${decodeURIComponent(url)}`;
+}
+
+async function exists(path) {
+  try {
+    const stat = await fs.stat(path);
+    return stat.isFile() && stat.size > 0;
+  } catch {
+    return false;
+  }
+}
+
+const rows = [];
+const portalRows = [];
+
+for (const preset of PROPERTY_PRESETS) {
+  assert(await exists(publicPath(preset.plan.url)), `${preset.id}: missing floor-plan image`);
+  const stitched = stitchRoomsByDoor(preset.rooms, { gap: 1.25 });
+  assert(stitched.links.length === preset.rooms.length - 1, `${preset.id}: tour links did not cover every room`);
+  if (preset.portalLinks?.length) {
+    const portalStitched = stitchRoomsByDoor(preset.rooms, {
+      gap: 1.25,
+      metersPerPixel: preset.plan.metersPerPixel,
+      portalLinks: preset.portalLinks,
+      preserveMapPlacement: true,
+    });
+    assert(
+      portalStitched.links.length === preset.portalLinks.length,
+      `${preset.id}: portal graph did not create every named door link`,
+    );
+    assert(
+      portalStitched.report.placedRoomCount === preset.rooms.length,
+      `${preset.id}: portal graph did not place every room`,
+    );
+    assert(
+      portalStitched.report.transitionMode === 'door_portals_map',
+      `${preset.id}: portal graph did not use door_portals_map mode`,
+    );
+    portalRows.push(
+      ...portalStitched.links.map((link) => ({
+        preset: preset.label,
+        link: link.label,
+        from: `${link.from}:${link.fromDoor}`,
+        to: `${link.to}:${link.toDoor}`,
+        distanceM: link.distanceM.toFixed(3),
+        widthM: link.width.toFixed(2),
+      })),
+    );
+  }
+
+  for (const room of preset.rooms) {
+    assert(await exists(publicPath(room.realSplatUrl)), `${room.id}: missing full SPZ`);
+    assert(await exists(publicPath(room.colliderUrl)), `${room.id}: missing collider GLB`);
+    assert(await exists(publicPath(room.liteSplatUrl)), `${room.id}: missing lite preview`);
+    assert(await exists(publicPath(room.portalSplatUrl)), `${room.id}: missing portal preview`);
+
+    const buffer = await fs.readFile(publicPath(room.portalSplatUrl));
+    const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+    const parsed = await parsePLY(arrayBuffer, { maxPoints: 1000000 });
+    let cutLeaks = 0;
+    for (let i = 0; i < parsed.positions.length; i += 3) {
+      if (
+        isPointInsidePortalCut(room, [
+          parsed.positions[i],
+          parsed.positions[i + 1],
+          parsed.positions[i + 2],
+        ])
+      ) {
+        cutLeaks += 1;
+      }
+    }
+    assert(cutLeaks === 0, `${room.id}: ${cutLeaks} portal splats remain inside doorway cut boxes`);
+
+    rows.push({
+      preset: preset.label,
+      room: room.label,
+      points: room.demoMeta?.numPoints || 0,
+      portalSplats: parsed.numPoints,
+      cutLeaks,
+    });
+  }
+}
+
+console.table(rows);
+if (portalRows.length) console.table(portalRows);
+console.log(`Property validation complete: ${rows.length} rooms checked.`);
+</file>
+
+<file path="src/core/roomAligner.js">
+import * as THREE from 'three';
+
+export const DEFAULT_METERS_PER_PIXEL = 0.04;
+export const PLAYER_EYE_HEIGHT = 1.65;
+
+export function computeScale(rooms, fallback = DEFAULT_METERS_PER_PIXEL) {
+  const candidates = rooms
+    .map((room) => {
+      const width = Number(room.realWidthM);
+      const pixelWidth = Number(room.floorPlanW);
+      return width > 0 && pixelWidth > 0 ? width / pixelWidth : null;
+    })
+    .filter((value) => typeof value === 'number' && Number.isFinite(value));
+
+  if (!candidates.length) return fallback;
+  candidates.sort((a, b) => a - b);
+  return candidates[Math.floor(candidates.length / 2)];
+}
+
+export function quaternionForYawAndFlip(yawDeg = 0, flipX = false) {
+  const yaw = new THREE.Quaternion().setFromAxisAngle(
+    new THREE.Vector3(0, 1, 0),
+    THREE.MathUtils.degToRad(yawDeg),
+  );
+  if (!flipX) return yaw.toArray();
+  const flip = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI);
+  return yaw.multiply(flip).normalize().toArray();
+}
+
+export function getRoomPortalDoors(room) {
+  return {
+    ...(room.stitchDoors || {}),
+    ...(room.portalDoors || {}),
+  };
+}
+
+export function getRoomPortalDoor(room, doorName) {
+  return room.portalDoors?.[doorName] || room.stitchDoors?.[doorName] || null;
+}
+
+export function directionForWall(wall = 'east') {
+  switch (wall) {
+    case 'west':
+      return { x: -1, z: 0, yawDeg: 90 };
+    case 'north':
+      return { x: 0, z: -1, yawDeg: 0 };
+    case 'south':
+      return { x: 0, z: 1, yawDeg: 180 };
+    case 'east':
+    default:
+      return { x: 1, z: 0, yawDeg: 270 };
+  }
+}
+
+export function inwardDirectionForWall(wall = 'east') {
+  const outward = directionForWall(wall);
+  return {
+    x: -outward.x,
+    z: -outward.z,
+    yawDeg: yawDegForDirection({ x: -outward.x, z: -outward.z }),
+  };
+}
+
+export function yawDegForDirection(direction) {
+  return THREE.MathUtils.radToDeg(Math.atan2(-direction.x, -direction.z));
+}
+
+export function yawDegForRoom(room) {
+  return Number(room.floorPlanRotation ?? 0) + Number(room.manualYawDeg ?? 0);
+}
+
+export function rotateLocalXZ(room, x = 0, z = 0) {
+  const yaw = THREE.MathUtils.degToRad(yawDegForRoom(room));
+  const cos = Math.cos(yaw);
+  const sin = Math.sin(yaw);
+  return {
+    x: x * cos + z * sin,
+    z: -x * sin + z * cos,
+  };
+}
+
+export function inverseRotateWorldXZ(room, x = 0, z = 0) {
+  const yaw = THREE.MathUtils.degToRad(-yawDegForRoom(room));
+  const cos = Math.cos(yaw);
+  const sin = Math.sin(yaw);
+  return {
+    x: x * cos + z * sin,
+    z: -x * sin + z * cos,
+  };
+}
+
+export function computeWorldTransforms(rooms, metersPerPixel = DEFAULT_METERS_PER_PIXEL, options = {}) {
+  const originX = options.originX ?? Math.min(...rooms.map((room) => room.floorPlanX ?? 0), 0);
+  const originY = options.originY ?? Math.min(...rooms.map((room) => room.floorPlanY ?? 0), 0);
+
+  return rooms.map((room, index) => {
+    const yawDeg = Number(room.floorPlanRotation ?? 0) + Number(room.manualYawDeg ?? 0);
+    const worldX =
+      typeof room.worldX === 'number'
+        ? room.worldX
+        : ((room.floorPlanX ?? 0) - originX) * metersPerPixel;
+    const worldZ =
+      typeof room.worldZ === 'number'
+        ? room.worldZ
+        : ((room.floorPlanY ?? 0) - originY) * metersPerPixel;
+
+    const splatYLift = Number(
+      room.splatYLift ??
+        room.analysis?.yLift ??
+        room.demoMeta?.splatYLift ??
+        room.colliderAnalysis?.yLift ??
+        0,
+    );
+    const colliderYLift = Number(
+      room.colliderYLift ??
+        room.colliderAnalysis?.yLift ??
+        room.demoMeta?.colliderYLift ??
+        splatYLift,
+    );
+    const manualYOffset = Number(room.manualYOffset ?? 0);
+    const visualFlipX = Boolean(room.visualFlipX);
+
+    return {
+      id: room.id,
+      label: room.label || `Room ${index + 1}`,
+      sourceRoom: room,
+      splatUrl: room.splatUrl,
+      splatFile: room.splatFile,
+      visualFormat: room.visualFormat || room.format || 'spz',
+      colliderUrl: room.colliderUrl,
+      colliderFile: room.colliderFile,
+      position: [worldX, splatYLift + manualYOffset, worldZ],
+      colliderPosition: [worldX, colliderYLift + manualYOffset, worldZ],
+      splatQuaternion: quaternionForYawAndFlip(yawDeg, visualFlipX),
+      colliderQuaternion: quaternionForYawAndFlip(yawDeg, false),
+      scale: room.scale || [1, 1, 1],
+      colliderScale: room.colliderScale || [1, 1, 1],
+      yawDeg,
+      visualFlipX,
+      doors: room.colliderAnalysis?.doors || room.doors || [],
+      stitchDoors: room.stitchDoors || null,
+      stitchDoorWorld: room.stitchDoorWorld || null,
+      portalDoors: room.portalDoors || null,
+      portalDoorWorld: room.portalDoorWorld || null,
+      footprint: room.footprint || null,
+      useFloorProxy: room.useFloorProxy === true,
+      bounds: room.colliderAnalysis?.bounds || null,
+      spawnPoint: [
+        typeof room.spawnX === 'number' ? room.spawnX : worldX,
+        PLAYER_EYE_HEIGHT,
+        typeof room.spawnZ === 'number' ? room.spawnZ : worldZ,
+      ],
+      spawnYawDeg: typeof room.spawnYawDeg === 'number' ? room.spawnYawDeg : 180,
+      floorMismatchM: Math.abs((splatYLift || 0) - (colliderYLift || 0)),
+    };
+  });
+}
+
+export function connectRoomCenters(transforms) {
+  const links = [];
+  for (let i = 1; i < transforms.length; i += 1) {
+    links.push({
+      id: `${transforms[i - 1].id}-${transforms[i].id}`,
+      from: transforms[i - 1].id,
+      to: transforms[i].id,
+      a: transforms[i - 1].colliderPosition,
+      b: transforms[i].colliderPosition,
+    });
+  }
+  return links;
+}
+
+export function localDoorToWorld(room, doorName) {
+  const door = getRoomPortalDoor(room, doorName);
+  if (!door) return null;
+  const rotated = rotateLocalXZ(room, door.x, door.z);
+  const localOutward = directionForWall(door.wall);
+  const worldOutward = rotateLocalXZ(room, localOutward.x, localOutward.z);
+  const worldInward = { x: -worldOutward.x, z: -worldOutward.z };
+  return {
+    ...door,
+    localX: door.x,
+    localZ: door.z,
+    x: (room.worldX ?? 0) + rotated.x,
+    y: 0,
+    z: (room.worldZ ?? 0) + rotated.z,
+    worldOutward,
+    worldInward: {
+      ...worldInward,
+      yawDeg: yawDegForDirection(worldInward),
+    },
+  };
+}
+
+export function stitchRoomsByDoor(rooms, options = {}) {
+  if (options.portalLinks?.length) {
+    return stitchRoomsByPortalLinks(rooms, options);
+  }
+
+  const gap = options.gap ?? 1.25;
+  const stitched = rooms.map((room) => ({
+    ...room,
+    useFloorProxy: true,
+    manualYawDeg: 0,
+    floorPlanRotation: 0,
+  }));
+
+  if (!stitched.length) return { rooms: stitched, links: [], report: { passable: false, reason: 'no_rooms' } };
+
+  stitched[0].worldX = options.startX ?? 0;
+  stitched[0].worldZ = options.startZ ?? 0;
+
+  const links = [];
+  for (let i = 1; i < stitched.length; i += 1) {
+    const previous = stitched[i - 1];
+    const current = stitched[i];
+    const exitDoor = previous.stitchDoors?.exit;
+    const entryDoor = current.stitchDoors?.entry;
+
+    if (!exitDoor || !entryDoor) {
+      current.worldX = (previous.worldX ?? 0) + (previous.realWidthM ?? 5) + gap + (current.realWidthM ?? 5);
+      current.worldZ = previous.worldZ ?? 0;
+      continue;
+    }
+
+    current.worldX = (previous.worldX ?? 0) + exitDoor.x + gap - entryDoor.x;
+    current.worldZ = (previous.worldZ ?? 0) + exitDoor.z - entryDoor.z;
+
+    const a = localDoorToWorld(previous, 'exit');
+    const b = localDoorToWorld(current, 'entry');
+    const width = Math.min(exitDoor.width || 1.2, entryDoor.width || 1.2);
+    links.push({
+      id: `${previous.id}-door-${current.id}`,
+      type: 'door-stitch',
+      from: previous.id,
+      to: current.id,
+      a: [a.x, 0, a.z],
+      b: [b.x, 0, b.z],
+      width,
+      label: `${previous.label} to ${current.label}`,
+      distanceM: Math.hypot(b.x - a.x, b.z - a.z),
+    });
+  }
+
+  for (const room of stitched) {
+    room.stitchDoorWorld = {
+      entry: localDoorToWorld(room, 'entry'),
+      exit: localDoorToWorld(room, 'exit'),
+    };
+    const footprintCenterX = room.footprint ? (room.footprint.xMin + room.footprint.xMax) / 2 : 0;
+    const footprintCenterZ = room.footprint ? (room.footprint.zMin + room.footprint.zMax) / 2 : 0;
+    room.spawnX = (room.worldX ?? 0) + footprintCenterX;
+    room.spawnZ = (room.worldZ ?? 0) + footprintCenterZ;
+    room.spawnYawDeg = -90;
+  }
+
+  const report = {
+    passable: links.length === Math.max(0, stitched.length - 1),
+    roomCount: stitched.length,
+    connectorCount: links.length,
+    totalConnectorLengthM: links.reduce((sum, link) => sum + link.distanceM, 0),
+    links: links.map((link) => ({
+      from: link.from,
+      to: link.to,
+      distanceM: Number(link.distanceM.toFixed(3)),
+      width: link.width,
+    })),
+  };
+
+  return { rooms: stitched, links, report };
+}
+
+function setRoomDoorWorld(room) {
+  const portalDoorWorld = {};
+  for (const [name] of Object.entries(getRoomPortalDoors(room))) {
+    portalDoorWorld[name] = localDoorToWorld(room, name);
+  }
+  room.portalDoorWorld = portalDoorWorld;
+  room.stitchDoorWorld = {
+    ...portalDoorWorld,
+    entry: localDoorToWorld(room, 'entry'),
+    exit: localDoorToWorld(room, 'exit'),
+  };
+}
+
+function placeRoomAtDoor({ placedRoom, targetRoom, placedDoorName, targetDoorName, gap }) {
+  const placedDoor = localDoorToWorld(placedRoom, placedDoorName);
+  const targetDoor = getRoomPortalDoor(targetRoom, targetDoorName);
+  if (!placedDoor || !targetDoor) return false;
+
+  const outward = placedDoor.worldOutward || directionForWall(placedDoor.wall);
+  const targetOffset = rotateLocalXZ(targetRoom, targetDoor.x, targetDoor.z);
+  const targetDoorWorld = {
+    x: placedDoor.x + outward.x * gap,
+    z: placedDoor.z + outward.z * gap,
+  };
+
+  targetRoom.worldX = targetDoorWorld.x - targetOffset.x;
+  targetRoom.worldZ = targetDoorWorld.z - targetOffset.z;
+  setRoomDoorWorld(targetRoom);
+  return true;
+}
+
+function buildPortalLink(link, fromRoom, toRoom) {
+  const fromDoor = localDoorToWorld(fromRoom, link.fromDoor);
+  const toDoor = localDoorToWorld(toRoom, link.toDoor);
+  if (!fromDoor || !toDoor) return null;
+  const width = Math.min(fromDoor.width || 1.1, toDoor.width || 1.1);
+  return {
+    id: link.id || `${fromRoom.id}-${link.fromDoor}-${toRoom.id}-${link.toDoor}`,
+    type: 'portal-teleport',
+    from: fromRoom.id,
+    to: toRoom.id,
+    fromDoor: link.fromDoor,
+    toDoor: link.toDoor,
+    fromDoorMeta: fromDoor,
+    toDoorMeta: toDoor,
+    a: [fromDoor.x, 0, fromDoor.z],
+    b: [toDoor.x, 0, toDoor.z],
+    width,
+    label: link.label || `${fromRoom.label} to ${toRoom.label}`,
+    distanceM: Math.hypot(toDoor.x - fromDoor.x, toDoor.z - fromDoor.z),
+    triggerRadius: link.triggerRadius ?? Math.max(0.65, width * 0.55),
+  };
+}
+
+export function stitchRoomsByPortalLinks(rooms, options = {}) {
+  const gap = options.gap ?? 1.25;
+  const portalLinks = options.portalLinks || [];
+  const stitched = rooms.map((room) => ({
+    ...room,
+    useFloorProxy: true,
+  }));
+
+  if (!stitched.length) return { rooms: stitched, links: [], report: { passable: false, reason: 'no_rooms' } };
+
+  const roomById = new Map(stitched.map((room) => [room.id, room]));
+  if (options.preserveMapPlacement) {
+    const originX = options.originX ?? Math.min(...stitched.map((room) => room.floorPlanX ?? 0), 0);
+    const originY = options.originY ?? Math.min(...stitched.map((room) => room.floorPlanY ?? 0), 0);
+    const metersPerPixel = options.metersPerPixel ?? DEFAULT_METERS_PER_PIXEL;
+    for (const room of stitched) {
+      room.worldX = typeof room.worldX === 'number' ? room.worldX : ((room.floorPlanX ?? 0) - originX) * metersPerPixel;
+      room.worldZ = typeof room.worldZ === 'number' ? room.worldZ : ((room.floorPlanY ?? 0) - originY) * metersPerPixel;
+      setRoomDoorWorld(room);
+    }
+
+    const links = portalLinks
+      .map((link) => {
+        const fromRoom = roomById.get(link.from);
+        const toRoom = roomById.get(link.to);
+        if (!fromRoom || !toRoom) return null;
+        return buildPortalLink(link, fromRoom, toRoom);
+      })
+      .filter(Boolean);
+
+    for (const room of stitched) {
+      const footprintCenterX = room.footprint ? (room.footprint.xMin + room.footprint.xMax) / 2 : 0;
+      const footprintCenterZ = room.footprint ? (room.footprint.zMin + room.footprint.zMax) / 2 : 0;
+      const spawnOffset = rotateLocalXZ(room, footprintCenterX, footprintCenterZ);
+      room.spawnX = (room.worldX ?? 0) + spawnOffset.x;
+      room.spawnZ = (room.worldZ ?? 0) + spawnOffset.z;
+      room.spawnYawDeg = -90 + yawDegForRoom(room);
+    }
+
+    return {
+      rooms: stitched,
+      links,
+      report: {
+        passable: links.length === portalLinks.length,
+        roomCount: stitched.length,
+        placedRoomCount: stitched.length,
+        connectorCount: links.length,
+        transitionMode: 'door_portals_map',
+        links: links.map((link) => ({
+          from: link.from,
+          fromDoor: link.fromDoor,
+          to: link.to,
+          toDoor: link.toDoor,
+          distanceM: Number(link.distanceM.toFixed(3)),
+          width: link.width,
+        })),
+      },
+    };
+  }
+
+  const rootId = options.rootId || portalLinks[0]?.from || stitched[0].id;
+  const root = roomById.get(rootId) || stitched[0];
+  root.worldX = options.startX ?? 0;
+  root.worldZ = options.startZ ?? 0;
+  setRoomDoorWorld(root);
+
+  const placed = new Set([root.id]);
+  let progressed = true;
+  while (progressed) {
+    progressed = false;
+    for (const link of portalLinks) {
+      const fromRoom = roomById.get(link.from);
+      const toRoom = roomById.get(link.to);
+      if (!fromRoom || !toRoom) continue;
+
+      if (placed.has(fromRoom.id) && !placed.has(toRoom.id)) {
+        if (placeRoomAtDoor({
+          placedRoom: fromRoom,
+          targetRoom: toRoom,
+          placedDoorName: link.fromDoor,
+          targetDoorName: link.toDoor,
+          gap: link.gap ?? gap,
+        })) {
+          placed.add(toRoom.id);
+          progressed = true;
+        }
+      } else if (placed.has(toRoom.id) && !placed.has(fromRoom.id)) {
+        if (placeRoomAtDoor({
+          placedRoom: toRoom,
+          targetRoom: fromRoom,
+          placedDoorName: link.toDoor,
+          targetDoorName: link.fromDoor,
+          gap: link.gap ?? gap,
+        })) {
+          placed.add(fromRoom.id);
+          progressed = true;
+        }
+      }
+    }
+  }
+
+  let fallbackOffset = 0;
+  for (const room of stitched) {
+    if (!placed.has(room.id)) {
+      fallbackOffset += (room.realWidthM ?? 5) + gap;
+      room.worldX = (root.worldX ?? 0) + fallbackOffset;
+      room.worldZ = root.worldZ ?? 0;
+      setRoomDoorWorld(room);
+    }
+  }
+
+  const links = portalLinks
+    .map((link) => {
+      const fromRoom = roomById.get(link.from);
+      const toRoom = roomById.get(link.to);
+      if (!fromRoom || !toRoom) return null;
+      return buildPortalLink(link, fromRoom, toRoom);
+    })
+    .filter(Boolean);
+
+  for (const room of stitched) {
+    setRoomDoorWorld(room);
+    const footprintCenterX = room.footprint ? (room.footprint.xMin + room.footprint.xMax) / 2 : 0;
+    const footprintCenterZ = room.footprint ? (room.footprint.zMin + room.footprint.zMax) / 2 : 0;
+    const spawnOffset = rotateLocalXZ(room, footprintCenterX, footprintCenterZ);
+    room.spawnX = (room.worldX ?? 0) + spawnOffset.x;
+    room.spawnZ = (room.worldZ ?? 0) + spawnOffset.z;
+    room.spawnYawDeg = -90 + yawDegForRoom(room);
+  }
+
+  const report = {
+    passable: links.length === portalLinks.length && placed.size === stitched.length,
+    roomCount: stitched.length,
+    placedRoomCount: placed.size,
+    connectorCount: links.length,
+    transitionMode: 'door_portals',
+    links: links.map((link) => ({
+      from: link.from,
+      fromDoor: link.fromDoor,
+      to: link.to,
+      toDoor: link.toDoor,
+      distanceM: Number(link.distanceM.toFixed(3)),
+      width: link.width,
+    })),
+  };
+
+  return { rooms: stitched, links, report };
+}
+</file>
+
+<file path="src/renderer/worldRenderer.js">
+import * as THREE from 'three';
+import {
+  DropInViewer,
+  LogLevel,
+  SceneRevealMode,
+} from '@mkkellogg/gaussian-splats-3d';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {
+  acceleratedRaycast,
+  computeBoundsTree,
+  disposeBoundsTree,
+} from 'three-mesh-bvh';
+import {
+  directionForWall,
+  inverseRotateWorldXZ,
+  inwardDirectionForWall,
+  PLAYER_EYE_HEIGHT,
+} from '../core/roomAligner.js';
+import { PlayerController } from './playerController.js';
+
+THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
+THREE.Mesh.prototype.raycast = acceleratedRaycast;
+
+const SPLAT_ALPHA_REMOVAL_THRESHOLD = 5;
+const _rayDirectionDown = new THREE.Vector3(0, -1, 0);
+
+function outwardForDoor(door) {
+  return door?.worldOutward || directionForWall(door?.wall);
+}
+
+function inwardForDoor(door) {
+  return door?.worldInward || inwardDirectionForWall(door?.wall);
+}
+
+function wallFromLocalDirection(direction, fallback = 'east') {
+  if (!direction || (!direction.x && !direction.z)) return fallback;
+  if (Math.abs(direction.x) >= Math.abs(direction.z)) {
+    return direction.x >= 0 ? 'east' : 'west';
+  }
+  return direction.z >= 0 ? 'south' : 'north';
+}
+
+function objectUrlFor(source) {
+  if (!source) return null;
+  if (typeof source === 'string') return { url: source, revoke: null };
+  const url = URL.createObjectURL(source);
+  return { url, revoke: () => URL.revokeObjectURL(url) };
+}
+
+function disposeObject(root) {
+  root.traverse((obj) => {
+    if (!obj.isMesh) return;
+    obj.geometry?.disposeBoundsTree?.();
+    obj.geometry?.dispose?.();
+    const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+    materials.forEach((mat) => mat?.dispose?.());
+  });
+}
+
+function makeLine(points, color = 0xc8a948) {
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const material = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.78 });
+  return new THREE.Line(geometry, material);
+}
+
+export class WorldRenderer {
+  constructor(canvas, callbacks = {}) {
+    this.canvas = canvas;
+    this.callbacks = callbacks;
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x080807);
+    this.camera = new THREE.PerspectiveCamera(68, 1, 0.05, 500);
+    this.camera.position.set(0, 1.65, 7);
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.clock = new THREE.Clock();
+    this.dropIn = null;
+    this.colliderRoots = [];
+    this.colliderMeshes = [];
+    this.roomDebugRoots = [];
+    this.portalTransitions = [];
+    this.roomTransforms = [];
+    this.roomById = new Map();
+    this.spawnPoint = [0, 1.65, 6];
+    this.spawnYawDeg = 180;
+    this.lastPortalAt = 0;
+    this.running = true;
+    this.disposed = false;
+    this.loadVersion = 0;
+    this.showColliders = false;
+    this.loader = new GLTFLoader();
+    this.player = new PlayerController(this.camera, canvas);
+
+    this._resizeObserver = new ResizeObserver(() => this.resize());
+    this._resizeObserver.observe(canvas.parentElement || canvas);
+
+    this._setupScene();
+    this.resize();
+    this._animate = this._animate.bind(this);
+    requestAnimationFrame(this._animate);
+  }
+
+  _setupScene() {
+    const grid = new THREE.GridHelper(70, 70, 0x514830, 0x22221d);
+    grid.name = 'world-grid';
+    grid.material.transparent = true;
+    grid.material.opacity = 0.38;
+    this.scene.add(grid);
+
+    const ambient = new THREE.HemisphereLight(0xfff2d2, 0x2e453f, 0.95);
+    this.scene.add(ambient);
+
+    const key = new THREE.DirectionalLight(0xffffff, 0.45);
+    key.position.set(4, 7, 3);
+    this.scene.add(key);
+  }
+
+  resize() {
+    const parent = this.canvas.parentElement;
+    const width = Math.max(1, parent?.clientWidth || this.canvas.clientWidth || 1);
+    const height = Math.max(1, parent?.clientHeight || this.canvas.clientHeight || 1);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height, false);
+  }
+
+  setShowColliders(value) {
+    this.showColliders = Boolean(value);
+    for (const mesh of this.colliderMeshes) {
+      mesh.visible = this.showColliders;
+    }
+    for (const root of this.roomDebugRoots) {
+      if (root.userData.debugOnly) root.visible = this.showColliders;
+    }
+  }
+
+  setCollisionEnabled(value) {
+    this.player.setCollisionEnabled(value);
+  }
+
+  async clear() {
+    if (this.dropIn) {
+      this.scene.remove(this.dropIn);
+      await this.dropIn.dispose().catch(() => {});
+      this.dropIn = null;
+    }
+
+    for (const root of [...this.colliderRoots, ...this.roomDebugRoots]) {
+      this.scene.remove(root);
+      disposeObject(root);
+    }
+    this.colliderRoots = [];
+    this.colliderMeshes = [];
+    this.roomDebugRoots = [];
+    this.portalTransitions = [];
+    this.roomTransforms = [];
+    this.roomById = new Map();
+  }
+
+  _makeDropInViewer() {
+    return new DropInViewer({
+      dynamicScene: true,
+      gpuAcceleratedSort: false,
+      integerBasedSort: false,
+      sharedMemoryForWorkers: typeof crossOriginIsolated !== 'undefined' && crossOriginIsolated,
+      sceneRevealMode: SceneRevealMode.Instant,
+      logLevel: LogLevel.None,
+      halfPrecisionCovariancesOnGPU: false,
+      antialiased: false,
+      maxScreenSpaceSplatSize: 96,
+      kernel2DSize: 0.12,
+      focalAdjustment: 1.12,
+      inMemoryCompressionLevel: 1,
+      freeIntermediateSplatData: true,
+    });
+  }
+
+  _splatSourceForRoom(room) {
+    if (!room || room.visualFormat === 'glb') return null;
+    return room.splatFile || room.splatUrl;
+  }
+
+  _splatSourceMeta(room, url = null) {
+    return {
+      id: room.id,
+      label: room.label,
+      url,
+      format: room.visualFormat || 'spz',
+      pointCount: room.sourceRoom?.analysis?.numPoints || room.sourceRoom?.demoMeta?.numPoints || null,
+    };
+  }
+
+  async loadRooms(roomTransforms, links = []) {
+    const loadVersion = ++this.loadVersion;
+    await this.clear();
+    if (this.disposed || loadVersion !== this.loadVersion) return;
+    this.roomTransforms = roomTransforms;
+    this.roomById = new Map(roomTransforms.map((room) => [room.id, room]));
+    this.spawnPoint = roomTransforms[0]?.spawnPoint || [0, 1.65, 4];
+    this.spawnYawDeg = roomTransforms[0]?.spawnYawDeg ?? 180;
+
+    this.callbacks.onStatus?.('Loading splat rooms...');
+
+    this.dropIn = this._makeDropInViewer();
+    this.dropIn.name = 'splat-stitcher-dropin';
+    this.scene.add(this.dropIn);
+
+    const splatHandles = [];
+    const splatScenes = [];
+    const loadedSplatSources = [];
+    const placeholderRooms = [];
+    const meshRooms = [];
+
+    for (const room of roomTransforms) {
+      if (room.visualFormat === 'glb') {
+        meshRooms.push(room);
+        continue;
+      }
+      const source = this._splatSourceForRoom(room);
+      if (!source) {
+        placeholderRooms.push(room);
+        continue;
+      }
+      const handle = objectUrlFor(source);
+      splatHandles.push(handle);
+      loadedSplatSources.push(this._splatSourceMeta(room, handle.url));
+      splatScenes.push({
+        path: handle.url,
+        splatAlphaRemovalThreshold: SPLAT_ALPHA_REMOVAL_THRESHOLD,
+        position: room.position,
+        rotation: room.splatQuaternion,
+        scale: room.scale,
+      });
+    }
+
+    if (splatScenes.length) {
+      this.callbacks.onStatus?.(`Loading ${splatScenes.length} splat rooms as one tour...`);
+      try {
+        await this.dropIn.addSplatScenes(splatScenes, false, (percentComplete, percentLabel) => {
+          if (this.disposed || loadVersion !== this.loadVersion) return;
+          const percent = Number.isFinite(percentComplete) ? `${Math.round(percentComplete)}%` : percentLabel || '';
+          this.callbacks.onStatus?.(`Loading full splat tour ${percent}`.trim());
+        });
+      } catch (error) {
+        if (this.disposed || loadVersion !== this.loadVersion) return;
+        throw error;
+      } finally {
+        splatHandles.forEach((handle) => handle?.revoke?.());
+      }
+    }
+    if (this.disposed || loadVersion !== this.loadVersion) return;
+
+    for (const room of meshRooms) {
+      this.callbacks.onStatus?.(`Loading ${room.label} mesh...`);
+      await this._loadVisibleGLB(room);
+      if (this.disposed || loadVersion !== this.loadVersion) return;
+    }
+
+    for (const room of placeholderRooms) {
+      this._addPlaceholder(room, 0x2b342d);
+    }
+
+    for (const [index, room] of roomTransforms.entries()) {
+      this.callbacks.onStatus?.(`Preparing ${room.label} (${index + 1}/${roomTransforms.length})...`);
+      if (room.useFloorProxy) {
+        this._addProxyFloor(room);
+      } else if (room.colliderUrl || room.colliderFile) {
+        await this._loadCollider(room);
+        if (this.disposed || loadVersion !== this.loadVersion) return;
+        if (room.footprint) this._addProxyFloor(room);
+      } else {
+        this._addFallbackFloor(room);
+      }
+      this._addRoomDebug(room);
+    }
+
+    this._addDoorConnectors(links);
+    this._addPortalVisuals(links);
+    this._addPortalHandoffVisuals(links);
+    this._addLinks(links);
+    this._configurePortalTransitions(links);
+    this.scene.updateMatrixWorld(true);
+    const passabilityReport = this._simulateJoinedPath(roomTransforms, links);
+    window.__splatStitcherActiveBuild = {
+      roomCount: roomTransforms.length,
+      splatCount: loadedSplatSources.length,
+      fullSpzCount: loadedSplatSources.filter((source) => source.format === 'spz' && source.url.includes('.spz')).length,
+      portalCount: links.filter((link) => link.type === 'portal-teleport').length,
+      sources: loadedSplatSources,
+      meshCount: meshRooms.length,
+      placeholderCount: placeholderRooms.length,
+    };
+    window.__splatStitcherReport = passabilityReport;
+    document.documentElement.dataset.splatStitcherReport = JSON.stringify(passabilityReport);
+    document.documentElement.dataset.splatStitcherActiveBuild = JSON.stringify(window.__splatStitcherActiveBuild);
+    this.player.teleportTo(this.spawnPoint, this.spawnYawDeg);
+    const routeStatus = links.length
+      ? passabilityReport.passable
+        ? passabilityReport.transitionMode === 'door_portals'
+          ? `door portals ready (${passabilityReport.portalCount} links)`
+          : `door path passable (${passabilityReport.samples} samples)`
+        : `door path blocked near ${passabilityReport.failedAt?.map((value) => value.toFixed(2)).join(', ')}`
+      : 'single room ready';
+    this.callbacks.onStatus?.(`World ready: ${roomTransforms.length} rooms; ${routeStatus}`);
+  }
+
+  async _loadSplat(room) {
+    const source = room.splatFile || room.splatUrl;
+    if (!source) {
+      this._addPlaceholder(room, 0x2b342d);
+      return;
+    }
+    const handle = objectUrlFor(source);
+    try {
+      await this.dropIn.addSplatScene(handle.url, {
+        splatAlphaRemovalThreshold: SPLAT_ALPHA_REMOVAL_THRESHOLD,
+        showLoadingUI: false,
+        progressiveLoad: false,
+        position: room.position,
+        rotation: room.splatQuaternion,
+        scale: room.scale,
+      });
+    } finally {
+      handle?.revoke?.();
+    }
+  }
+
+  async _loadVisibleGLB(room) {
+    const handle = objectUrlFor(room.splatFile || room.splatUrl);
+    if (!handle) return;
+    try {
+      const gltf = await this.loader.loadAsync(handle.url);
+      gltf.scene.position.fromArray(room.position);
+      gltf.scene.quaternion.fromArray(room.splatQuaternion);
+      gltf.scene.scale.fromArray(room.scale);
+      gltf.scene.name = `visual-${room.id}`;
+      this.scene.add(gltf.scene);
+      this.roomDebugRoots.push(gltf.scene);
+    } finally {
+      handle.revoke?.();
+    }
+  }
+
+  async _loadCollider(room) {
+    const handle = objectUrlFor(room.colliderFile || room.colliderUrl);
+    if (!handle) return;
+    try {
+      const gltf = await this.loader.loadAsync(handle.url);
+      const root = gltf.scene;
+      root.name = `collider-${room.id}`;
+      root.position.fromArray(room.colliderPosition);
+      root.quaternion.fromArray(room.colliderQuaternion);
+      root.scale.fromArray(room.colliderScale);
+      root.updateWorldMatrix(true, true);
+
+      root.traverse((child) => {
+        if (!child.isMesh) return;
+        child.geometry.computeBoundsTree?.();
+        child.material = new THREE.MeshBasicMaterial({
+          color: 0x28d890,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.18,
+          depthWrite: false,
+        });
+        child.visible = this.showColliders;
+        child.frustumCulled = false;
+        this.colliderMeshes.push(child);
+      });
+
+      this.scene.add(root);
+      this.colliderRoots.push(root);
+    } finally {
+      handle.revoke?.();
+    }
+  }
+
+  _addFallbackFloor(room) {
+    const root = new THREE.Group();
+    root.name = `fallback-floor-${room.id}`;
+    const geometry = new THREE.BoxGeometry(7, 0.08, 5);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x1fbf81,
+      transparent: true,
+      opacity: 0.08,
+      visible: false,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(room.colliderPosition[0], 0, room.colliderPosition[2]);
+    mesh.geometry.computeBoundsTree?.();
+    root.add(mesh);
+    this.scene.add(root);
+    this.colliderRoots.push(root);
+    this.colliderMeshes.push(mesh);
+  }
+
+  _addProxyFloor(room) {
+    const root = new THREE.Group();
+    root.name = `proxy-floor-${room.id}`;
+    const footprint = room.footprint || {
+      xMin: -Math.max(2, (room.sourceRoom?.realWidthM || 5) / 2),
+      xMax: Math.max(2, (room.sourceRoom?.realWidthM || 5) / 2),
+      zMin: -Math.max(2, (room.sourceRoom?.realDepthM || 4) / 2),
+      zMax: Math.max(2, (room.sourceRoom?.realDepthM || 4) / 2),
+    };
+    const width = Math.max(0.5, footprint.xMax - footprint.xMin);
+    const depth = Math.max(0.5, footprint.zMax - footprint.zMin);
+    const geometry = new THREE.BoxGeometry(width, 0.08, depth);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x22d58e,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.2,
+      depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.name = `proxy-floor-mesh-${room.id}`;
+    const centerOffset = new THREE.Vector3((footprint.xMin + footprint.xMax) / 2, 0, (footprint.zMin + footprint.zMax) / 2);
+    centerOffset.applyQuaternion(new THREE.Quaternion().fromArray(room.colliderQuaternion));
+    mesh.position.set(
+      room.colliderPosition[0] + centerOffset.x,
+      -0.04,
+      room.colliderPosition[2] + centerOffset.z,
+    );
+    mesh.quaternion.fromArray(room.colliderQuaternion);
+    mesh.visible = this.showColliders;
+    mesh.frustumCulled = false;
+    mesh.geometry.computeBoundsTree?.();
+    root.add(mesh);
+    this.scene.add(root);
+    this.colliderRoots.push(root);
+    this.colliderMeshes.push(mesh);
+  }
+
+  _addPlaceholder(room, color) {
+    const geometry = new THREE.BoxGeometry(5, 2.8, 4);
+    const material = new THREE.MeshBasicMaterial({
+      color,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.5,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(room.position[0], 1.4, room.position[2]);
+    mesh.name = `placeholder-${room.id}`;
+    this.scene.add(mesh);
+    this.roomDebugRoots.push(mesh);
+  }
+
+  _addRoomDebug(room) {
+    const root = new THREE.Group();
+    root.name = `debug-${room.id}`;
+    root.userData.debugOnly = true;
+    root.visible = this.showColliders;
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(0.32, 0.42, 32),
+      new THREE.MeshBasicMaterial({ color: 0xf2c84b, side: THREE.DoubleSide }),
+    );
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.set(room.colliderPosition[0], 0.025, room.colliderPosition[2]);
+    root.add(ring);
+
+    for (const door of room.doors || []) {
+      const marker = new THREE.Mesh(
+        new THREE.BoxGeometry(Math.max(0.35, door.width || 0.7), 0.05, 0.18),
+        new THREE.MeshBasicMaterial({ color: 0x38dca2, transparent: true, opacity: 0.85 }),
+      );
+      marker.position.set(
+        room.colliderPosition[0] + (door.worldX || 0),
+        0.06,
+        room.colliderPosition[2] + (door.worldZ || 0),
+      );
+      marker.rotation.y = THREE.MathUtils.degToRad(door.facingYaw || 0);
+      root.add(marker);
+    }
+
+    for (const [doorName, door] of Object.entries(room.stitchDoorWorld || {})) {
+      if (!door) continue;
+      const marker = new THREE.Mesh(
+        new THREE.BoxGeometry(Math.max(0.35, door.width || 0.8), 0.08, 0.22),
+        new THREE.MeshBasicMaterial({
+          color: doorName === 'entry' ? 0x56c7ff : 0xf5b94f,
+          transparent: true,
+          opacity: 0.9,
+        }),
+      );
+      marker.position.set(door.x, 0.08, door.z);
+      marker.name = `stitch-door-${room.id}-${doorName}`;
+      root.add(marker);
+    }
+
+    this.scene.add(root);
+    this.roomDebugRoots.push(root);
+  }
+
+  _addDoorConnectors(links) {
+    const doorLinks = links.filter((link) => link.type === 'door-stitch');
+    if (!doorLinks.length) return;
+
+    const root = new THREE.Group();
+    root.name = 'door-connector-floors';
+    for (const link of doorLinks) {
+      const a = new THREE.Vector3(link.a[0], 0, link.a[2]);
+      const b = new THREE.Vector3(link.b[0], 0, link.b[2]);
+      const direction = b.clone().sub(a);
+      const length = Math.max(0.2, direction.length());
+      const midpoint = a.clone().add(b).multiplyScalar(0.5);
+      const geometry = new THREE.BoxGeometry(length + 0.16, 0.08, Math.max(0.7, link.width || 1.1));
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xe0b640,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.32,
+        depthWrite: false,
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.name = `door-connector-${link.id}`;
+      mesh.position.set(midpoint.x, -0.04, midpoint.z);
+      mesh.rotation.y = -Math.atan2(direction.z, direction.x);
+      mesh.visible = this.showColliders;
+      mesh.frustumCulled = false;
+      mesh.geometry.computeBoundsTree?.();
+      root.add(mesh);
+      this.colliderMeshes.push(mesh);
+    }
+    this.scene.add(root);
+    this.colliderRoots.push(root);
+  }
+
+  _addPortalVisuals(links) {
+    const doorLinks = links.filter((link) => link.type === 'door-stitch');
+    if (!doorLinks.length) return;
+
+    const root = new THREE.Group();
+    root.name = 'portal-visuals';
+    root.userData.debugOnly = true;
+    root.visible = this.showColliders;
+    const frameMaterial = new THREE.MeshStandardMaterial({
+      color: 0x3a2616,
+      roughness: 0.9,
+      metalness: 0.05,
+    });
+    const floorMaterial = new THREE.MeshStandardMaterial({
+      color: 0x191713,
+      roughness: 0.95,
+      metalness: 0.0,
+    });
+    const sideMaterial = new THREE.MeshStandardMaterial({
+      color: 0x0a0908,
+      transparent: true,
+      opacity: 0.3,
+      roughness: 1,
+      depthWrite: false,
+    });
+
+    for (const link of doorLinks) {
+      const a = new THREE.Vector3(link.a[0], 0, link.a[2]);
+      const b = new THREE.Vector3(link.b[0], 0, link.b[2]);
+      const direction = b.clone().sub(a);
+      const length = Math.max(0.2, direction.length());
+      const width = Math.max(0.9, link.width || 1.15);
+      const yaw = -Math.atan2(direction.z, direction.x);
+      const midpoint = a.clone().add(b).multiplyScalar(0.5);
+      const dirUnit = direction.clone().normalize();
+      const sideUnit = new THREE.Vector3(-dirUnit.z, 0, dirUnit.x);
+
+      const floor = new THREE.Mesh(new THREE.BoxGeometry(length + 0.28, 0.04, width + 0.18), floorMaterial.clone());
+      floor.name = `portal-threshold-${link.id}`;
+      floor.position.set(midpoint.x, 0.012, midpoint.z);
+      floor.rotation.y = yaw;
+      root.add(floor);
+
+      for (const side of [-1, 1]) {
+        const sideWall = new THREE.Mesh(new THREE.BoxGeometry(length + 0.18, 1.15, 0.06), sideMaterial.clone());
+        sideWall.name = `portal-side-${link.id}-${side}`;
+        sideWall.position.set(
+          midpoint.x + sideUnit.x * side * (width / 2 + 0.05),
+          0.62,
+          midpoint.z + sideUnit.z * side * (width / 2 + 0.05),
+        );
+        sideWall.rotation.y = yaw;
+        root.add(sideWall);
+      }
+
+      this._addPortalFrame(root, a.clone().addScaledVector(dirUnit, 0.09), yaw, width, frameMaterial);
+      this._addPortalFrame(root, b.clone().addScaledVector(dirUnit, -0.09), yaw, width, frameMaterial);
+    }
+
+    this.scene.add(root);
+    this.roomDebugRoots.push(root);
+  }
+
+  _addPortalHandoffVisuals(links) {
+    const portalLinks = links.filter((link) => link.type === 'portal-teleport');
+    if (!portalLinks.length) return;
+
+    const root = new THREE.Group();
+    root.name = 'door-portal-handoffs';
+    const thresholdMaterial = new THREE.MeshStandardMaterial({
+      color: 0x18d89a,
+      emissive: 0x073426,
+      roughness: 0.8,
+      metalness: 0.05,
+      transparent: true,
+      opacity: 0.72,
+    });
+    const frameMaterial = new THREE.MeshStandardMaterial({
+      color: 0xc8a948,
+      emissive: 0x1d1602,
+      roughness: 0.7,
+      metalness: 0.15,
+      transparent: true,
+      opacity: 0.82,
+    });
+
+    for (const link of portalLinks) {
+      this._addDoorPortalMarker(root, link.a, link.fromDoorMeta, link.width, thresholdMaterial, frameMaterial);
+      this._addDoorPortalMarker(root, link.b, link.toDoorMeta, link.width, thresholdMaterial, frameMaterial);
+    }
+
+    this.scene.add(root);
+    this.roomDebugRoots.push(root);
+  }
+
+  _addDoorPortalMarker(root, point, door, width, thresholdMaterial, frameMaterial) {
+    if (!point || !door) return;
+    const outward = outwardForDoor(door);
+    const inward = inwardForDoor(door);
+    const yaw = -Math.atan2(outward.z, outward.x);
+    const portalWidth = Math.max(0.85, width || door.width || 1.1);
+    const center = new THREE.Vector3(point[0], 0, point[2]);
+
+    const threshold = new THREE.Mesh(
+      new THREE.BoxGeometry(0.18, 0.045, portalWidth),
+      thresholdMaterial.clone(),
+    );
+    threshold.name = `portal-trigger-${door.label || door.wall}`;
+    threshold.position.set(
+      center.x + inward.x * 0.28,
+      0.035,
+      center.z + inward.z * 0.28,
+    );
+    threshold.rotation.y = yaw;
+    threshold.frustumCulled = false;
+    root.add(threshold);
+  }
+
+  _addPortalFrame(root, center, yaw, width, material) {
+    const height = 2.28;
+    const jambThickness = 0.11;
+    const depth = 0.22;
+    const lintelHeight = 0.16;
+    const pieces = [
+      { name: 'left', size: [depth, height, jambThickness], pos: [0, height / 2, -width / 2] },
+      { name: 'right', size: [depth, height, jambThickness], pos: [0, height / 2, width / 2] },
+      { name: 'top', size: [depth, lintelHeight, width + jambThickness], pos: [0, height + lintelHeight / 2, 0] },
+    ];
+
+    for (const piece of pieces) {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(...piece.size), material.clone());
+      mesh.name = `portal-frame-${piece.name}`;
+      const localX = piece.pos[0];
+      const localZ = piece.pos[2];
+      mesh.position.set(
+        center.x + Math.cos(yaw) * localX + Math.sin(yaw) * localZ,
+        piece.pos[1],
+        center.z - Math.sin(yaw) * localX + Math.cos(yaw) * localZ,
+      );
+      mesh.rotation.y = yaw;
+      root.add(mesh);
+    }
+  }
+
+  _addLinks(links) {
+    const debugLinks = links.filter((link) => link.type !== 'door-stitch' && link.type !== 'portal-teleport');
+    if (!debugLinks.length) return;
+    const root = new THREE.Group();
+    root.name = 'room-links';
+    root.userData.debugOnly = true;
+    root.visible = this.showColliders;
+    for (const link of debugLinks) {
+      const a = new THREE.Vector3(link.a[0], 0.08, link.a[2]);
+      const b = new THREE.Vector3(link.b[0], 0.08, link.b[2]);
+      root.add(makeLine([a, b]));
+    }
+    this.scene.add(root);
+    this.roomDebugRoots.push(root);
+  }
+
+  _configurePortalTransitions(links) {
+    const portalLinks = links.filter((link) => link.type === 'portal-teleport');
+    this.portalTransitions = portalLinks.flatMap((link) => {
+      const forward = this._makePortalTransition({
+        id: `${link.id}:forward`,
+        from: link.from,
+        to: link.to,
+        sourcePoint: link.a,
+        sourceDoor: link.fromDoorMeta,
+        targetPoint: link.b,
+        targetDoor: link.toDoorMeta,
+        radius: link.triggerRadius,
+        label: link.label,
+      });
+      const backward = this._makePortalTransition({
+        id: `${link.id}:backward`,
+        from: link.to,
+        to: link.from,
+        sourcePoint: link.b,
+        sourceDoor: link.toDoorMeta,
+        targetPoint: link.a,
+        targetDoor: link.fromDoorMeta,
+        radius: link.triggerRadius,
+        label: link.label,
+      });
+      return [forward, backward].filter(Boolean);
+    });
+
+    const publicTransitions = this.portalTransitions.map((transition) => ({
+      id: transition.id,
+      from: transition.from,
+      to: transition.to,
+      source: transition.source.toArray().map((value) => Number(value.toFixed(3))),
+      target: transition.target.map((value) => Number(value.toFixed(3))),
+      radius: Number(transition.radius.toFixed(3)),
+      yawDeg: Number(transition.yawDeg.toFixed(1)),
+    }));
+    window.__splatStitcherPortalTransitions = publicTransitions;
+    document.documentElement.dataset.splatStitcherPortalTransitions = JSON.stringify(publicTransitions);
+  }
+
+  _makePortalTransition({ id, from, to, sourcePoint, targetPoint, targetDoor, radius, label }) {
+    if (!sourcePoint || !targetPoint || !targetDoor) return null;
+    const targetInward = inwardForDoor(targetDoor);
+    return {
+      id,
+      from,
+      to,
+      label,
+      source: new THREE.Vector3(sourcePoint[0], PLAYER_EYE_HEIGHT, sourcePoint[2]),
+      target: [
+        targetPoint[0] + targetInward.x * 0.9,
+        PLAYER_EYE_HEIGHT,
+        targetPoint[2] + targetInward.z * 0.9,
+      ],
+      yawDeg: targetInward.yawDeg,
+      radius: Math.max(0.55, radius || 0.75),
+    };
+  }
+
+  _simulateJoinedPath(roomTransforms, links) {
+    const portalLinks = links.filter((link) => link.type === 'portal-teleport');
+    if (portalLinks.length) {
+      return this._simulatePortalGraph(roomTransforms, portalLinks);
+    }
+
+    const doorLinks = links.filter((link) => link.type === 'door-stitch');
+    if (!roomTransforms.length) {
+      return { passable: false, reason: 'no_rooms', samples: 0, connectorCount: 0 };
+    }
+    if (!doorLinks.length) {
+      return { passable: true, reason: 'single_or_unstitched', samples: 1, connectorCount: 0 };
+    }
+
+    const roomById = new Map(roomTransforms.map((room) => [room.id, room]));
+    let samples = 0;
+    const checkedLinks = [];
+
+    for (const link of doorLinks) {
+      const from = roomById.get(link.from);
+      const to = roomById.get(link.to);
+      if (!from || !to) {
+        return {
+          passable: false,
+          reason: 'missing_link_room',
+          samples,
+          connectorCount: doorLinks.length,
+          roomCount: roomTransforms.length,
+        };
+      }
+
+      const waypoints = [
+        new THREE.Vector3(from.colliderPosition[0], 0, from.colliderPosition[2]),
+        new THREE.Vector3(link.a[0], 0, link.a[2]),
+        new THREE.Vector3(link.b[0], 0, link.b[2]),
+        new THREE.Vector3(to.colliderPosition[0], 0, to.colliderPosition[2]),
+      ];
+
+      for (let i = 1; i < waypoints.length; i += 1) {
+        const start = waypoints[i - 1];
+        const end = waypoints[i];
+        const distance = start.distanceTo(end);
+        const steps = Math.max(1, Math.ceil(distance / 0.45));
+        for (let step = 0; step <= steps; step += 1) {
+          const t = step / steps;
+          const point = start.clone().lerp(end, t);
+          samples += 1;
+          if (!this._hasFloorAt(point.x, point.z)) {
+            return {
+              passable: false,
+              reason: 'missing_floor',
+              failedAt: [point.x, 0, point.z],
+              failedLink: { from: link.from, to: link.to },
+              samples,
+              connectorCount: doorLinks.length,
+              roomCount: roomTransforms.length,
+            };
+          }
+        }
+      }
+      checkedLinks.push(`${link.from}->${link.to}`);
+    }
+
+    return {
+      passable: true,
+      reason: 'sampled_floor_route',
+      samples,
+      checkedLinks,
+      connectorCount: doorLinks.length,
+      roomCount: roomTransforms.length,
+      connectors: doorLinks.map((link) => ({
+        from: link.from,
+        to: link.to,
+        distanceM: Number((link.distanceM || 0).toFixed(3)),
+        widthM: Number((link.width || 0).toFixed(2)),
+      })),
+    };
+  }
+
+  _simulatePortalGraph(roomTransforms, portalLinks) {
+    if (!roomTransforms.length) {
+      return { passable: false, reason: 'no_rooms', samples: 0, connectorCount: 0 };
+    }
+    let samples = 0;
+    const checkedLinks = [];
+
+    for (const link of portalLinks) {
+      const sourceInward = inwardForDoor(link.fromDoorMeta);
+      const targetInward = inwardForDoor(link.toDoorMeta);
+      const sourcePoint = {
+        x: link.a[0] + sourceInward.x * 0.55,
+        z: link.a[2] + sourceInward.z * 0.55,
+      };
+      const targetPoint = {
+        x: link.b[0] + targetInward.x * 0.55,
+        z: link.b[2] + targetInward.z * 0.55,
+      };
+      samples += 2;
+
+      if (!this._hasFloorAt(sourcePoint.x, sourcePoint.z)) {
+        return {
+          passable: false,
+          reason: 'missing_source_floor',
+          failedAt: [sourcePoint.x, 0, sourcePoint.z],
+          failedLink: { from: link.from, to: link.to, door: link.fromDoor },
+          samples,
+          portalCount: portalLinks.length,
+          roomCount: roomTransforms.length,
+          transitionMode: 'door_portals',
+        };
+      }
+      if (!this._hasFloorAt(targetPoint.x, targetPoint.z)) {
+        return {
+          passable: false,
+          reason: 'missing_target_floor',
+          failedAt: [targetPoint.x, 0, targetPoint.z],
+          failedLink: { from: link.from, to: link.to, door: link.toDoor },
+          samples,
+          portalCount: portalLinks.length,
+          roomCount: roomTransforms.length,
+          transitionMode: 'door_portals',
+        };
+      }
+      checkedLinks.push(`${link.from}:${link.fromDoor}->${link.to}:${link.toDoor}`);
+    }
+
+    return {
+      passable: true,
+      reason: 'sampled_door_portals',
+      samples,
+      checkedLinks,
+      portalCount: portalLinks.length,
+      connectorCount: portalLinks.length,
+      roomCount: roomTransforms.length,
+      transitionMode: 'door_portals',
+      connectors: portalLinks.map((link) => ({
+        from: link.from,
+        to: link.to,
+        fromDoor: link.fromDoor,
+        toDoor: link.toDoor,
+        distanceM: Number((link.distanceM || 0).toFixed(3)),
+        widthM: Number((link.width || 0).toFixed(2)),
+      })),
+    };
+  }
+
+  _hasFloorAt(x, z) {
+    const raycaster = new THREE.Raycaster(new THREE.Vector3(x, 4, z), _rayDirectionDown, 0, 8);
+    for (const collider of this.colliderMeshes) {
+      collider.updateWorldMatrix(true, false);
+      const hits = raycaster.intersectObject(collider, true);
+      if (hits.some((hit) => hit.point.y > -0.25 && hit.point.y < 0.25)) return true;
+    }
+    return false;
+  }
+
+  resetPlayer() {
+    this.player.teleportTo(this.spawnPoint, this.spawnYawDeg);
+  }
+
+  captureDoorAnchor(roomId, doorId) {
+    const room = this.roomTransforms.find((item) => item.id === roomId);
+    if (!room) {
+      throw new Error('Selected room is not loaded in the world');
+    }
+
+    const existingDoor = room.sourceRoom?.portalDoors?.[doorId] || room.sourceRoom?.stitchDoors?.[doorId] || null;
+    const worldDelta = {
+      x: this.camera.position.x - room.position[0],
+      z: this.camera.position.z - room.position[2],
+    };
+    const local = inverseRotateWorldXZ(room.sourceRoom || room, worldDelta.x, worldDelta.z);
+    const worldForward = {
+      x: -Math.sin(this.player.yaw),
+      z: -Math.cos(this.player.yaw),
+    };
+    const localForward = inverseRotateWorldXZ(room.sourceRoom || room, worldForward.x, worldForward.z);
+    const wall = wallFromLocalDirection(localForward, existingDoor?.wall || 'east');
+
+    return {
+      x: Number(local.x.toFixed(3)),
+      z: Number(local.z.toFixed(3)),
+      wall,
+      width: existingDoor?.width || 1.15,
+      label: existingDoor?.label || doorId,
+      calibrated: true,
+    };
+  }
+
+  _checkPortalTransitions() {
+    if (!this.portalTransitions.length) return;
+    const now = performance.now();
+    if (now - this.lastPortalAt < 950) return;
+    const position = this.camera.position;
+
+    for (const transition of this.portalTransitions) {
+      const dx = position.x - transition.source.x;
+      const dz = position.z - transition.source.z;
+      if (dx * dx + dz * dz > transition.radius * transition.radius) continue;
+
+      this.player.teleportTo(transition.target, transition.yawDeg);
+      this.lastPortalAt = now;
+      const payload = {
+        id: transition.id,
+        from: transition.from,
+        to: transition.to,
+        target: transition.target,
+        yawDeg: transition.yawDeg,
+        at: Date.now(),
+      };
+      window.__splatStitcherLastPortal = payload;
+      document.documentElement.dataset.splatStitcherLastPortal = JSON.stringify(payload);
+      this.callbacks.onStatus?.(`Door portal: ${transition.from} -> ${transition.to}`);
+      break;
+    }
+  }
+
+  _animate() {
+    if (!this.running) return;
+    requestAnimationFrame(this._animate);
+    const delta = Math.min(0.05, this.clock.getDelta());
+    this.player.update(delta, this.colliderMeshes);
+    this._checkPortalTransitions();
+    this.renderer.render(this.scene, this.camera);
+    this.callbacks.onFrame?.({
+      position: this.camera.position.toArray(),
+      floorY: this.player.floorY,
+      locked: this.player.isLocked,
+      colliders: this.colliderMeshes.length,
+    });
+  }
+
+  dispose() {
+    this.running = false;
+    this.disposed = true;
+    this.loadVersion += 1;
+    this.player.dispose();
+    this._resizeObserver.disconnect();
+    void this.clear();
+    this.renderer.dispose();
+  }
+}
+</file>
+
+<file path="src/styles.css">
+:root {
+  color-scheme: dark;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #080807;
+  color: #f0efe7;
+  --bg: #080807;
+  --panel: #11110f;
+  --panel-2: #171713;
+  --line: #302e25;
+  --line-strong: #5c4d27;
+  --gold: #d4af47;
+  --gold-soft: rgba(212, 175, 71, 0.16);
+  --green: #2bd894;
+  --green-soft: rgba(43, 216, 148, 0.16);
+  --red: #e36a5b;
+  --muted: #a7a193;
+  --text: #f0efe7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(212, 175, 71, 0.04) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(43, 216, 148, 0.035) 1px, transparent 1px),
+    #080807;
+  background-size: 48px 48px;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #090908;
+  color: var(--text);
+  padding: 9px 10px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 71, 0.15);
+}
+
+.app-shell {
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  overflow: hidden;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 8, 7, 0.94);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  color: var(--gold);
+  background: var(--gold-soft);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.1;
+}
+
+.brand p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.metric {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: #d8d3c3;
+  background: rgba(17, 17, 15, 0.88);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.metric svg {
+  color: var(--green);
+}
+
+.workspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 360px;
+}
+
+.left-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+  border-right: 1px solid var(--line);
+  background: rgba(10, 10, 9, 0.94);
+}
+
+.rail-button {
+  width: 48px;
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #0f0f0d;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.rail-button span {
+  font-size: 10px;
+}
+
+.rail-button.active,
+.rail-button:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-soft);
+}
+
+.main-stage {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 54px minmax(0, 1fr);
+  border-right: 1px solid var(--line);
+}
+
+.stage-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(13, 13, 11, 0.92);
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.segmented button,
+.icon-button,
+.primary-button,
+.upload-button,
+.floating-reset {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  background: #10100e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 6px;
+  padding: 0 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.segmented button {
+  border: 0;
+  border-radius: 0;
+  color: var(--muted);
+}
+
+.segmented button.selected {
+  color: var(--gold);
+  background: var(--gold-soft);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.icon-button input,
+.upload-button input {
+  display: none;
+}
+
+.icon-button:hover,
+.upload-button:hover,
+.floating-reset:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.primary-button {
+  border-color: rgba(43, 216, 148, 0.55);
+  background: var(--green-soft);
+  color: var(--green);
+  font-weight: 700;
+}
+
+.map-panel,
+.world-panel {
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  background: #060605;
+}
+
+.map-panel {
+  padding: 16px;
+  overflow: auto;
+}
+
+.plan-stage {
+  position: relative;
+  width: 1220px;
+  height: 520px;
+  max-width: none;
+  min-width: 760px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #10100e;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.plan-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(212, 175, 71, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 71, 0.08) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0.018) 1px, transparent 1px, transparent 16px);
+  background-size: 40px 40px, 40px 40px, 100% 16px;
+  pointer-events: none;
+}
+
+.floor-plan-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.76;
+  background: #f6f3ed;
+}
+
+.tour-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tour-lines line {
+  stroke: rgba(18, 161, 116, 0.78);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 12 10;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
+}
+
+.tour-lines circle {
+  fill: var(--green);
+  stroke: #07100c;
+  stroke-width: 2;
+}
+
+.room-box {
+  position: absolute;
+  z-index: 2;
+  border: 1px solid rgba(212, 175, 71, 0.55);
+  background: rgba(212, 175, 71, 0.14);
+  color: #fff9df;
+  border-radius: 7px;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: 18px 1fr auto auto;
+  gap: 3px;
+  cursor: grab;
+  user-select: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+.room-box.ready {
+  border-color: rgba(43, 216, 148, 0.7);
+  background: rgba(43, 216, 148, 0.12);
+}
+
+.room-box.selected {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.room-box.disabled-room {
+  opacity: 0.48;
+  border-style: dashed;
+}
+
+.room-box strong,
+.room-box span,
+.room-box small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room-box strong {
+  font-size: 13px;
+  align-self: end;
+}
+
+.room-box span,
+.room-box small {
+  font-size: 11px;
+  color: #d8d0af;
+}
+
+.room-box-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--gold);
+}
+
+.mini-tool {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(212, 175, 71, 0.45);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.scale-widget {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(8, 8, 7, 0.86);
+}
+
+.scale-widget label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scale-widget span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.scale-widget input {
+  width: 84px;
+  padding: 6px 8px;
+}
+
+.right-panel {
+  min-height: 0;
+  overflow: auto;
+  background: rgba(10, 10, 9, 0.96);
+}
+
+.room-panel {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.danger-icon {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(227, 106, 91, 0.4);
+  border-radius: 6px;
+  background: rgba(227, 106, 91, 0.08);
+  color: var(--red);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.danger-icon:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.status-line,
+.warning-line {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(43, 216, 148, 0.28);
+  border-radius: 7px;
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.warning-line {
+  border-color: rgba(227, 106, 91, 0.4);
+  color: #ffb1a7;
+  background: rgba(227, 106, 91, 0.1);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.form-grid label,
+.scale-widget label {
+  min-width: 0;
+}
+
+.form-grid span,
+.toggle-list span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.upload-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.upload-button {
+  min-height: 42px;
+  border-color: var(--line-strong);
+  color: #eadca9;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.facts div {
+  min-height: 58px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+}
+
+.facts span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.facts strong {
+  font-size: 15px;
+}
+
+.toggle-list {
+  display: grid;
+  gap: 8px;
+}
+
+.toggle-list label {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+}
+
+.toggle-list input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--green);
+}
+
+.toggle-list span {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+}
+
+.door-list {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.subhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.door-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 58px 102px 30px;
+  gap: 8px;
+  align-items: center;
+  min-height: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #d9d4c7;
+  font-size: 12px;
+}
+
+.door-row strong,
+.door-row span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.door-calibrate {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: #eadca9;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.door-calibrate.active {
+  border-color: rgba(43, 216, 148, 0.55);
+  color: var(--green);
+  background: rgba(43, 216, 148, 0.12);
+}
+
+.muted {
+  color: var(--muted);
+  margin: 0;
+}
+
+.panel-footer {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.world-panel {
+  height: 100%;
+}
+
+.world-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+}
+
+.world-hud {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(8, 8, 7, 0.76);
+  color: #dcd6c8;
+  font-size: 12px;
+  backdrop-filter: blur(7px);
+}
+
+.world-hud.top-left {
+  top: 12px;
+  left: 12px;
+}
+
+.world-status {
+  position: absolute;
+  z-index: 4;
+  left: 12px;
+  bottom: 12px;
+  max-width: min(520px, calc(100% - 24px));
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  padding: 7px 10px;
+  border: 1px solid rgba(43, 216, 148, 0.28);
+  border-radius: 7px;
+  background: rgba(8, 8, 7, 0.76);
+  color: var(--green);
+  font-size: 12px;
+  backdrop-filter: blur(7px);
+}
+
+.world-calibration {
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid rgba(200, 169, 72, 0.42);
+  border-radius: 7px;
+  background: rgba(8, 8, 7, 0.82);
+  color: #eadca9;
+  font-size: 12px;
+  backdrop-filter: blur(7px);
+}
+
+.world-calibration div,
+.world-calibration button {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.world-calibration button {
+  border: 1px solid rgba(43, 216, 148, 0.42);
+  border-radius: 6px;
+  padding: 0 9px;
+  color: var(--green);
+  background: rgba(43, 216, 148, 0.11);
+}
+
+.world-hud div {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.floating-reset {
+  position: absolute;
+  z-index: 4;
+  right: 12px;
+  top: 12px;
+  background: rgba(8, 8, 7, 0.76);
+}
+
+.world-empty {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(212, 175, 71, 0.08), transparent 38%);
+}
+
+.world-empty h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.world-empty p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.empty-panel {
+  padding: 18px;
+  color: var(--muted);
+}
+
+@media (max-width: 1050px) {
+  .workspace {
+    grid-template-columns: 54px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) 420px;
+  }
+
+  .right-panel {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    grid-template-rows: auto 1fr;
+  }
+
+  .topbar {
+    align-items: start;
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .metric-strip {
+    justify-content: start;
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) 430px;
+  }
+
+  .left-rail {
+    flex-direction: row;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+  }
+
+  .rail-button {
+    width: 64px;
+  }
+
+  .stage-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .toolbar-actions {
+    justify-content: start;
+  }
+
+  .right-panel {
+    grid-column: auto;
+  }
+
+  .form-grid,
+  .upload-row,
+  .facts {
+    grid-template-columns: 1fr;
+  }
+}
+</file>
+
+<file path="src/ui/App.jsx">
+import React, { useMemo, useState } from 'react';
+import {
+  Box,
+  Building2,
+  CheckCircle2,
+  FileUp,
+  Gauge,
+  Layers,
+  Map,
+  Play,
+  Plus,
+  Route,
+  RotateCcw,
+  Sparkles,
+} from 'lucide-react';
+import { DEMO_ROOMS, makeEmptyRoom } from '../core/demoRooms.js';
+import { analyzeGLBCollider } from '../core/glbAnalyzer.js';
+import { detectOrientation } from '../core/orientationDetector.js';
+import {
+  LUXURY_PENTHOUSE_PLAN,
+  LUXURY_PENTHOUSE_PORTAL_LINKS,
+  LUXURY_PENTHOUSE_ROOMS,
+} from '../core/propertyPresets.js';
+import {
+  computeWorldTransforms,
+  connectRoomCenters,
+  DEFAULT_METERS_PER_PIXEL,
+  stitchRoomsByDoor,
+} from '../core/roomAligner.js';
+import { parseSplatFile } from '../core/splatParser.js';
+import { FloorPlanCanvas } from './FloorPlanCanvas.jsx';
+import { RoomPanel } from './RoomPanel.jsx';
+import { WorldViewer } from './WorldViewer.jsx';
+
+const DOOR_CALIBRATION_KEY = 'splat-stitcher-door-calibrations:v1';
+
+function readDoorCalibrations() {
+  if (typeof window === 'undefined') return {};
+  try {
+    return JSON.parse(window.localStorage.getItem(DOOR_CALIBRATION_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function writeDoorCalibration(roomId, doorId, anchor) {
+  if (typeof window === 'undefined') return;
+  const current = readDoorCalibrations();
+  const next = {
+    ...current,
+    [roomId]: {
+      ...(current[roomId] || {}),
+      [doorId]: anchor,
+    },
+  };
+  window.localStorage.setItem(DOOR_CALIBRATION_KEY, JSON.stringify(next));
+}
+
+function withDoorCalibrations(room) {
+  const saved = readDoorCalibrations()[room.id];
+  if (!saved) return room;
+  return {
+    ...room,
+    portalDoors: {
+      ...(room.portalDoors || {}),
+      ...saved,
+    },
+  };
+}
+
+function cloneDemoRooms() {
+  return DEMO_ROOMS.map((room, index) => ({
+    ...room,
+    enabled: index < 2,
+    splatYLift: room.demoMeta.splatYLift,
+    colliderYLift: room.demoMeta.colliderYLift,
+    analysis: {
+      numPoints: room.demoMeta.numPoints,
+      sampledPoints: Math.min(room.demoMeta.numPoints, 250000),
+      floorY: room.demoMeta.splatFloorY,
+      ceilY: room.demoMeta.splatCeilY,
+      yLift: room.demoMeta.splatYLift,
+      roomHeightM: room.demoMeta.splatCeilY - room.demoMeta.splatFloorY,
+      meta: {
+        fractionalBits: room.demoMeta.fractionalBits,
+      },
+    },
+    status: 'ready',
+  }));
+}
+
+function clonePresetRooms(sourceRooms) {
+  return sourceRooms.map((sourceRoom) => {
+    const room = withDoorCalibrations(sourceRoom);
+    return {
+      ...room,
+      enabled: true,
+      splatYLift: room.demoMeta?.splatYLift ?? 0,
+      colliderYLift: room.demoMeta?.colliderYLift ?? room.demoMeta?.splatYLift ?? 0,
+      analysis: room.demoMeta
+        ? {
+            numPoints: room.demoMeta.numPoints,
+            sampledPoints: Math.min(room.demoMeta.numPoints, 250000),
+            floorY: room.demoMeta.splatFloorY,
+            ceilY: room.demoMeta.splatCeilY,
+            yLift: room.demoMeta.splatYLift,
+            roomHeightM: room.demoMeta.splatCeilY - room.demoMeta.splatFloorY,
+            meta: {
+              fractionalBits: room.demoMeta.fractionalBits,
+            },
+          }
+        : room.analysis,
+      status: 'ready',
+    };
+  });
+}
+
+export function App() {
+  const [rooms, setRooms] = useState(() => cloneDemoRooms());
+  const [selectedRoomId, setSelectedRoomId] = useState(DEMO_ROOMS[0].id);
+  const [floorPlanUrl, setFloorPlanUrl] = useState(null);
+  const [floorPlanMeta, setFloorPlanMeta] = useState(null);
+  const [metersPerPixel, setMetersPerPixel] = useState(DEFAULT_METERS_PER_PIXEL);
+  const [activeView, setActiveView] = useState('map');
+  const [showColliders, setShowColliders] = useState(false);
+  const [collisionEnabled, setCollisionEnabled] = useState(true);
+  const [status, setStatus] = useState('Demo rooms loaded');
+  const [worldBuild, setWorldBuild] = useState({ nonce: 0, transforms: [], links: [] });
+  const [portalLinks, setPortalLinks] = useState([]);
+  const [calibrationTarget, setCalibrationTarget] = useState(null);
+
+  const selectedRoom = rooms.find((room) => room.id === selectedRoomId) || rooms[0];
+  const readyCount = rooms.filter((room) => room.splatUrl || room.splatFile).length;
+  const includedCount = rooms.filter((room) => room.enabled !== false).length;
+  const totalPoints = rooms.reduce((sum, room) => sum + Number(room.analysis?.numPoints || room.demoMeta?.numPoints || 0), 0);
+  const computedScale = useMemo(() => Number(metersPerPixel) || DEFAULT_METERS_PER_PIXEL, [metersPerPixel]);
+
+  function updateRoom(roomId, patch) {
+    setRooms((current) => current.map((room) => (room.id === roomId ? { ...room, ...patch } : room)));
+  }
+
+  function addRoom() {
+    const room = makeEmptyRoom(rooms.length);
+    setRooms((current) => [...current, room]);
+    setSelectedRoomId(room.id);
+  }
+
+  function removeRoom(roomId) {
+    setRooms((current) => current.filter((room) => room.id !== roomId));
+    if (selectedRoomId === roomId) {
+      const next = rooms.find((room) => room.id !== roomId);
+      if (next) setSelectedRoomId(next.id);
+    }
+  }
+
+  function loadDemo() {
+    const demo = cloneDemoRooms();
+    setRooms(demo);
+    setSelectedRoomId(demo[0].id);
+    setFloorPlanUrl(null);
+    setFloorPlanMeta(null);
+    setMetersPerPixel(DEFAULT_METERS_PER_PIXEL);
+    setPortalLinks([]);
+    setCalibrationTarget(null);
+    setStatus('Demo rooms restored');
+    void hydrateDemoColliders(demo);
+  }
+
+  function loadLuxuryPenthouse() {
+    const presetRooms = clonePresetRooms(LUXURY_PENTHOUSE_ROOMS);
+    setRooms(presetRooms);
+    setSelectedRoomId(presetRooms[0].id);
+    setFloorPlanUrl(LUXURY_PENTHOUSE_PLAN.url);
+    setFloorPlanMeta({ width: LUXURY_PENTHOUSE_PLAN.width, height: LUXURY_PENTHOUSE_PLAN.height });
+    setMetersPerPixel(LUXURY_PENTHOUSE_PLAN.metersPerPixel);
+    setPortalLinks(LUXURY_PENTHOUSE_PORTAL_LINKS);
+    setCalibrationTarget(null);
+    setActiveView('map');
+    setStatus('Luxury penthouse plan loaded');
+    void hydrateDemoColliders(presetRooms);
+  }
+
+  async function hydrateDemoColliders(demoRooms = rooms) {
+    setStatus('Analyzing demo colliders...');
+    const results = await Promise.allSettled(
+      demoRooms.map(async (room) => ({
+        id: room.id,
+        analysis: await analyzeGLBCollider(room.colliderUrl, { maxVertices: 220000 }),
+      })),
+    );
+
+    setRooms((current) =>
+      current.map((room) => {
+        const hit = results.find((result) => result.status === 'fulfilled' && result.value.id === room.id);
+        if (!hit || hit.status !== 'fulfilled') return room;
+        return {
+          ...room,
+          colliderAnalysis: hit.value.analysis,
+          colliderYLift: hit.value.analysis.yLift,
+        };
+      }),
+    );
+    setStatus('Collider analysis complete');
+  }
+
+  async function handleSplatUpload(roomId, file) {
+    if (!file) return;
+    updateRoom(roomId, { status: 'analyzing', splatFile: file, splatUrl: null });
+    try {
+      const parsed = await parseSplatFile(file, { maxPoints: 250000 });
+      const orientation = parsed.positions.length ? detectOrientation(parsed.positions, parsed.format) : null;
+      updateRoom(roomId, {
+        status: 'ready',
+        format: parsed.format,
+        visualFormat: parsed.format,
+        analysis: orientation
+          ? {
+              ...orientation,
+              numPoints: parsed.numPoints,
+              sampledPoints: parsed.sampledPoints,
+              meta: parsed.meta,
+            }
+          : {
+              numPoints: parsed.numPoints,
+              sampledPoints: parsed.sampledPoints,
+              meta: parsed.meta,
+            },
+        splatYLift: orientation?.yLift ?? 0,
+      });
+      setStatus(`${file.name} analyzed`);
+    } catch (error) {
+      updateRoom(roomId, { status: 'error', error: error.message });
+      setStatus(error.message);
+    }
+  }
+
+  async function handleColliderUpload(roomId, file) {
+    if (!file) return;
+    updateRoom(roomId, { colliderStatus: 'analyzing', colliderFile: file, colliderUrl: null });
+    try {
+      const colliderAnalysis = await analyzeGLBCollider(file, { maxVertices: 250000 });
+      updateRoom(roomId, {
+        colliderStatus: 'ready',
+        colliderAnalysis,
+        colliderYLift: colliderAnalysis.yLift,
+      });
+      setStatus(`${file.name} collider analyzed`);
+    } catch (error) {
+      updateRoom(roomId, { colliderStatus: 'error', colliderError: error.message });
+      setStatus(error.message);
+    }
+  }
+
+  function autoSpreadRooms() {
+    setRooms((current) =>
+      current.map((room, index) => ({
+        ...room,
+        floorPlanX: 180 + index * 245,
+        floorPlanY: 245 + (index % 2) * 20,
+        worldX: index === 0 ? 0 : undefined,
+        worldZ: 0,
+      })),
+    );
+  }
+
+  function buildWorldFromRooms(sourceRooms, nextStatus, options = {}) {
+    const buildRooms = sourceRooms.filter((room) => room.enabled !== false && (room.splatUrl || room.splatFile));
+    const transforms = computeWorldTransforms(buildRooms.length ? buildRooms : sourceRooms, computedScale);
+    setWorldBuild({
+      nonce: Date.now(),
+      transforms,
+      links: options.links || connectRoomCenters(transforms),
+      report: options.report || null,
+    });
+    setActiveView('world');
+    setStatus(nextStatus);
+  }
+
+  function generateWorld() {
+    const normalRooms = rooms.map((room) => ({
+      ...room,
+      useFloorProxy: false,
+    }));
+    setRooms(normalRooms);
+    buildWorldFromRooms(normalRooms, 'Generating continuous world...');
+  }
+
+  function generateJoinedMap() {
+    const joinedRooms = rooms.map((room) => ({
+      ...room,
+      enabled: true,
+      splatUrl: room.realSplatUrl || room.splatUrl,
+      visualFormat: room.realSplatUrl ? 'spz' : room.visualFormat,
+    }));
+    const stitched = stitchRoomsByDoor(joinedRooms, {
+      gap: 1.25,
+      metersPerPixel: computedScale,
+      portalLinks,
+      preserveMapPlacement: Boolean(portalLinks.length),
+    });
+    setRooms(stitched.rooms);
+    buildWorldFromRooms(stitched.rooms, 'Loading full SPZ joined tour...', {
+      links: stitched.links,
+      report: stitched.report,
+    });
+  }
+
+  function selectDoorCalibration(roomId, doorId, label) {
+    setSelectedRoomId(roomId);
+    setCalibrationTarget({ roomId, doorId, label });
+    setActiveView('world');
+    setStatus(`Calibrating ${label || doorId}: stand at the real door and capture`);
+  }
+
+  function handleDoorCapture({ roomId, doorId, anchor }) {
+    writeDoorCalibration(roomId, doorId, anchor);
+    setRooms((current) =>
+      current.map((room) => {
+        if (room.id !== roomId) return room;
+        const previous = room.portalDoors?.[doorId] || {};
+        return {
+          ...room,
+          portalDoors: {
+            ...(room.portalDoors || {}),
+            [doorId]: {
+              ...previous,
+              ...anchor,
+            },
+          },
+        };
+      }),
+    );
+    setStatus(`Captured ${anchor.label || doorId} at ${anchor.x.toFixed(2)}, ${anchor.z.toFixed(2)}; rebuild tour`);
+  }
+
+  function generateFullSelectedRoom() {
+    const targetRoom = rooms.find((room) => room.id === selectedRoomId) || selectedRoom;
+    if (!targetRoom) return;
+    const fullRooms = rooms.map((room) => ({
+      ...room,
+      enabled: room.id === targetRoom.id,
+      splatUrl: room.id === targetRoom.id && room.realSplatUrl ? room.realSplatUrl : room.splatUrl,
+      visualFormat: room.id === targetRoom.id && room.realSplatUrl ? 'spz' : room.visualFormat,
+      useFloorProxy: false,
+    }));
+    setRooms(fullRooms);
+    buildWorldFromRooms(fullRooms, `Loading full SPZ for ${targetRoom.label}...`);
+  }
+
+  function handleFloorPlanUpload(file) {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setFloorPlanUrl((prev) => {
+      if (prev?.startsWith?.('blob:')) URL.revokeObjectURL(prev);
+      return url;
+    });
+    setFloorPlanMeta(null);
+    setStatus(`${file.name} loaded`);
+  }
+
+  return (
+    <div className="app-shell">
+      <header className="topbar">
+        <div className="brand">
+          <div className="brand-mark">SS</div>
+          <div>
+            <h1>Splat Stitcher</h1>
+            <p>Multi-room Gaussian world builder</p>
+          </div>
+        </div>
+        <div className="metric-strip">
+          <div className="metric">
+            <Layers size={16} />
+            <span>{rooms.length} rooms</span>
+          </div>
+          <div className="metric">
+            <CheckCircle2 size={16} />
+            <span>{readyCount} ready</span>
+          </div>
+          <div className="metric">
+            <Box size={16} />
+            <span>{includedCount} included</span>
+          </div>
+          <div className="metric">
+            <Gauge size={16} />
+            <span>{(totalPoints / 1000000).toFixed(2)}M splats</span>
+          </div>
+        </div>
+      </header>
+
+      <main className="workspace">
+        <aside className="left-rail">
+          <button className={activeView === 'map' ? 'rail-button active' : 'rail-button'} onClick={() => setActiveView('map')}>
+            <Map size={18} />
+            <span>Map</span>
+          </button>
+          <button className={activeView === 'world' ? 'rail-button active' : 'rail-button'} onClick={() => setActiveView('world')}>
+            <Box size={18} />
+            <span>World</span>
+          </button>
+          <button className="rail-button" onClick={loadDemo}>
+            <Sparkles size={18} />
+            <span>Demo</span>
+          </button>
+          <button className="rail-button" onClick={loadLuxuryPenthouse}>
+            <Building2 size={18} />
+            <span>Estate</span>
+          </button>
+        </aside>
+
+        <section className="main-stage">
+          <div className="stage-toolbar">
+            <div className="segmented">
+              <button className={activeView === 'map' ? 'selected' : ''} onClick={() => setActiveView('map')}>
+                <Map size={16} />
+                Map
+              </button>
+              <button className={activeView === 'world' ? 'selected' : ''} onClick={() => setActiveView('world')}>
+                <Box size={16} />
+                World
+              </button>
+            </div>
+            <div className="toolbar-actions">
+              <label className="icon-button">
+                <FileUp size={16} />
+                <span>Plan</span>
+                <input type="file" accept="image/*" onChange={(event) => handleFloorPlanUpload(event.target.files?.[0])} />
+              </label>
+              <button className="icon-button" onClick={addRoom}>
+                <Plus size={16} />
+                <span>Room</span>
+              </button>
+              <button className="icon-button" onClick={autoSpreadRooms}>
+                <RotateCcw size={16} />
+                <span>Spread</span>
+              </button>
+              <button className="icon-button" onClick={loadLuxuryPenthouse}>
+                <Building2 size={16} />
+                <span>Penthouse</span>
+              </button>
+              <button className="icon-button" onClick={generateJoinedMap}>
+                <Route size={16} />
+                <span>Build Tour</span>
+              </button>
+              <button className="icon-button" onClick={generateFullSelectedRoom}>
+                <Sparkles size={16} />
+                <span>Full Room</span>
+              </button>
+              <button className="primary-button" onClick={generateWorld}>
+                <Play size={16} />
+                <span>Generate</span>
+              </button>
+            </div>
+          </div>
+
+          {activeView === 'map' ? (
+            <FloorPlanCanvas
+              rooms={rooms}
+              selectedRoomId={selectedRoomId}
+              floorPlanUrl={floorPlanUrl}
+              planSize={floorPlanMeta}
+              metersPerPixel={computedScale}
+              portalLinks={portalLinks}
+              onSelectRoom={setSelectedRoomId}
+              onUpdateRoom={updateRoom}
+              setMetersPerPixel={setMetersPerPixel}
+            />
+          ) : (
+            <WorldViewer
+              worldBuild={worldBuild}
+              showColliders={showColliders}
+              collisionEnabled={collisionEnabled}
+              status={status}
+              selectedRoomId={selectedRoomId}
+              calibrationTarget={calibrationTarget}
+              onCaptureDoor={handleDoorCapture}
+              onStatus={setStatus}
+            />
+          )}
+        </section>
+
+        <aside className="right-panel">
+          <RoomPanel
+            room={selectedRoom}
+            rooms={rooms}
+            metersPerPixel={computedScale}
+            showColliders={showColliders}
+            collisionEnabled={collisionEnabled}
+            status={status}
+            onUpdateRoom={updateRoom}
+            onRemoveRoom={removeRoom}
+            onSplatUpload={handleSplatUpload}
+            onColliderUpload={handleColliderUpload}
+            onToggleColliders={setShowColliders}
+            onToggleCollision={setCollisionEnabled}
+            calibrationTarget={calibrationTarget}
+            onSelectDoorCalibration={selectDoorCalibration}
+          />
+        </aside>
+      </main>
+    </div>
+  );
+}
+</file>
+
+<file path="src/ui/RoomPanel.jsx">
+import React from 'react';
+import {
+  AlertTriangle,
+  Box,
+  CheckCircle2,
+  Crosshair,
+  DoorOpen,
+  Eye,
+  EyeOff,
+  FileUp,
+  Shield,
+  Trash2,
+} from 'lucide-react';
+
+function number(value, digits = 3) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n.toFixed(digits) : '0.000';
+}
+
+export function RoomPanel({
+  room,
+  rooms,
+  metersPerPixel,
+  showColliders,
+  collisionEnabled,
+  status,
+  onUpdateRoom,
+  onRemoveRoom,
+  onSplatUpload,
+  onColliderUpload,
+  onToggleColliders,
+  onToggleCollision,
+  calibrationTarget,
+  onSelectDoorCalibration,
+}) {
+  if (!room) {
+    return <div className="empty-panel">No room selected</div>;
+  }
+
+  const points = room.analysis?.numPoints || room.demoMeta?.numPoints || 0;
+  const portalDoors = Object.entries(room.portalDoors || {}).map(([id, door]) => ({
+    id,
+    ...door,
+    worldX: door.x,
+    worldZ: door.z,
+  }));
+  const detectedDoors = room.colliderAnalysis?.doors || room.doors || [];
+  const doors = portalDoors.length ? portalDoors : detectedDoors;
+  const mismatch = Math.abs(Number(room.splatYLift ?? room.demoMeta?.splatYLift ?? 0) - Number(room.colliderYLift ?? room.demoMeta?.colliderYLift ?? 0));
+
+  return (
+    <div className="room-panel">
+      <div className="panel-heading">
+        <div>
+          <p className="eyebrow">Selected Room</p>
+          <h2>{room.label}</h2>
+        </div>
+        <button className="danger-icon" onClick={() => onRemoveRoom(room.id)} disabled={rooms.length <= 1}>
+          <Trash2 size={16} />
+        </button>
+      </div>
+
+      <div className="status-line">
+        {room.status === 'error' ? <AlertTriangle size={16} /> : <CheckCircle2 size={16} />}
+        <span>{room.status === 'analyzing' ? 'Analyzing' : room.status === 'error' ? room.error : room.enabled === false ? 'Ready, not included' : 'Ready for stitching'}</span>
+      </div>
+
+      <div className="form-grid">
+        <label>
+          <span>Name</span>
+          <input value={room.label || ''} onChange={(event) => onUpdateRoom(room.id, { label: event.target.value })} />
+        </label>
+        <label>
+          <span>Category</span>
+          <input value={room.category || ''} onChange={(event) => onUpdateRoom(room.id, { category: event.target.value })} />
+        </label>
+        <label>
+          <span>Width m</span>
+          <input
+            type="number"
+            value={room.realWidthM || 0}
+            step="0.1"
+            onChange={(event) => onUpdateRoom(room.id, { realWidthM: Number(event.target.value) })}
+          />
+        </label>
+        <label>
+          <span>Depth m</span>
+          <input
+            type="number"
+            value={room.realDepthM || 0}
+            step="0.1"
+            onChange={(event) => onUpdateRoom(room.id, { realDepthM: Number(event.target.value) })}
+          />
+        </label>
+      </div>
+
+      <div className="upload-row">
+        <label className="upload-button">
+          <FileUp size={16} />
+          <span>SPZ/PLY/GLB</span>
+          <input type="file" accept=".spz,.ply,.glb,.gltf" onChange={(event) => onSplatUpload(room.id, event.target.files?.[0])} />
+        </label>
+        <label className="upload-button">
+          <Box size={16} />
+          <span>Collider</span>
+          <input type="file" accept=".glb,.gltf" onChange={(event) => onColliderUpload(room.id, event.target.files?.[0])} />
+        </label>
+      </div>
+
+      <div className="facts">
+        <div>
+          <span>Points</span>
+          <strong>{points ? points.toLocaleString() : '-'}</strong>
+        </div>
+        <div>
+          <span>Sample</span>
+          <strong>{room.analysis?.sampledPoints ? room.analysis.sampledPoints.toLocaleString() : '-'}</strong>
+        </div>
+        <div>
+          <span>SPZ lift</span>
+          <strong>{number(room.splatYLift ?? room.demoMeta?.splatYLift)}m</strong>
+        </div>
+        <div>
+          <span>GLB lift</span>
+          <strong>{number(room.colliderYLift ?? room.demoMeta?.colliderYLift)}m</strong>
+        </div>
+      </div>
+
+      {mismatch > 0.45 && (
+        <div className="warning-line">
+          <AlertTriangle size={16} />
+          <span>Floor mismatch {mismatch.toFixed(2)}m</span>
+        </div>
+      )}
+
+      <div className="form-grid">
+        <label>
+          <span>Yaw deg</span>
+          <input
+            type="number"
+            value={room.manualYawDeg || 0}
+            step="1"
+            onChange={(event) => onUpdateRoom(room.id, { manualYawDeg: Number(event.target.value) })}
+          />
+        </label>
+        <label>
+          <span>Y offset</span>
+          <input
+            type="number"
+            value={room.manualYOffset || 0}
+            step="0.05"
+            onChange={(event) => onUpdateRoom(room.id, { manualYOffset: Number(event.target.value) })}
+          />
+        </label>
+        <label>
+          <span>Plan X</span>
+          <input
+            type="number"
+            value={Math.round(room.floorPlanX || 0)}
+            onChange={(event) => onUpdateRoom(room.id, { floorPlanX: Number(event.target.value), worldX: undefined })}
+          />
+        </label>
+        <label>
+          <span>Plan Y</span>
+          <input
+            type="number"
+            value={Math.round(room.floorPlanY || 0)}
+            onChange={(event) => onUpdateRoom(room.id, { floorPlanY: Number(event.target.value), worldZ: undefined })}
+          />
+        </label>
+      </div>
+
+      <div className="toggle-list">
+        <label>
+          <input
+            type="checkbox"
+            checked={room.enabled !== false}
+            onChange={(event) => onUpdateRoom(room.id, { enabled: event.target.checked })}
+          />
+          <span>Include in world</span>
+        </label>
+        {room.realSplatUrl && (
+          <label>
+            <input
+              type="checkbox"
+              checked={room.splatUrl === room.realSplatUrl}
+              onChange={(event) =>
+                onUpdateRoom(room.id, {
+                  splatUrl: event.target.checked ? room.realSplatUrl : room.liteSplatUrl,
+                  visualFormat: event.target.checked ? 'spz' : 'ply',
+                })
+              }
+            />
+            <span>Full SPZ asset</span>
+          </label>
+        )}
+        <label>
+          <input
+            type="checkbox"
+            checked={Boolean(room.visualFlipX)}
+            onChange={(event) => onUpdateRoom(room.id, { visualFlipX: event.target.checked })}
+          />
+          <span>Flip visual X</span>
+        </label>
+        <label>
+          <input type="checkbox" checked={showColliders} onChange={(event) => onToggleColliders(event.target.checked)} />
+          <span>{showColliders ? <Eye size={14} /> : <EyeOff size={14} />} Show colliders</span>
+        </label>
+        <label>
+          <input type="checkbox" checked={collisionEnabled} onChange={(event) => onToggleCollision(event.target.checked)} />
+          <span><Shield size={14} /> Collision</span>
+        </label>
+      </div>
+
+      <div className="door-list">
+        <div className="subhead">
+          <DoorOpen size={16} />
+          <span>Doors Found</span>
+        </div>
+        {doors.length ? (
+          doors.map((door) => (
+            <div className="door-row" key={door.id || `${door.wall}-${door.centerOffset}`}>
+              <strong>{door.label || door.id || door.wall}</strong>
+              <span>{number(door.width, 2)}m</span>
+              <span>{number(door.worldX, 2)}, {number(door.worldZ, 2)}</span>
+              <button
+                className={calibrationTarget?.roomId === room.id && calibrationTarget?.doorId === door.id ? 'door-calibrate active' : 'door-calibrate'}
+                onClick={() => onSelectDoorCalibration?.(room.id, door.id, door.label || door.id)}
+                title="Calibrate"
+              >
+                <Crosshair size={13} />
+              </button>
+            </div>
+          ))
+        ) : (
+          <p className="muted">No GLB gaps yet</p>
+        )}
+      </div>
+
+      <div className="panel-footer">
+        <span>Scale {metersPerPixel.toFixed(3)} m/px</span>
+        <span>{status}</span>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/ui/WorldViewer.jsx">
+import React, { useEffect, useRef, useState } from 'react';
+import { Crosshair, DoorOpen, MousePointer2, RotateCcw } from 'lucide-react';
+import { WorldRenderer } from '../renderer/worldRenderer.js';
+
+export function WorldViewer({
+  worldBuild,
+  showColliders,
+  collisionEnabled,
+  status,
+  selectedRoomId,
+  calibrationTarget,
+  onCaptureDoor,
+  onStatus,
+}) {
+  const canvasRef = useRef(null);
+  const rendererRef = useRef(null);
+  const [frame, setFrame] = useState({ position: [0, 0, 0], floorY: 0, locked: false, colliders: 0 });
+
+  useEffect(() => {
+    if (!canvasRef.current) return undefined;
+    const renderer = new WorldRenderer(canvasRef.current, {
+      onStatus,
+      onFrame: setFrame,
+    });
+    rendererRef.current = renderer;
+    return () => {
+      rendererRef.current = null;
+      renderer.dispose();
+    };
+  }, [onStatus]);
+
+  useEffect(() => {
+    rendererRef.current?.setShowColliders(showColliders);
+  }, [showColliders]);
+
+  useEffect(() => {
+    rendererRef.current?.setCollisionEnabled(collisionEnabled);
+  }, [collisionEnabled]);
+
+  useEffect(() => {
+    if (!worldBuild?.nonce || !rendererRef.current) return;
+    const renderer = rendererRef.current;
+    void renderer.loadRooms(worldBuild.transforms, worldBuild.links).catch((error) => {
+      if (rendererRef.current === renderer) {
+        onStatus?.(`World load failed: ${error.message}`);
+      }
+    });
+  }, [onStatus, worldBuild]);
+
+  const pos = frame.position || [0, 0, 0];
+  function captureDoorHere() {
+    if (!calibrationTarget || !rendererRef.current) return;
+    try {
+      const anchor = rendererRef.current.captureDoorAnchor(calibrationTarget.roomId || selectedRoomId, calibrationTarget.doorId);
+      onCaptureDoor?.({
+        roomId: calibrationTarget.roomId || selectedRoomId,
+        doorId: calibrationTarget.doorId,
+        anchor,
+      });
+    } catch (error) {
+      onStatus?.(`Door capture failed: ${error.message}`);
+    }
+  }
+
+  return (
+    <div className="world-panel">
+      <canvas ref={canvasRef} className="world-canvas" />
+      <div className="world-hud top-left">
+        <div>
+          <Crosshair size={14} />
+          <span>{pos.map((value) => value.toFixed(2)).join(', ')}</span>
+        </div>
+        <div>
+          <MousePointer2 size={14} />
+          <span>{frame.locked ? 'Mouse locked' : 'Click canvas'}</span>
+        </div>
+      </div>
+      <div className="world-status">{status}</div>
+      {calibrationTarget && (
+        <div className="world-calibration">
+          <div>
+            <DoorOpen size={14} />
+            <span>{calibrationTarget.label || calibrationTarget.doorId}</span>
+          </div>
+          <button onClick={captureDoorHere}>
+            <Crosshair size={14} />
+            <span>Capture Here</span>
+          </button>
+        </div>
+      )}
+      <button className="floating-reset" onClick={() => rendererRef.current?.resetPlayer()}>
+        <RotateCcw size={16} />
+        <span>Reset</span>
+      </button>
+      {!worldBuild?.nonce && (
+        <div className="world-empty">
+          <h2>World Preview</h2>
+          <p>Generate a stitch from the map to load the rooms here.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="scripts/validate-portals.mjs">
+import {
+  LUXURY_PENTHOUSE_PORTAL_LINKS,
+  LUXURY_PENTHOUSE_ROOMS,
+} from '../src/core/propertyPresets.js';
+import {
+  inwardDirectionForWall,
+  stitchRoomsByDoor,
+} from '../src/core/roomAligner.js';
+//debug
+function assert(condition, message) {
+  if (!condition) throw new Error(message);
+}
+
+function insideFootprint(room, x, z, margin = 0.05) {
+  const footprint = room.footprint;
+  if (!footprint) return true;
+  const localX = x - (room.worldX ?? 0);
+  const localZ = z - (room.worldZ ?? 0);
+  return (
+    localX >= footprint.xMin - margin &&
+    localX <= footprint.xMax + margin &&
+    localZ >= footprint.zMin - margin &&
+    localZ <= footprint.zMax + margin
+  );
+}
+
+const stitched = stitchRoomsByDoor(LUXURY_PENTHOUSE_ROOMS, {
+  gap: 1.25,
+  metersPerPixel: 0.018,
+  portalLinks: LUXURY_PENTHOUSE_PORTAL_LINKS,
+  preserveMapPlacement: true,
+});
+
+assert(stitched.report.transitionMode === 'door_portals_map', 'expected door_portals_map transition mode');
+assert(stitched.links.length === LUXURY_PENTHOUSE_PORTAL_LINKS.length, 'not every portal link was created');
+assert(stitched.report.placedRoomCount === LUXURY_PENTHOUSE_ROOMS.length, 'not every room was placed by the portal graph');
+
+const roomById = new Map(stitched.rooms.map((room) => [room.id, room]));
+const rows = [];
+
+for (const link of stitched.links) {
+  const fromRoom = roomById.get(link.from);
+  const toRoom = roomById.get(link.to);
+  assert(fromRoom, `${link.id}: missing source room`);
+  assert(toRoom, `${link.id}: missing target room`);
+
+  const fromInward = inwardDirectionForWall(link.fromDoorMeta.wall);
+  const toInward = inwardDirectionForWall(link.toDoorMeta.wall);
+  const sourceInside = {
+    x: link.a[0] + fromInward.x * 0.55,
+    z: link.a[2] + fromInward.z * 0.55,
+  };
+  const targetInside = {
+    x: link.b[0] + toInward.x * 0.9,
+    z: link.b[2] + toInward.z * 0.9,
+  };
+
+  assert(
+    insideFootprint(fromRoom, sourceInside.x, sourceInside.z),
+    `${link.id}: source trigger is outside ${fromRoom.label}`,
+  );
+  assert(
+    insideFootprint(toRoom, targetInside.x, targetInside.z),
+    `${link.id}: landing point is outside ${toRoom.label}`,
+  );
+
+  rows.push({
+    link: link.label,
+    fromDoor: `${link.from}:${link.fromDoor}`,
+    toDoor: `${link.to}:${link.toDoor}`,
+    source: `${sourceInside.x.toFixed(2)}, ${sourceInside.z.toFixed(2)}`,
+    landing: `${targetInside.x.toFixed(2)}, ${targetInside.z.toFixed(2)}`,
+    mapDistanceM: link.distanceM.toFixed(2),
+    yaw: toInward.yawDeg,
+  });
+}
+
+console.table(rows);
+console.log(`Portal validation complete: ${stitched.links.length} bidirectional door links ready.`);
+</file>
+
+</files>
