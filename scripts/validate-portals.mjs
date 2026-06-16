@@ -6,7 +6,7 @@ import {
   inwardDirectionForWall,
   stitchRoomsByDoor,
 } from '../src/core/roomAligner.js';
-
+//debug
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
